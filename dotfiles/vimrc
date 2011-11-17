@@ -1,0 +1,547 @@
+set nocompatible
+set title
+set number
+set ruler
+set nobackup
+set nowritebackup
+set noswapfile
+set ignorecase
+set sw=2 sts=2 tabstop=2 et
+set wildmode=list:longest
+set autoindent 
+set backspace=indent,eol,start
+set notimeout " don't timeout on mappings
+set ttimeout  " do timeout on terminal key codes
+set timeoutlen=100 " timeout after 100 msec
+set hls
+" http://stackoverflow.com/questions/563616/vim-and-ctags-tips-and-tricks/741486#741486
+set tags=./tags;/
+
+" set clipboard+=unnamed
+
+"If you set 'hidden' Vim will keep the buffer around when you leave it.
+"You won't lose anything, except a little memory for the buffer to live in.
+set hidden
+
+" enable virtual edit to all
+"set virtualedit=all
+" Enable commad-line completion
+set wildmenu
+
+" one more place in normal mode
+set virtualedit=onemore
+
+",
+  "comma
+  "noremap , i,
+
+"-
+
+"."noremap j O<space><bs>
+
+"J
+  noremap j r
+  noremap J R
+
+"p
+  noremap p t
+  noremap P T
+
+"y
+  "Replace character
+  "noremap y r
+  noremap y e
+  noremap Y E
+
+"ö
+  " Macro recording
+  "noremap ö q
+
+"g
+  "search
+  noremap <C-g> n
+  "default: join line without space
+  "noremap gj gj
+  "join line with space
+  "noremap gj J
+  "noremap g G
+  "noremap G n
+  "Empty line up
+  "map <silent> gm <esc>:set paste<cr>:normal! O<cr><esc>:set nopaste<cr><down>
+  "map <silent> gt <esc>:set paste<cr>:normal! o<cr><esc>:set nopaste<cr><down>
+  "nnoremap <silent> <C-@> <esc>:let cursor_pos = getpos(".")<cr>:set paste<cr>:normal! o<cr><esc>:set nopaste<cr>:call setpos(".", cursor_pos)<cr>
+  nnoremap <silent> gO <esc>:let cursor_pos = getpos(".")<cr>:let cursor_col = cursor_pos[1]<cr>:let cursor_pos[1] = cursor_col + 1<cr>:set paste<cr>:normal! O<cr>:call setpos(".", cursor_pos)<cr>:set nopaste<cr>
+  nnoremap <silent> go <esc>:let cursor_pos = getpos(".")<cr>:set paste<cr>:normal! o<cr><esc>:set nopaste<cr>:call setpos(".", cursor_pos)<cr>:set nopaste<cr>
+
+  "
+  "split
+  "noremap gs <Esc>:bo sp 
+  "noremap gv <Esc>:
+
+"m
+  "Up
+  "noremap m k
+  noremap m k
+  noremap M K
+  "noremap <C-m> i2
+  "Jumping back-forward
+  noremap gm <C-^>
+  "map <silent> <esc>m :wincmd k<cr>
+  "map <silent> <esc>t :wincmd j<CR>
+  "map <silent> <esc>r :wincmd h<CR>
+  "map <silent> <esc>n :wincmd l<CR>
+
+"l
+  noremap l <pageup>10<up>
+  noremap L gg  
+  noremap <C-l> <esc>:
+  "noremap L N
+  "noremap <C-l> <C-n>
+  "noremap L G
+  "noremap <C-l> <C-g>
+  "onoremap l g
+  "page up
+  "noremap <C-n> :R<cr>
+  "ruby end
+  "noremap <C-l> :FuzzyFinderTextMateRefreshFiles<cr>:FuzzyFinderTextMate<cr>
+  " inoremap <C-l> <cr>end<up><esc>A
+  "page top
+  "noremap L gg
+
+"õ
+
+"q
+  "quit
+  noremap q :q<cr>
+  noremap Q :q!<cr>
+  noremap <C-q> <C-]>
+"Q
+  "quit
+  "noremap <S-Q> :q!<cr>
+
+"a
+  noremap a v
+  noremap A V
+  noremap <C-a> <C-V>
+  "copy all
+  "imap <C-a> <esc>:normal! ggVG<cr>
+  "vmap <C-a> <esc>:normal! ggVG<cr>
+  "map <C-a> <esc>:normal! ggVG<cr>
+
+"A
+  "noremap A v
+
+"o
+  "quit
+  "noremap o <esc>:q<cr>
+  " Split screen
+  "noremap <C-o> <C-w>w
+  " noremap <C-o> <esc>:q!<cr>
+
+"O
+  "quit
+  "noremap O <esc>:q!<cr>
+
+"e
+  "line below with autoindent fix
+  "noremap e o<space><bs>
+  noremap e c
+  noremap E C
+
+"E
+  "Empty line down
+  "map <silent> E <esc>:set paste<cr>:normal! o<cr><esc>:set nopaste<cr><up>
+
+"i
+  "in front of cursor
+  "noremap i i
+  "vnoremap i i
+
+"I
+  "in the end of line
+  "noremap I I
+
+"u
+  "at the end of cursor
+  noremap u a
+  "at the end of line
+  noremap U A
+
+"d
+  "Start commandline
+  "noremap d :
+  "noremap dd "+dd
+  "vnoremap d "+d
+  " noremap D :NB! remaped to S
+
+"r
+  "left
+  "noremap r h
+  noremap r b
+  noremap R E
+  "going back
+  map <c-r> <C-O>
+  
+"t
+  "down
+  noremap t j
+  noremap T M
+  "noremap T M
+  noremap <C-m> <C-t>
+  "inoremap t j
+  "lnoremap t j
+  "inoremap T J
+  "lnoremap T J
+
+"n
+  "right
+  "noremap n l
+  " move right by word
+  noremap n w
+  noremap N e
+  map <c-n> gf
+  "map <C-n> gf
+  "map <C-n> :R<cr>
+
+  "Go Ctrl-]
+  "noremap <C-n> <C-]>
+  " map n <right>
+  "Go to some file
+  "map N gf
+
+"s
+  "delete
+  "noremap s :call Delete_key()<cr>
+  "noremap s i<del><esc>l
+  noremap s :call BS_key()<cr>
+
+"S
+  "delete
+  noremap S d^
+
+"k
+  "noremap k :w<cr>
+  "noremap K :w<cr>
+  "oremap K :
+  "noremap k :
+  "noremap k :
+  "noremap k :
+  "noremap k :
+  "noremap k :
+  """"""""""noremap k :
+  """"""""""noremap K :
+  "noremap <C-k> <C-m>
+  "backspace
+  noremap k x
+  " noremap k i<BS><esc>l
+  "delete
+  noremap K D
+  "cnoremap K <C-u>
+
+"z
+  "undo
+  noremap z u
+  noremap Z U
+  noremap <C-z> u
+  "undo
+  noremap Z <C-r>
+
+"x
+  "cut
+  noremap x "+d
+  vnoremap x "+d
+  "nnoremap xx <esc>V"+d
+  "noremap <C-x> "+d
+  
+"X
+  "cut
+  "noremap X D
+
+"c
+  "copy
+  noremap c "+y
+  noremap C Y
+  "noremap c y
+  "noremap c "+y
+  "noremap <C-c> "+y
+  "vnoremap <silent> c "+y
+  "cnoremap <C-c> "+y
+
+"v
+  noremap v "+P
+  "noremap V P
+  "set pastetoggle=<F2> 
+  "paste
+  "noremap v p
+
+  "*p would preserve formatting
+  noremap gv "*p
+  noremap gV "*P
+  "noremap <silent> v :set paste<cr>I"+P<esc>:set nopaste<cr>
+  "noremap <silent> <C-v> :set paste<cr>"+p<esc>:set nopaste<cr>
+  "noremap <silent> <C-v> <esc>:set paste<cr>"+P<esc>:set nopaste<cr><esc>
+  "vnoremap <silent> v d<esc>:set paste<cr>"+P<esc>:set nopaste<cr><esc>
+  "cnoremap <C-v> <MiddleMouse>
+
+  "paste
+  noremap V "+p
+  "noremap <silent> V <esc>:set paste<cr>"+p<esc>:set nopaste<cr><esc>
+  "vnoremap <silent> V d<esc>:set paste<cr>"+p<esc>:set nopaste<cr><esc>
+
+"ü
+  " z extra cmds
+  "noremap ü z
+  
+  " zf create a fold
+  "noremap üf zf
+
+  " zj moves the cursor to the next fold.
+  "noremap üh zj
+
+  " zk moves the cursor to the previous fold.
+  "noremap ül zk
+
+  " zo opens a fold at the cursor.
+  "noremap ün zo
+
+  " zc close one fold under the cursor.
+  "noremap ür zc
+
+  " zM closes all open folds.
+  "noremap üt zM  
+
+  " zR open all folds.
+  "noremap üm zR
+
+  " zm increases the foldlevel by one.
+  "noremap üür zm
+
+  " zr decreases the foldlevel by one.
+  "noremap üün zr
+
+  " zd deletes the fold at the cursor.
+  "noremap ük zd
+
+  " zE deletes all folds.
+  noremap üK zE
+
+"b
+  " Till before
+  noremap b t
+
+  "For new layout
+  inoremap µ <esc>:w<cr><right>
+  nnoremap µ :w<cr>
+  cnoremap µ <esc>
+  vnoremap µ <esc>
+
+"µ
+  "save
+  "inoremap µ <esc>:w<cr>
+  "noremap µ <esc>
+  "cnoremap µ <esc>
+
+"h
+  "page down
+  "noremap h <pagedown>10<down>
+  noremap h <pagedown>10<down>
+  noremap H G
+  "no H R
+  "noremap <C-h> <C-r>
+  "page bottom
+  "noremap H GG
+
+"f
+  "searching
+  "noremap <C-f> :set hls<cr>/
+  noremap <C-f> /
+  cmap <silent> <C-f> <esc>:noh<cr>
+
+"w
+  "default: move cursor to window 
+  "below
+  noremap ät <C-w>j
+  "up
+  noremap äm <C-w>k
+  "left
+  noremap är <C-w>h
+  "right
+  noremap än <C-w>l
+
+  noremap äo <C-w>o
+
+  noremap äv :vs<cr>
+
+"ä
+  "noremap ä :w<cr>
+  "noremap Ä :wq<cr>
+
+"space
+   vmap <space> <plug>NERDCommenterToggle
+
+"tab
+inoremap <tab> <c-n>
+
+"Page down
+  "noremap <pagedown> <pagedown>10<down>
+
+"Page up
+  "noremap <pageup> <pagup>10<up>
+
+"Searching
+  "noremap # :set hls<cr>#
+
+"Going back
+  "noremap Mr <C-I>
+
+"Clean command line
+  "Clean command line esc - something goes wrong here
+  " cnoremap <esc> <C-u>
+
+" local stuff
+if hostname() == "priit"
+
+filetype plugin indent on " Enable filetype-specific indenting and plugins
+au filetype help set nonumber
+"autocmd FileType javascript setlocal cindent  " added for js 2007.12.05
+
+"Rails Fabrication
+autocmd User Rails Rnavcommand fabricator spec/fabricators -suffix=_fabricator.rb -default=model()
+
+
+"set mouse=a
+syntax on
+
+" colerscheme stuff
+colorscheme dark-ruby
+
+" Move cursor to the last position
+:au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal g'\"" | endif
+ 
+"You need to do this to clear the PAGER environment variable inside of Vim.
+"This is to handle the case where you start Vim normally and want to use Vim's
+"Man" function. " let ruby_operators=1
+let $PAGER=''
+
+" CD to whatever directory the current buffer is using. 
+com! CD cd %:p:h
+
+" yaml autoident
+" autocmd FileType yaml set ai sw=2 sts=2 et
+" au! BufRead,BufNewFile *.sass setfiletype sass
+" au! BufRead,BufNewFile *.haml setfiletype haml
+" autocmd BufRead *spec.rb set foldmethod=syntax
+
+" function Return_key and BS_key from Jochen Baier, 2006 (email@Jochen-Baier.de)
+" http://www.vim.org/scripts/script.php?script_id=1579
+function! Return_key()
+  let buftype = getbufvar(bufnr(''), '&buftype') 
+  
+  if buftype != ""
+    unmap <CR>
+    execute "normal \<CR>"
+    nnoremap <silent> <CR> :call Return_key()<CR>
+  else
+    execute "normal i\<CR>\<ESC>" 
+  endif
+endfunction           
+
+function! BS_key(...)
+  let column = col(".")
+  "call Decho ("colum: " . column)
+
+  execute "normal i\<BS>\<ESC>"
+
+    if column == 1
+      let column2 = col (".")
+      if column2 > 1
+          execute "normal n"
+      endif
+    else
+      if column > 2
+        execute "normal n" 
+      endif
+    endif
+
+endfunction       
+nnoremap <silent> <CR> :call Return_key()<CR>
+"nnoremap <silent> <CR> i\<cr>\<esc>
+nnoremap <silent> <SPACE> i<SPACE><ESC>l
+
+" NERDCommenter does need to creat mappings
+let NERDCreateDefaultMappings="0"
+
+" fuzzyfinder_textmate
+let g:fuzzy_ignore = '.o;.obj;.bak;.exe;.pyc;.pyo;.DS_Store;.db'
+
+" improve autocomplete/fuzzyfinder menu color
+highlight Pmenu ctermbg=238 gui=bold
+
+func Eatchar(pat)
+  let c = nr2char(getchar(0))
+ return (c =~ a:pat) ? '' : c
+endfunc
+"Rails alternative files
+"  noremap gm <esc>:A<cr>
+"  noremap gl <esc>:R<cr>
+
+cabbr bsp botright sp
+"cabbr rsp vert botright sp
+"cabbr lsp vert topleft sp
+cabbr lsp bel vsp
+"Rails
+"  cabbr c Rcontroller<cr>
+ cabbr co Rcontroller
+"  cabbr coa Rcontroller application<cr>
+"  cabbr cos Redit spec/controllers/<C-R>=Eatchar('\s')<cr>
+"  cabbr m Rmodel<cr>
+ cabbr mo Rmodel
+"  cabbr mop Rmodel p<tab>
+"  cabbr mos Redit spec/models/<C-R>=Eatchar('\s')<cr>
+"  cabbr v Rview<cr>
+ cabbr vi Rview
+ cabbr via Rview layouts/application<cr>
+
+  "vie == :e apps/view/post/index.html.haml
+ cabbr vie Rview <C-R><C-W>.haml<C-R>=Eatchar('\s')<cr>
+"  cabbr he Rhelper
+"  cabbr hes Redit spec/helpers/<C-R>=Eatchar('\s')<cr>
+ cabbr hea Rhelper application<cr>
+"  cabbr ha Rhelper application<cr>
+"  cabbr st Rstylesheet
+"  cabbr sta Rstylesheet application<cr>
+ cabbr sas Redit app/stylesheets/screen.sass<cr>
+"  cabbr sasi Redit app/stylesheets/ie.sass<cr>
+"  cabbr sasa Redit app/stylesheets/base.sass<cr>
+"  cabbr routes Redit config/routes.rb<cr>
+ cabbr ro Redit config/routes.rb<cr>
+"  cabbr mi Rmigration
+"  cabbr mia Rmigration 001<cr>
+ cabbr sc Redit db/schema.rb<cr>
+ cabbr ja Rjavascript
+"  cabbr jaa Rjavascript application<cr>
+"  cabbr fix Redit spec/fixtures/<C-R>=Eatchar('\s')<cr>
+"  cabbr fx Redit spec/fixtures/<C-R>=Eatchar('\s')<cr>
+"  cabbr spec Redit spec/spec_helper.rb<cr>
+"  cabbr env Redit config/environment.rb<cr>
+"  cabbr conf Redit config/environment.rb<cr>
+"  cabbr con Redit config/environment.rb<cr>
+"  cabbr data Redit config/database.yml<cr>
+"  cabbr da Redit config/database.yml<cr>
+"  cabbr a A<cr>
+"  cabbr ae AE<cr>
+"  cabbr r R<cr>
+"  cabbr re R<cr>
+"  cabbr fi :FuzzyFinderTextMate<cr>
+
+"Ctag build
+cabbr bta :!/usr/bin/ctags -R --exclude=.git --exclude=log * `rvm gemdir`/gems `$MY_RUBY_HOME`/lib
+"cabbr bta :!/usr/bin/ctags -R --exclude=.git --exclude=log * /usr/local/rvm/gems/ruby-1.9.2-p136@rails3/gems
+
+" Fix esc to the same place
+"inoremap <esc> <esc><right>
+end
+
+"Highlight text overflow
+highlight OverLength ctermbg=black ctermfg=yellow guibg=#592929
+match OverLength /\%101v\+/
