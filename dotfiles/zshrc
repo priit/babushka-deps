@@ -90,6 +90,7 @@ alias bigreset="rake db:drop; rake db:create; rake db:migrate; rake db:seed; rak
 alias svn_clean="find . | grep .svn | xargs rm -fr"
 
 #system
+alias v='vim -u ~/.vimrc-priit'
 alias install="sudo apt-get install "
 alias ls="ls -hLp --group-directories-first "
 
