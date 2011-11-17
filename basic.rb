@@ -1,6 +1,6 @@
 dep 'basic', :username do
-  username.default!(shell('whoami'))
+  username.ask("Additional user along root user:").default(shell('whoami'))
 
-  requires 'zsh.conf' # for root user
-  requires 'zsh.conf'.with(username)
+  requires 'zsh.conf'.with(username) if username != 'root'
+  requires 'zsh.confroot'
 end

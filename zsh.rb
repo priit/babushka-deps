@@ -11,11 +11,17 @@ dep 'zsh.conf', :username do
   username.default!(shell('whoami'))
   requires 'zsh'.with(username)
 
-  def home_dir
-    username == 'root' ? '/root' : "/home/#{username}"
+  met? { username == 'root' ? true : "/home/#{username}/.zshrc".p.exists? }
+  meet do
+    render_erb 'dotfiles/zshrc', :to => "/home/#{username}/.zshrc".p
+    log_shell  "Set owner as #{username}:#{username}:", 
+      "chown #{username}:#{username} /home/#{username}/.zshrc"
   end
+end
 
-  # DOTO: update when new zshrc version is released
-  met? { "#{home_dir}/.zshrc".p.exists? }
-  meet { render_erb 'dotfiles/zshrc', :to => "#{home_dir}/.zshrc".p }
+# root
+dep 'zsh.confroot' do
+  requires 'zsh'.with('root')
+  met? { "/root/.zshrc".p.exists? }
+  meet { render_erb 'dotfiles/zshrc', :to => "/root/.zshrc".p }
 end
