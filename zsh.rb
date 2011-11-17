@@ -1,3 +1,5 @@
+dep 'zsh.managed'
+
 dep 'zsh', :username do
   requires 'zsh.managed'
   username.default!(shell('whoami'))
