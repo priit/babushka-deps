@@ -1,0 +1,237 @@
+#Current evnviroment
+if [ -f /etc/development ]; then
+  development=true
+elif [ -f /etc/staging ]; then
+  staging=true
+elif [ -f /etc/production ]; then
+  production=true
+fi
+
+# default locations
+export LANGUAGE=en_US.UTF-8
+export LANG=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
+
+# default editor
+export EDITOR=vim
+
+# Completions
+autoload -U compinit
+compinit -C
+# case-insensitive (all),partial-word and then substring completion
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
+
+# Lines configured by zsh-newuser-install
+HISTFILE=~/.histfile
+HISTSIZE=100000
+SAVEHIST=100000
+
+setopt appendhistory notify
+
+# setopt extendedglob # wacky pattern matching
+setopt autocd # change to dirs without cd
+setopt nobeep # no need for beeps, was unsetopt beep
+
+# stupid stuff
+alias "cd.."="cd .."
+alias "cd..."="cd ../../"
+alias "cd...."="cd ../../../"
+alias "cd....."="cd ../../../../"
+alias "cd......"="cd ../../../../../"
+alias "cd......."="cd ../../../../../../"
+alias "cd........"="cd ../../../../../../../"
+alias "cd........."="cd ../../../../../../../../"
+alias "cd.........."="cd ../../../../../../../../../"
+
+#git 
+alias ga="git add"
+alias gs="git status"
+alias gl="git log --max-count=50"
+alias gss="git push"
+alias gll="git pull origin master"
+alias gd="git diff"
+alias gca="git add . && git commit -v -a"
+alias gc="git commit -v"
+alias gb="git branch "
+alias gco="git checkout "
+alias grc="git reset --soft HEAD~1"
+alias gr="git reset"
+alias gre="git rebase "
+alias gme="git merge "
+alias gitignore="
+  mkdir -p log tmp/cache tmp/pids tmp/sessions tmp/sockets public/stylesheets/compiled &&
+  touch log/.keepdir tmp/cache/.keepdir tmp/pids/.keepdir tmp/sessions/.keepdir tmp/sockets/.keepdir public/stylesheets/compiled/.keepdir &&
+  git add -f log/.keepdir tmp/cache/.keepdir tmp/pids/.keepdir tmp/sessions/.keepdir tmp/sockets/.keepdir public/stylesheets/compiled/.keepdir"
+
+#ruby
+alias r19r3="rvm ruby-1.9.2@rails3 --default"
+alias r19r2="rvm ruby-1.9.2@rails2 --default"
+alias r19="rvm ruby-1.9.2@rails3 --default"
+
+alias r18r3="rvm ruby-1.8.7-p302@rails3 --default"
+alias r18r2="rvm ruby-1.8.7-p302@rails2 --default"
+alias r18="rvm ruby-1.8.7-p302@rails2 --default"
+
+alias autospec='autospec --no-full-after-failed'
+alias gemi="gem install --no-ri --no-rdoc "
+
+alias r="ruby -I test -I spec "
+
+# rvm gem directory
+alias cdgem="cd \$(rvm gemhome)/gems"
+
+alias con="script/console"
+alias dcon="script/dbconsole"
+alias dbcon="script/dbconsole"
+alias gen="script/generate"
+alias bigreset="rake db:drop; rake db:create; rake db:migrate; rake db:seed; rake db:test:clone"
+
+#svn
+alias svn_clean="find . | grep .svn | xargs rm -fr"
+
+#system
+alias install="sudo apt-get install "
+alias ls="ls -hLp --group-directories-first "
+
+if $development; then
+  export PAGER="/bin/sh -c \"col -b | vi -R -c 'set nonumber' -\""
+fi
+
+alias ps="ps afxww"
+alias free="free -m"
+alias update="sudo aptitude update && sudo aptitude safe-upgrade"
+alias in="sudo apt-get install"
+alias out="sudo apt-get remove"
+alias pdf="evince"
+alias play='totem'
+alias view='eog'
+
+alias ie7='kvm -cpu qemu32,-nx -usb -usbdevice tablet -drive file=/home/priit/vendor/winxp-ie7.img,cache=writeback -soundhw ac97'
+alias ie8='kvm -cpu qemu32,-nx -usb -usbdevice tablet -drive file=/home/priit/vendor/winxp-ie8.img,cache=writeback -soundhw ac97'
+
+# from http://kriener.org/articles/2009/06/04/zsh-prompt-magic
+setopt prompt_subst
+autoload colors    
+colors             
+autoload -Uz vcs_info
+
+
+# default left prompt
+if [[ $production == true ]]; then
+  export PS1="%{$fg[red]%}%n@%m: %{$reset_color%}"
+elif [[ $staging == true ]]; then
+  export PS1="%{$fg[yellow]%}%n@%m: %{$reset_color%}"
+else
+  export PS1="%n: "
+fi
+
+# default right prompt
+export RPS1="%~"
+
+
+#
+# ############## LOCAL ENV ONLY ####################
+#
+
+if [[ $development == true ]]; then
+
+  # check-for-changes can be really slow.
+  # you should disable it, if you work with large repositories    
+  zstyle ':vcs_info:*' disable bzr cdv darcs mtn svk tla
+  #zstyle ':vcs_info:*:prompt:*' check-for-changes true
+  zstyle ':vcs_info:*:prompt:*' unstagedstr '¹'  # display ¹ if there are unstaged changes
+  zstyle ':vcs_info:*:prompt:*' stagedstr '²'    # display ² if there are staged changes
+  zstyle ':vcs_info:*:prompt:*' actionformats "${FMT_BRANCH}${FMT_ACTION}" "${FMT_PATH}"
+  zstyle ':vcs_info:*:prompt:*' formats       "${FMT_BRANCH}"              "${FMT_PATH}"
+  zstyle ':vcs_info:*:prompt:*' nvcsformats   ""                             "%~"         
+
+  #`chpwd' checks that standard output is terminal
+  # then puts the directory in the title bar if the terminal
+  # is an xterm or some close relative.
+  # last directory: ${PWD##*/} or %c or %.
+  #   precmd() { print -Pn "\e]0; ${PWD##*/} %c\a" }
+  chpwd() { print -Pn "\e]0;%.\a" }
+  precmd() { print -Pn "\e]0;%.\a" }
+
+  function precmd {       
+    vcs_info 'prompt'          
+  }      
+
+  function lprompt {
+      local brackets=$1
+      local color1=$2  
+      local color2=$3  
+      local at="${color1}@${PR_RESET}"                        
+
+      #if [[ `hostname` == "aa" ]]; then
+        #local user_host="%m"                    
+      #else
+        #local user_host="${color2}%n${at}${color2}%m"                    
+      #fi
+
+      local bracket_open="${color1}${brackets[1]}${PR_RESET}"
+      local bracket_close="${color1}${brackets[2]}"          
+                                                               
+      local git='$vcs_info_msg_0_'                           
+      local cwd="${color2}%B%1~%b"
+
+      PROMPT="${PR_RESET}${user_host}${bracket_open}${git}${bracket_close}${PR_RESET}: "
+  }                                                                                        
+
+  function rprompt {
+      local brackets=$1
+      local color1=$2  
+      local color2=$3  
+                       
+      local bracket_open="${color1}${brackets[1]}${PR_RESET}"
+      local bracket_close="${color1}${brackets[2]}${PR_RESET}"
+      local colon="${color1}:"                                
+      local at="${color1}@${PR_RESET}"                        
+                                                              
+      local vcs_cwd='${${vcs_info_msg_1_%%.}/$HOME/~}'        
+      local cwd="${color2}%B%20<..<${vcs_cwd}%<<%b"
+      local inner="${user_host}${colon}${cwd}"
+
+      RPROMPT="${PR_RESET}${bracket_open}${inner}${bracket_close}${PR_RESET}"
+  }
+
+  lprompt '' $BR_BRIGHT_BLACK $PR_WHITE
+
+
+  # Load RVM and set promt
+  if [[ -s "$HOME/.rvm/bin/rvm-prompt" ]] ; then
+    export RPS1="$RPS1   \$(~/.rvm/bin/rvm-prompt v g)"
+    source $HOME/.rvm/scripts/rvm
+  elif [[ -s "/usr/local/rvm/scripts/rvm" ]] ; then
+    export RPS1="$RPS1   \$(rvm-prompt v g)"
+    source /usr/local/rvm/scripts/rvm
+  fi
+
+  if [ -f '/etc/profile.d/rvm.sh' ]; then
+    source /etc/profile.d/rvm.sh
+  fi
+
+  # GIT branch info
+  setopt prompt_subst
+  autoload -Uz vcs_info
+  #zstyle ':vcs_info:*' actionformats \
+      #'%F{5}(%f%s%F{5})%F{3}-%F{5}[%F{2}%b%F{3}|%F{1}%a%F{5}]%f '
+  zstyle ':vcs_info:*' formats       \
+      '%F{99}[%F{2}%b%F{99}]%f'
+  zstyle ':vcs_info:(sv[nk]|bzr):*' branchformat '%b%F{1}:%F{3}%r'
+  zstyle ':vcs_info:*' enable git cvs svn
+
+  # or use pre_cmd, see man zshcontrib
+  vcs_info_wrapper() {
+    vcs_info
+    if [ -n "$vcs_info_msg_0_" ]; then
+      echo "%{$fg[grey]%}${vcs_info_msg_0_}%{$reset_color%}$del"
+    fi
+  }
+  export PS1=$'%n$(vcs_info_wrapper): '
+
+fi
+
+#
+# ####### LOCAL ENV END ########
+#
