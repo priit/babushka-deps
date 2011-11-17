@@ -11,6 +11,11 @@ dep 'zsh.conf', :username do
   username.default!(shell('whoami'))
   requires 'zsh'.with(username)
 
-  met? { '~/.zshrc'.p.exists? }
-  meet { render_erb 'dotfiles/zshrc', :to => '~/.zshrc'.p }
+  def home_dir
+    username == 'root' ? '/root' : "/home/#{username}"
+  end
+
+  # DOTO: update when new zshrc version is released
+  met? { "#{home_dir}/.zshrc".p.exists? }
+  meet { render_erb 'dotfiles/zshrc', :to => "#{home_dir}/.zshrc".p }
 end
