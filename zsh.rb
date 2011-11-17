@@ -12,5 +12,5 @@ dep 'zsh.conf', :username do
   requires 'zsh'.with(username)
 
   met? { '~/.zshrc'.p.exists? }
-  meet { render_erb 'dotfiles/zshrc', :to => '~/.zshrc' }
+  meet { render_erb 'dotfiles/zshrc', :to => '~/.zshrc'.p }
 end
