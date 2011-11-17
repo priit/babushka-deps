@@ -3,4 +3,7 @@ dep 'basic', :username do
 
   requires 'zsh.conf'.with(username) if username != 'root'
   requires 'zsh.confroot'
+
+  requires 'vim.conf'.with(username) if username != 'root'
+  requires 'vim.confroot'
 end
