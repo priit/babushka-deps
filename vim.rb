@@ -6,7 +6,7 @@ dep 'vim.conf', :username  do
 
   met? { username == 'root' ? true : "/home/#{username}/.vimrc".p.exists? }
   meet do
-    render_erb 'dotfiles/vimrc', :to => "/home/#{username}/.vimrc".p
+    render_erb 'dotfiles/vimrc', :to => "/home/#{username}/.vimrc".p, :comment => '"'
     log_shell  "Set owner as #{username}:#{username}:", 
       "chown #{username}:#{username} /home/#{username}/.vimrc"
   end
@@ -17,6 +17,6 @@ dep 'vim.confroot' do
 
   met? { "/root/.vimrc".p.exists? }
   meet do
-    render_erb 'dotfiles/vimrc', :to => "/root/.vimrc".p
+    render_erb 'dotfiles/vimrc', :to => "/root/.vimrc".p, :comment => '"'
   end
 end
