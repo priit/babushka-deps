@@ -6,6 +6,9 @@ dep 'basic', :username do
   requires 'zip.managed'
   requires 'unzip.managed'
 
+  requires 'screen.conf'.with(username) if username != 'root'
+  requires 'screen.confroot'
+
   requires 'zsh.conf'.with(username) if username != 'root'
   requires 'zsh.confroot'
 
@@ -13,6 +16,6 @@ dep 'basic', :username do
   requires 'vim.confroot'
 end
 
-deb 'tree.managed' 
-deb 'unzip.managed'
-deb 'zip.managed'
+dep 'tree.managed' 
+dep 'unzip.managed'
+dep 'zip.managed'
