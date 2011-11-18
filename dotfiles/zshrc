@@ -7,13 +7,19 @@ elif [ -f /etc/production ]; then
   production=true
 fi
 
+USERNAME=`whoami`
+
 # default locations
 export LANGUAGE=en_US.UTF-8
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 
 # default editor
-export EDITOR=vim
+if [ $USERNAME = "priit" ]; then
+  export EDITOR="vim -u ~/.vimrc-priit"
+else
+  export EDITOR="vim"
+fi
 
 # Completions
 autoload -U compinit
@@ -95,7 +101,7 @@ alias install="sudo apt-get install "
 alias ls="ls -hLp --group-directories-first "
 
 if $development; then
-  export PAGER="/bin/sh -c \"col -b | vi -R -c 'set nonumber' -\""
+  export PAGER="/bin/sh -c \"col -b | vim -u ~/.vimrc-priit -R -c 'set nonumber' -\""
 fi
 
 alias ps="ps afxww"
