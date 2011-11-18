@@ -4,7 +4,7 @@ dep 'screen.conf', :username  do
   username.default!(shell('whoami'))
 
   before { shell "touch /home/#{username}/.screenrc" }
-  met? { usernaem == 'root' ? true : grep(/^vbell on/, "/home/#{username}/.screenrc") }
+  met? { username == 'root' ? true : grep(/^vbell on/, "/home/#{username}/.screenrc") }
   meet do
     append_to_file 'vbell on', "/home/#{username}/.screenrc"
     log_shell  "Set owner as #{username}:#{username}:", 
