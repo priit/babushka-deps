@@ -1,9 +1,11 @@
 dep 'sudoers' do
-  met? { grep(/^#includedir \/etc\/sudoers.d/, '/etc/sudoers') }
-  meet { sudo 'touch /tmp/jeeeeeeeeeeeeeeeeee' }
+  met? { grep(/^includedir \/etc\/sudoers.d/, '/etc/sudoers') }
+  meet { sudo "echo 'includedir /etc/sudoers.d' >> /etc/sudoers" }
 end
 
 dep 'sudo', :username do
+  requires 'sudoers'
+
   met? { grep(/^#{username}:/, '/etc/sudoers') }
   meet {
     sudo "mkdir -p /home/#{username}" and
