@@ -1,5 +1,4 @@
-dep 'env' do
-  env ||= 'production'
+dep 'env', :env do
   env.default('production').choose(%w[development staging production])
 
   met? do
