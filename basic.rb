@@ -22,8 +22,8 @@ dep 'basic', :username, :password do
   requires 'vim.confroot'
 
   if username != 'root'
-    requires 'ssh.authorized_keys'.with(username)
-    requires 'ssh.authorized_keys-twice'.with('root')
+    requires 'ssh.authorized_keys'.with(username, nil)
+    requires 'ssh.authorized_keys-twice'.with(username, nil)
   end
 
   requires 'ssh.conf'.with(username)
