@@ -1,5 +1,5 @@
 dep 'askalon' do
   #requires 'basic'
   requires 'build-essential'
-  requires 'ruby-dep'
+  #requires 'ruby-dep'
 end
