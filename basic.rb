@@ -3,6 +3,7 @@ dep 'basic', :username, :password do
   password.ask("Additional user password")
 
   requires 'user'.with(username, password) if username != 'root'
+  requires 'sudo'.with(username) if username != 'root'
   requires 'locales.conf'
   requires 'tree.managed'
   requires 'zip.managed'

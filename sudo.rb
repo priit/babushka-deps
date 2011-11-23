@@ -1,17 +1,11 @@
-dep 'sudoers' do
+dep 'sudoers.d' do
   met? { grep(/^includedir \/etc\/sudoers.d/, '/etc/sudoers') }
   meet { sudo "echo 'includedir /etc/sudoers.d' >> /etc/sudoers" }
 end
 
 dep 'sudo', :username do
-  requires 'sudoers'
+  requires 'sudoers.d'
 
-  met? { grep(/^#{username}:/, '/etc/sudoers') }
-  meet {
-    sudo "mkdir -p /home/#{username}" and
-    sudo "useradd -m -s /bin/zsh -b /home -g #{username} #{username}" and
-    sudo "chmod 701 /home/#{username}" and
-    sudo "chown #{username}:#{username} -R /home/#{username}" and
-    sudo %{echo "#{password}\n#{password}" | passwd #{username}}
-  }
+  met? { "/etc/sudoers.d/#{username}".p.exists? }
+  meet { sudo "echo '#{username} ALL=(ALL:ALL) ALL' > /etc/sudoers.d/#{username}" }
 end
