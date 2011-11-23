@@ -12,6 +12,6 @@ dep 'apt.upgrade' do
 
   met? { false }
   meet do
-    shell 'apt-get upgrade -y'
+    sudo 'apt-get upgrade -y'
   end
 end
