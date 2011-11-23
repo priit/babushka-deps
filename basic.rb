@@ -10,6 +10,8 @@ dep 'basic', :username, :password do
   requires 'zip.managed'
   requires 'unzip.managed'
 
+  requires 'hosts.conf'
+
   requires 'screen.conf'.with(username) if username != 'root'
   requires 'screen.confroot'
 
