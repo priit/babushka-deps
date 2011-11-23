@@ -30,8 +30,8 @@ dep 'ssh.init_authorized_keys', :username do
 end
 
 dep 'ssh.authorized_keys', :username, :key do
-  #username.default(shell('whoami'))
   requires 'ssh.init_authorized_keys'.with(username)
+  key.ask('Please provide SSH key')
 
   def ssh_dir
     "~#{username}" / '.ssh'
@@ -53,6 +53,7 @@ end
 dep 'ssh.authorized_keys-twice', :username, :key do
   #username.default(shell('whoami'))
   requires 'ssh.init_authorized_keys'.with(username)
+  key.ask('Please provide second SSH key')
 
   def ssh_dir
     "~#{username}" / '.ssh'
