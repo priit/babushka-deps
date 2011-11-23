@@ -1,5 +1,4 @@
-dep 'build-essential.managed'
-
 dep 'build-essential' do
-  requires 'build-essential.managed'
+  met? { shell('dpkg -l | grep "build-essential"') }
+  meet { sudo 'apt-get install build-essential -y' }
 end
