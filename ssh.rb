@@ -45,7 +45,8 @@ dep 'ssh.authorized_keys', :username, :key do
     @sudo ||= username == shell('whoami')
   end
 
-  met? { grep(/#{key.to_s.split[2]}/, "#{ssh_dir}/authorized_keys") }
+  met? { grep(/aa@aa|veiko@veiko/, "#{ssh_dir}/authorized_keys") }
+  #met? { grep(/#{key.to_s.split[2]}/, "#{ssh_dir}/authorized_keys") }
   meet { append_to_file key, (ssh_dir / 'authorized_keys'), :sudo => sudo? }
 end
 
@@ -67,7 +68,8 @@ dep 'ssh.authorized_keys-twice', :username, :key do
     @sudo ||= username == shell('whoami')
   end
 
-  met? { grep(/#{key.to_s.split[2]}/, "#{ssh_dir}/authorized_keys") }
+  met? { grep(/aa@aa|veiko@veiko/, "#{ssh_dir}/authorized_keys") }
+  #met? { grep(/#{key.to_s.split[2]}/, "#{ssh_dir}/authorized_keys") }
   meet { append_to_file key, (ssh_dir / 'authorized_keys'), :sudo => sudo? }
 end
 

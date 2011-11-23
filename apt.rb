@@ -4,14 +4,15 @@ dep 'apt' do
     '/etc/apt/sources.list'.p.copy('/etc/apt/sources.list.backup')
     render_erb 'apt/sources.list', :to => '/etc/apt/sources.list'
   end
-  after { shell 'apt-get update' }
+  after { sudo 'apt-get update -y' }
 end
 
 dep 'apt.upgrade' do
   requires 'apt'
 
-  met? { false }
-  meet do
-    sudo 'apt-get upgrade -y'
-  end
+  # does not work at the moment
+  #met? { true }
+  #meet do
+    #sudo 'apt-get upgrade -y'
+  #end
 end
