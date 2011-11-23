@@ -1,6 +1,6 @@
 dep 'user', :username, :password do
   requires 'zsh'
-  password.ask("Additional user password: ")
+  password.ask("Additional user password")
 
   met? { grep(/^#{username}:/, '/etc/passwd') }
   meet {
