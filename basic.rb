@@ -1,4 +1,4 @@
-dep 'basic', :username do
+dep 'basic', :username, :password do
   username.ask("Additional user along root user:").default(shell('whoami'))
   password.ask("Additional user password")
 
