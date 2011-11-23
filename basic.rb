@@ -2,6 +2,7 @@ dep 'basic', :username, :password do
   username.ask("Additional user along root user:").default(shell('whoami'))
   password.ask("Additional user password")
 
+  requires 'apt.upgrade'
   requires 'env'
   requires 'user'.with(username, password) if username != 'root'
   requires 'sudo'.with(username) if username != 'root'
