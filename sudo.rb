@@ -8,7 +8,9 @@ dep 'sudo', :username do
 
   met? { "/etc/sudoers.d/#{username}".p.exists? }
   meet do 
-    insert_into_file "#{username} ALL=(ALL:ALL) ALL", "/etc/sudoers.d/#{username}" 
+    sudo "rm /etc/sudoers.d/#{username}"
+    sudo "touch /etc/sudoers.d/#{username}"
+    append_to_file "#{username} ALL=(ALL:ALL) ALL", "/etc/sudoers.d/#{username}" 
     sudo "chmod 0440 /etc/sudoers.d/#{username}"
   end
 end
