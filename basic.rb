@@ -1,6 +1,7 @@
 dep 'basic', :username do
   username.ask("Additional user along root user:").default(shell('whoami'))
 
+  requires 'user'.with(username) if username != 'root'
   requires 'locales.conf'
   requires 'tree.managed'
   requires 'zip.managed'
