@@ -1,5 +1,5 @@
 dep 'sudoers' do
-  met? { grep(/^includedir \/etc\/sudoers.d/, '/etc/sudoers') }
+  met? { grep(/^#includedir \/etc\/sudoers.d/, '/etc/sudoers') }
   meet { sudo 'touch /tmp/jeeeeeeeeeeeeeeeeee' }
 end
 
