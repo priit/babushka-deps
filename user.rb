@@ -1,6 +1,6 @@
-dep 'group', :name do
-  met? { grep(/^#{name}:/, '/etc/group') }
-  meet { sudo "groupadd #{name}" }
+dep 'group', :groupname do
+  met? { grep(/^#{groupname}:/, '/etc/group') }
+  meet { sudo "groupadd #{groupname}" }
 end
 
 dep 'user', :username, :password do
