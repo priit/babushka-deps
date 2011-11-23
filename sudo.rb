@@ -7,5 +7,8 @@ dep 'sudo', :username do
   requires 'sudoers.d'
 
   met? { "/etc/sudoers.d/#{username}".p.exists? }
-  meet { sudo "echo '#{username} ALL=(ALL:ALL) ALL' > /etc/sudoers.d/#{username}" }
+  meet do 
+    sudo "echo '#{username} ALL=(ALL:ALL) ALL' > /etc/sudoers.d/#{username}" 
+    sudo "chmod 0440 /etc/sudoers.d/#{username}"
+  end
 end
