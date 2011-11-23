@@ -1,4 +1,4 @@
-dep 'user', :username do
+dep 'user', :username, :password do
   requires 'zsh'
   password.ask("Additional user password: ")
 
