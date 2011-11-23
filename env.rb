@@ -1,4 +1,5 @@
 dep 'env' do
+  env || = 'production'
   env.default('production').choose(%w[development staging production])
 
   met? do
