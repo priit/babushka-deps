@@ -8,6 +8,8 @@ dep 'ssh.conf', :username do
 end
 
 dep 'ssh.permit_user_env' do
+  requires 'ssh.conf'
+
   met? { grep(/^PermitUserEnvironment yes/, '/etc/ssh/sshd_config') }
   meet do 
     append_to_file "PermitUserEnvironment yes", "/etc/ssh/sshd_config" 
