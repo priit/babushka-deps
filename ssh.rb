@@ -12,6 +12,7 @@ dep 'ssh.permit_user_env' do
   meet do 
     append_to_file "PermitUserEnvironment yes", "/etc/ssh/sshd_config" 
   end
+  after { shell '/etc/init.d/ssh restart' }
 end
 
 dep 'ssh.init_authorized_keys', :username do
