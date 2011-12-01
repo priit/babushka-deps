@@ -7,7 +7,7 @@ dep 'ssh.conf', :username do
   after { shell '/etc/init.d/ssh restart' }
 end
 
-dep 'hosts.postconf' do
+dep 'ssh.permit_user_env' do
   met? { grep(/^PermitUserEnvironment yes/, '/etc/ssh/sshd_config') }
   meet do 
     append_to_file "PermitUserEnvironment yes", "/etc/ssh/sshd_config" 
