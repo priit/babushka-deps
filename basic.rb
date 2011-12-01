@@ -28,6 +28,7 @@ dep 'basic', :username, :password do
   end
 
   requires 'ssh.conf'.with(username)
+  requires 'ssh.postconf'
 end
 
 dep 'tree.managed' 
