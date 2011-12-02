@@ -6,7 +6,7 @@ dep 'sudo', :username do
 end
 
 dep 'sudo.apache_no_password', :username do
-  require 'sudo'.with(:username)
+  requires 'sudo'.with(:username)
 
   met? { grep(/^#{username}/, '/etc/sudoers') }
   meet do 
