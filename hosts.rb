@@ -6,7 +6,14 @@ dep 'hosts.no_sendmail' do
 end
 
 dep 'hosts.deny' do
-  met? { grep(/^ALL: ALL/, '/etc/hosts.deny') }
+  met? do
+    if grep(/^ALL: ALL/, '/etc/hosts.deny') 
+      true
+    else
+      confirm('Should we add ALL: ALL to /etc/hosts.deny') == 'y'
+    end
+  end
+
   meet do 
     append_to_file "ALL: ALL", "/etc/hosts.deny" 
   end
@@ -18,7 +25,7 @@ dep 'hosts.allow', :allowed_ips do
     if grep(/^ALL: /, '/etc/hosts.allow') 
       true
     else
-      if confirm('Should we turn on whitelist and alter hotst.allow/deny files?') == 'y'
+      if confirm('Should we add ALL: localhost + ips to /etc/hosts.allow?') == 'y'
         allowed_ips.ask('Please give list of allowed ips (separated by comma)')
       else 
         true
