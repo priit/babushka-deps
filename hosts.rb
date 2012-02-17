@@ -10,7 +10,7 @@ dep 'hosts.deny' do
     if grep(/^ALL: ALL/, '/etc/hosts.deny') 
       true
     else
-      confirm('Should we add "ALL: ALL" to /etc/hosts.deny') == 'y'
+      confirm('Should we add "ALL: ALL" to /etc/hosts.deny')
     end
   end
 
@@ -25,7 +25,7 @@ dep 'hosts.allow', :allowed_ips do
     if grep(/^ALL: /, '/etc/hosts.allow') 
       true
     else
-      if confirm('Should we add ALL: localhost + ips to /etc/hosts.allow?') == 'y'
+      if confirm('Should we add ALL: localhost + ips to /etc/hosts.allow?')
         @allowed_ips = get_value('Allowed ips (separated by comma)')
         false
       else 
