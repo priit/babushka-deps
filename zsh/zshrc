@@ -91,6 +91,7 @@ alias dcon="script/dbconsole"
 alias dbcon="script/dbconsole"
 alias gen="script/generate"
 alias bigreset="rake db:drop; rake db:create; rake db:migrate; rake db:seed; rake db:test:clone"
+alias u='unicorn_rails'
 
 #svn
 alias svn_clean="find . | grep .svn | xargs rm -fr"
@@ -99,6 +100,7 @@ alias svn_clean="find . | grep .svn | xargs rm -fr"
 alias v='vim -u ~/.vimrc-priit'
 alias install="sudo apt-get install "
 alias ls="ls -hLp --group-directories-first "
+alias s='sudo'
 
 if $development; then
   export PAGER="/bin/sh -c \"col -b | vim -u ~/.vimrc-priit -R -c 'set nonumber' -\""
