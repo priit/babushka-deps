@@ -35,7 +35,7 @@ dep 'hosts.allow', :allowed_ips do
   end
 
   meet do 
-    append_to_file "ALL: localhost, #{@allowed_ips}", "/etc/hosts.allow" 
+    append_to_file "ALL: localhost, #{allowed_ips}", "/etc/hosts.allow" 
   end
 end
 
