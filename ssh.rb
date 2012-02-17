@@ -59,7 +59,8 @@ dep 'ssh.authorized_keys', :username, :key do
     if grep(/aa@aa|veiko@veiko/, "#{ssh_dir}/authorized_keys")
       true
     else
-      confirm('Should we skip adding ssh keys?') == 'y'
+      true
+      #confirm('Should we skip adding ssh keys?') == 'y'
     end
   end
 
@@ -90,7 +91,8 @@ dep 'ssh.authorized_keys-twice', :username, :key do
     if grep(/aa@aa|veiko@veiko/, "#{ssh_dir}/authorized_keys")
       true
     else
-      confirm('Should we skip adding ssh keys?') == 'y'
+      true
+      #confirm('Should we skip adding ssh keys?') == 'y'
     end
   end
 
