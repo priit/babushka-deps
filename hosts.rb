@@ -23,11 +23,12 @@ dep 'hosts.allow', :allowed_ips do
   allowed_ips.ask('Allowed ips (separated by comma)')
 
   met? do
-    if grep(/^ALL: /, '/etc/hosts.allow') 
-      true
-    else
-      confirm('Should we add ALL: localhost + ips to /etc/hosts.allow?')
-    end
+    return true if grep(/^ALL: /, '/etc/hosts.allow') 
+    #if grep(/^ALL: /, '/etc/hosts.allow') 
+      #true
+    #else
+      #confirm('Should we add ALL: localhost + ips to /etc/hosts.allow?')
+    #end
   end
 
   meet do 
