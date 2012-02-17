@@ -87,7 +87,7 @@ dep 'ssh.authorized_keys-twice', :username, :key do
     @sudo ||= username == shell('whoami')
   end
 
-  def met?
+  met? do
     if grep(/aa@aa|veiko@veiko/, "#{ssh_dir}/authorized_keys")
       true
     else
