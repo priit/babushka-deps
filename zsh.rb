@@ -13,7 +13,7 @@ dep 'zsh.conf', :username do
 
   met? { username == 'root' ? true : "/home/#{username}/.zshrc".p.exists? }
   meet do
-    render_erb 'dotfiles/zshrc', :to => "/home/#{username}/.zshrc".p
+    render_erb 'zsh/zshrc', :to => "/home/#{username}/.zshrc".p
     log_shell  "Set owner as #{username}:#{username}:", 
       "chown #{username}:#{username} /home/#{username}/.zshrc"
   end
@@ -23,5 +23,5 @@ end
 dep 'zsh.confroot' do
   requires 'zsh'.with('root')
   met? { "/root/.zshrc".p.exists? }
-  meet { render_erb 'dotfiles/zshrc', :to => "/root/.zshrc".p }
+  meet { render_erb 'zsh/zshrc', :to => "/root/.zshrc".p }
 end
