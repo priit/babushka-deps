@@ -13,9 +13,19 @@ dep 'hosts.deny' do
 end
 
 dep 'hosts.allow', :allowed_ips do
-  allowed_ips.ask('Please give list of allowed ips (separated by comma)')
 
-  met? { grep(/^ALL: /, '/etc/hosts.allow') }
+  met? do
+    if grep(/^ALL: /, '/etc/hosts.allow') 
+      true
+    else
+      if confirm('Should we turn on whitelist and alter hotst.allow/deny files?') == 'y'
+        allowed_ips.ask('Please give list of allowed ips (separated by comma)')
+      else 
+        true
+      end
+    end
+  end
+
   meet do 
     append_to_file "ALL: localhost, #{allowed_ips}", "/etc/hosts.allow" 
   end
