@@ -74,9 +74,9 @@ alias r19r3="rvm ruby-1.9.2@rails3 --default"
 alias r19r2="rvm ruby-1.9.2@rails2 --default"
 alias r19="rvm ruby-1.9.2@rails3 --default"
 
-alias r18r3="rvm ruby-1.8.7-p302@rails3 --default"
-alias r18r2="rvm ruby-1.8.7-p302@rails2 --default"
-alias r18="rvm ruby-1.8.7-p302@rails2 --default"
+alias r18r3="rvm ruby-1.8.7@rails3 --default"
+alias r18r2="rvm ruby-1.8.7@rails2 --default"
+alias r18="rvm ruby-1.8.7@rails2 --default"
 
 alias autospec='autospec --no-full-after-failed'
 alias gemi="gem install --no-ri --no-rdoc "

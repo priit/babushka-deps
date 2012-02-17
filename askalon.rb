@@ -3,6 +3,5 @@ dep 'askalon' do
   requires 'basic'
   #requires 'ruby-dep'
 
-  requires 'sudo.apache_no_password'
   requires 'ssh.permit_user_env'
 end
