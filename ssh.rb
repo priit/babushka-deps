@@ -55,9 +55,17 @@ dep 'ssh.authorized_keys', :username, :key do
     @sudo ||= username == shell('whoami')
   end
 
-  met? { grep(/aa@aa|veiko@veiko/, "#{ssh_dir}/authorized_keys") }
-  #met? { grep(/#{key.to_s.split[2]}/, "#{ssh_dir}/authorized_keys") }
-  meet { append_to_file key, (ssh_dir / 'authorized_keys'), :sudo => sudo? }
+  met? do
+    if grep(/aa@aa|veiko@veiko/, "#{ssh_dir}/authorized_keys")
+      true
+    else
+      prompt('Do you like to add ssh keys?') == 'y'
+    end
+  end
+
+  meet do
+    append_to_file key, (ssh_dir / 'authorized_keys'), :sudo => sudo?
+  end
 end
 
 # how to run twice?
@@ -78,8 +86,14 @@ dep 'ssh.authorized_keys-twice', :username, :key do
     @sudo ||= username == shell('whoami')
   end
 
-  met? { grep(/aa@aa|veiko@veiko/, "#{ssh_dir}/authorized_keys") }
-  #met? { grep(/#{key.to_s.split[2]}/, "#{ssh_dir}/authorized_keys") }
+  def met?
+    if grep(/aa@aa|veiko@veiko/, "#{ssh_dir}/authorized_keys")
+      true
+    else
+      prompt('Do you like to add ssh keys?') == 'y'
+    end
+  end
+
   meet { append_to_file key, (ssh_dir / 'authorized_keys'), :sudo => sudo? }
 end
 
