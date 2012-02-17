@@ -26,7 +26,7 @@ dep 'hosts.allow', :allowed_ips do
       true
     else
       if confirm('Should we add ALL: localhost + ips to /etc/hosts.allow?')
-        @allowed_ips = get_value('Allowed ips (separated by comma)')
+        allowed_ips.ask('Allowed ips (separated by comma)')
         false
       else 
         true
