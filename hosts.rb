@@ -20,17 +20,13 @@ dep 'hosts.deny' do
 end
 
 dep 'hosts.allow', :allowed_ips do
+  allowed_ips.ask('Allowed ips (separated by comma)')
 
   met? do
     if grep(/^ALL: /, '/etc/hosts.allow') 
       true
     else
-      if confirm('Should we add ALL: localhost + ips to /etc/hosts.allow?')
-        allowed_ips.ask('Allowed ips (separated by comma)')
-        false
-      else 
-        true
-      end
+      confirm('Should we add ALL: localhost + ips to /etc/hosts.allow?')
     end
   end
 
