@@ -17,6 +17,6 @@ dep 'vim.confroot' do
 
   met? { "/root/.vimrc-priit".p.exists? }
   meet do
-    render_erb 'zsh/vimrc-priit', :to => "/root/.vimrc-priit".p, :comment => '"'
+    render_erb 'vim/vimrc-priit', :to => "/root/.vimrc-priit".p, :comment => '"'
   end
 end
