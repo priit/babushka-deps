@@ -6,7 +6,7 @@ dep 'vim.conf', :username  do
 
   met? { username == 'root' ? true : "/home/#{username}/.vimrc-priit".p.exists? }
   meet do
-    render_erb 'zsh/vimrc-priit', :to => "/home/#{username}/.vimrc-priit".p, :comment => '"'
+    render_erb 'vim/vimrc-priit', :to => "/home/#{username}/.vimrc-priit".p, :comment => '"'
     log_shell  "Set owner as #{username}:#{username}:", 
       "chown #{username}:#{username} /home/#{username}/.vimrc-priit"
   end
