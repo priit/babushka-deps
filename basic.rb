@@ -1,3 +1,10 @@
+dep 'aa', :username, :password do
+  #username.ask("Additional user along root user:").default(shell('whoami'))
+  password.ask("Additional user password")
+  username.ask("eeee")
+end
+
+
 dep 'basic', :username, :password do
   #username.ask("Additional user along root user:").default(shell('whoami'))
   password.ask("Additional user password")
