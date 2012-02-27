@@ -1,12 +1,12 @@
 dep 'basic', :username, :password do
-  username.ask("Additional user along root user:").default(shell('whoami'))
-  password.ask("Additional user password").default('test')
+  username.ask("Additional user along root user:").default('skip')
+  password.ask("Additional user password").default('skip')
 
   requires 'apt'
   requires 'env'
   requires 'sudo.managed'
-  requires 'user'.with(username, password) if username != 'root' && password != 'test'
-  requires 'sudo'.with(username) if username != 'root'
+  requires 'user'.with(username, password) if username != 'skip' && password != 'skip'
+  requires 'sudo'.with(username) if username != 'skip'
   requires 'locales.conf'
   requires 'tree.managed'
   requires 'zip.managed'
@@ -14,16 +14,16 @@ dep 'basic', :username, :password do
 
   requires 'hosts.conf'
 
-  requires 'screen.conf'.with(username) if username != 'root'
+  requires 'screen.conf'.with(username) if username != 'skip'
   requires 'screen.confroot'
 
-  requires 'zsh.conf'.with(username) if username != 'root'
+  requires 'zsh.conf'.with(username) if username != 'skip'
   requires 'zsh.confroot'
 
-  requires 'vim.conf'.with(username) if username != 'root'
+  requires 'vim.conf'.with(username) if username != 'skip'
   requires 'vim.confroot'
 
-  if username != 'root'
+  if username != 'skip'
     requires 'ssh.authorized_keys'.with(username, nil)
     requires 'ssh.authorized_keys-twice'.with(username, nil)
   end
