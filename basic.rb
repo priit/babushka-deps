@@ -3,6 +3,7 @@ dep 'basic', :username, :password do
   password.ask("Additional user password")
 
   requires 'apt'
+  requires 'sudo.managed'
   requires 'env'
   requires 'user'.with(username, password) if username != 'root'
   requires 'sudo'.with(username) if username != 'root'
