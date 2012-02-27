@@ -1,6 +1,7 @@
 dep 'basic', :username, :password do
   #username.ask("Additional user along root user:").default(shell('whoami'))
-  password.ask("Additional user password").default('test')
+  password.ask("Additional user password")
+  username.ask("eeee")
 
   #requires 'apt'
   #requires 'sudo.managed'
