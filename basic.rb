@@ -2,7 +2,7 @@ dep 'basic', :username, :password do
   username.ask("Additional user along root user:").default('skip')
   password.ask("Additional user password").default('skip')
 
-  requires 'apt'
+  #requires 'apt'
   requires 'env'
   requires 'sudo.managed'
   requires 'user'.with(username, password) if username != 'skip' && password != 'skip'

@@ -17,6 +17,7 @@ dep 'screen.confroot' do
   met? { grep(/^vbell on/, "/root/.screenrc") }
   meet do
     append_to_file 'vbell on', "/root/.screenrc"
+    append_to_file 'startup_message off', '/etc/screenrc'
   end
 end
 
