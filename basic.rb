@@ -14,7 +14,7 @@ dep 'basic', :username, :password do
 
   requires 'hosts.conf'
 
-  #requires 'screen.managed'
+  requires 'screen.managed'
   #requires 'screen.conf'.with(username) if username != 'skip'
   #requires 'screen.confroot'
 
