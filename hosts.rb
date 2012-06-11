@@ -10,7 +10,7 @@ dep 'hosts.deny' do
     if grep(/^ALL: ALL/, '/etc/hosts.deny') 
       true
     else
-      confirm('Should we add "ALL: ALL" to /etc/hosts.deny')
+      !confirm('Should we add "ALL: ALL" to /etc/hosts.deny')
     end
   end
 
