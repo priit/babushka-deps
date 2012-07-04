@@ -100,7 +100,7 @@ alias svn_clean="find . | grep .svn | xargs rm -fr"
 #system
 alias v='vim -u ~/.vimrc-priit'
 alias install="sudo apt-get install "
-alias ls="ls -hLp --group-directories-first "
+alias ls="ls -hp --group-directories-first "
 alias s='sudo'
 
 if $development; then
