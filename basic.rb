@@ -14,8 +14,8 @@ dep 'basic', :username, :password do
   requires 'hosts.conf'
 
   requires 'screen.managed'
-  requires 'screen.conf'.with(username) if username != 'skip'
-  requires 'screen.confroot'
+  requires 'screen.turn_off_startup_message'
+  requires 'screen.turen_off_vbell'
 
   requires 'zsh.conf'.with(username) if username != 'skip'
   requires 'zsh.confroot'
