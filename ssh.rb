@@ -87,7 +87,7 @@ dep 'ssh.authorized_keys-twice', :username, :key do
   end
 
   met? do
-    if grep(/aa@aa|veiko@veiko/, "#{ssh_dir}/authorized_keys")
+    if "#{ssh_dir}/authorized_keys".p.grep(/aa@aa|veiko@veiko/)
       true
     else
       confirm('Should we skip ssh keys for user?')

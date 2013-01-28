@@ -4,7 +4,7 @@ dep 'screen.conf', :username  do
   username.default!(shell('whoami'))
 
   before { shell "touch /home/#{username}/.screenrc" }
-  met? { username == 'root' ? true : "/home/#{username}/.screenrc".grep(/^vbell on/, "/home/#{username}/.screenrc") }
+  met? { username == 'root' ? true : "/home/#{username}/.screenrc".p.grep(/^vbell on/, "/home/#{username}/.screenrc") }
   meet do
     append_to_file 'vbell off', "/home/#{username}/.screenrc"
     append_to_file 'startup_message off', "/home/#{username}/.screenrc"
