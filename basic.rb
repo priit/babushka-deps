@@ -23,7 +23,7 @@ dep 'basic', :username, :password do
   requires 'vim.conf'.with(username) if username != 'skip'
   requires 'vim.confroot'
 
-  requires 'ssh.authorized_keys'.with(username, nil)
+  requires 'ssh.authorized_keys'.with(username, nil) if username != 'skip'
 
   requires 'ssh.conf'.with(username)
 end
