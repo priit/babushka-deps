@@ -26,7 +26,6 @@ dep 'basic', :username, :password do
 
   if username != 'skip'
     requires 'ssh.authorized_keys'.with(username, nil)
-    requires 'ssh.authorized_keys-twice'.with(username, nil)
   end
 
   requires 'ssh.conf'.with(username)
