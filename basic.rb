@@ -4,7 +4,7 @@ dep 'basic', :username, :password do
 
   #requires 'apt'
   requires 'env'
-  requires 'sudo.managed'
+  requires 'sudo.bin'
   requires 'user'.with(username, password) if username != 'skip' && password != 'skip'
   requires 'sudo'.with(username) if username != 'skip'
   requires 'locales.conf'
