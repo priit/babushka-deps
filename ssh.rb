@@ -56,7 +56,7 @@ dep 'ssh.authorized_keys', :username, :key do
   end
 
   met? do
-    if "#{ssh_dir}/authorized_keys".p.grep(/aa@aa|veiko@veiko/)
+    if "#{ssh_dir}/authorized_keys".p.grep(/# Babushka added key for #{username}/)
       true
     else
       confirm('Should we skip ssh keys?')
@@ -64,35 +64,7 @@ dep 'ssh.authorized_keys', :username, :key do
   end
 
   meet do
+    (ssh_dir + '/authorized_keys').p.append("# Babushka added key for #{username}")
     (ssh_dir + '/authorized_keys').p.append(key)
   end
-end
-
-# how to run twice?
-dep 'ssh.authorized_keys-twice', :username, :key do
-  #username.default(shell('whoami'))
-  requires 'ssh.init_authorized_keys'.with(username)
-  key.ask('Please provide second SSH key')
-
-  def ssh_dir
-    "~#{username}" / '.ssh'
-  end
-
-  def group
-    shell "id -gn #{username}"
-  end
-
-  def sudo?
-    @sudo ||= username == shell('whoami')
-  end
-
-  met? do
-    if "#{ssh_dir}/authorized_keys".p.grep(/aa@aa|veiko@veiko/)
-      true
-    else
-      confirm('Should we skip ssh keys for user?')
-    end
-  end
-
-  meet { (ssh_dir + '/authorized_keys').p.append(key) }
 end
