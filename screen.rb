@@ -13,12 +13,19 @@ dep 'screen.conf', :username  do
   end
 end
 
+dep 'screen.turn_off_startup_message' do
+  met? { '/etc/screenrc'.p.grep(/^startup_message on/) }
+  meet do
+    '/etc/screenrc'.p.append('# Babushka added')
+    '/etc/screenrc'.p.append('startup_message off\n')
+  end
+end
+
 dep 'screen.confroot' do
   before { shell "touch /root/.screenrc" }
   met? { '/root/.screenrc'.p.grep(/^vbell on/) }
   meet do
     '/root/.screenrc'.p.append('vbell off')
-    '/etc/screenrc'.p.append('startup_message off')
   end
 end
 
