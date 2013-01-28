@@ -19,23 +19,19 @@ end
 
 dep 'ssh.init_authorized_keys', :username do
   def ssh_dir
-    "~#{username}" / '.ssh'
+    "/home/#{username}/.ssh"
   end
 
   def group
     shell "id -gn #{username}"
   end
 
-  def sudo?
-    @sudo ||= username == shell('whoami')
-  end
-
   met? { "#{ssh_dir}/authorized_keys".p.exists? }
   meet do
-    shell "mkdir -p -m 700 '#{ssh_dir}'", :sudo => sudo? 
-    shell "touch '#{ssh_dir}/authorized_keys'", :sudo => sudo?
-    sudo "chown -R #{username}:#{group} '#{ssh_dir}'" unless ssh_dir.owner == username
-    shell "chmod 644 #{(ssh_dir / 'authorized_keys')}", :sudo => sudo?
+    shell "mkdir -p -m 700 '#{ssh_dir}'"
+    shell "touch '#{ssh_dir}/authorized_keys'"
+    shell "chown -R #{username}:#{group} '#{ssh_dir}'"
+    shell "chmod 644 #{(ssh_dir / 'authorized_keys')}"
   end
 end
 
@@ -44,15 +40,11 @@ dep 'ssh.authorized_keys', :username, :key do
   key.ask('Please provide SSH key')
 
   def ssh_dir
-    "~#{username}" / '.ssh'
+    "/home/#{username}/.ssh"
   end
 
   def group
     shell "id -gn #{username}"
-  end
-
-  def sudo?
-    @sudo ||= username == shell('whoami')
   end
 
   met? do
