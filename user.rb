@@ -9,7 +9,7 @@ dep 'user', :username, :password do
   requires 'group'.with(username)
   password.ask("Additional user password")
 
-  met? { grep(/^#{username}:/, '/etc/passwd') }
+  met? { '/etc/passwd'.p.grep(/^#{username}:/) }
   meet {
     sudo "mkdir -p /home/#{username}" and
     sudo "useradd -m -s /bin/zsh -b /home -g #{username} #{username}" and
