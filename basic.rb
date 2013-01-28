@@ -15,7 +15,7 @@ dep 'basic', :username, :password do
 
   requires 'screen.managed'
   requires 'screen.turn_off_startup_message'
-  requires 'screen.turen_off_vbell'
+  requires 'screen.turn_off_vbell'
 
   requires 'zsh.conf'.with(username) if username != 'skip'
   requires 'zsh.confroot'
