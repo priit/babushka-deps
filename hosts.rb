@@ -1,5 +1,5 @@
 dep 'hosts.no_sendmail' do
-  met? { !grep(/^sendmail: all/, '/etc/hosts.allow') }
+  met? { !'/etc/hosts.allow'.p.grep(/^sendmail: all/) }
   meet do 
     change_line 'sendmail: all', '# sendmail: all', '/etc/hosts.allow'
   end
@@ -7,7 +7,7 @@ end
 
 dep 'hosts.deny' do
   met? do
-    if grep(/^ALL: ALL/, '/etc/hosts.deny') 
+    if '/etc/hosts.deny'.p.grep(/^ALL: ALL/) 
       true
     else
       !confirm('Should we add "ALL: ALL" to /etc/hosts.deny')
@@ -22,7 +22,7 @@ end
 dep 'hosts.allow', :allowed_ips do
 
   met? do
-    if grep(/^ALL: /, '/etc/hosts.allow') 
+    if '/etc/hosts.allow'.p.grep(/^ALL: /) 
       true
     else
       if confirm('Should we add ALL: localhost + ips to /etc/hosts.allow?')
