@@ -16,7 +16,7 @@ end
 dep 'screen.turn_off_startup_message' do
   met? { '/etc/screenrc'.p.grep(/^startup_message on/) }
   meet do
-    '/etc/screenrc'.p.append("# Babushka added\n")
+    '/etc/screenrc'.p.append("\n# Added by Babushka\n")
     '/etc/screenrc'.p.append("startup_message off\n")
   end
 end
