@@ -17,7 +17,7 @@ dep 'apt' do
   #after { sudo 'apt-get update -y' }
   
   met? do
-    confirm("Sould we do apt-get update? (y/n):") == "y"
+    confirm("Should we do apt-get update? (y/n):")
   end
 
   meet do
