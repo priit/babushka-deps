@@ -15,7 +15,7 @@ dep 'hosts.deny' do
   end
 
   meet do 
-    append_to_file "ALL: ALL", "/etc/hosts.deny" 
+    '/etc/hosts.deny'.p.append("ALL: ALL")
   end
 end
 
@@ -35,7 +35,7 @@ dep 'hosts.allow', :allowed_ips do
   end
 
   meet do 
-    append_to_file "ALL: localhost, #{allowed_ips}", "/etc/hosts.allow" 
+    '/etc/hosts.allow'.p.append("ALL: localhost, #{allowed_ips}") 
   end
 end
 

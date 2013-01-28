@@ -12,7 +12,7 @@ dep 'ssh.permit_user_env' do
 
   met? { '/etc/ssh/sshd_config'.p.grep(/^PermitUserEnvironment yes/) }
   meet do 
-    append_to_file "PermitUserEnvironment yes", "/etc/ssh/sshd_config" 
+    '/etc/ssh/sshd_config'.p.append('PermitUserEnvironment yes') 
   end
   after { shell '/etc/init.d/ssh restart' }
 end
@@ -64,7 +64,7 @@ dep 'ssh.authorized_keys', :username, :key do
   end
 
   meet do
-    append_to_file key, (ssh_dir / 'authorized_keys'), :sudo => sudo?
+    (ssh_dir + '/authorized_keys').p.append(key)
   end
 end
 
@@ -94,6 +94,5 @@ dep 'ssh.authorized_keys-twice', :username, :key do
     end
   end
 
-  meet { append_to_file key, (ssh_dir / 'authorized_keys'), :sudo => sudo? }
+  meet { (ssh_dir + '/authorized_keys').p.append(key) }
 end
-
