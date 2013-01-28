@@ -2,7 +2,6 @@ dep 'basic', :username, :password do
   username.ask("Additional user along root user:").default('skip')
   password.ask("Additional user password").default('skip')
 
-  #requires 'apt'
   requires 'env'
   requires 'sudo.bin'
   requires 'user'.with(username, password) if username != 'skip' && password != 'skip'
@@ -15,8 +14,8 @@ dep 'basic', :username, :password do
   requires 'hosts.conf'
 
   requires 'screen.managed'
-  #requires 'screen.conf'.with(username) if username != 'skip'
-  #requires 'screen.confroot'
+  requires 'screen.conf'.with(username) if username != 'skip'
+  requires 'screen.confroot'
 
   requires 'zsh.conf'.with(username) if username != 'skip'
   requires 'zsh.confroot'
@@ -24,9 +23,7 @@ dep 'basic', :username, :password do
   requires 'vim.conf'.with(username) if username != 'skip'
   requires 'vim.confroot'
 
-  if username != 'skip'
-    requires 'ssh.authorized_keys'.with(username, nil)
-  end
+  requires 'ssh.authorized_keys'.with(username, nil)
 
   requires 'ssh.conf'.with(username)
 end
