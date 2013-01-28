@@ -56,7 +56,7 @@ dep 'ssh.authorized_keys', :username, :key do
   end
 
   meet do
-    (ssh_dir + '/authorized_keys').p.append("# Babushka added key for #{username}")
+    (ssh_dir + '/authorized_keys').p.append("# Babushka added key for #{username}\n")
     (ssh_dir + '/authorized_keys').p.append(key)
   end
 end
