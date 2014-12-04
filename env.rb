@@ -2,12 +2,12 @@ dep 'env', :env do
   env.default('production').choose(%w[development staging production])
 
   met? do
-    '/etc/development'.p.exists? ||
-    '/etc/staging'.p.exists? ||
-    '/etc/production'.p.exists?
+    '/opt/development'.p.exists? ||
+    '/opt/staging'.p.exists? ||
+    '/opt/production'.p.exists?
   end
 
   meet do 
-    sudo "touch /etc/#{env}" 
+    sudo "touch /opt/#{env}" 
   end
 end
