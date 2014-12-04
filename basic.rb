@@ -7,3 +7,7 @@ dep 'basic' do
   requires 'screen.turn_off_startup_message'
   requires 'screen.turn_off_vbell'
 end
+
+dep 'tree.managed' 
+dep 'unzip.managed'
+dep 'zip.managed'
