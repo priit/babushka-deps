@@ -1,18 +1,18 @@
-dep 'user', :username, :password do
+dep 'user', :user, :password do
   requires 'zsh'
-  requires 'group'.with(username)
-  password.ask("Enter user root password")
+  requires 'group'.with(user)
+  password.ask("Creane a new user #{user} password:")
 
-  met? { '/etc/passwd'.p.grep(/^#{username}:/) }
+  met? { '/etc/passwd'.p.grep(/^#{user}:/) }
   meet {
-    sudo "useradd --create-home --shell /bin/zsh --base-dir /home --groups #{username}" and
-    sudo "chmod 701 /home/#{username}" and
-    sudo "chown #{username}:#{username} -R /home/#{username}" and
-    sudo %{echo "#{password}\n#{password}" | passwd #{username}}
+    sudo "useradd --create-home --shell /bin/zsh --base-dir /home --groups #{user}" and
+    sudo "chmod 701 /home/#{user}" and
+    sudo "chown #{user}:#{user} -R /home/#{user}" and
+    sudo %{echo "#{password}\n#{password}" | passwd #{user}}
   }
 end
 
-dep 'group', :groupname do
-  met? { '/etc/group'.p.grep(/^#{groupname}:/) }
-  meet { sudo "groupadd #{groupname}" }
+dep 'group', :group do
+  met? { '/etc/group'.p.grep(/^#{group}:/) }
+  meet { sudo "groupadd #{group}" }
 end

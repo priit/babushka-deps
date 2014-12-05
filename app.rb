@@ -9,8 +9,8 @@ dep 'app', :username, :password do
 
   requires 'hosts.conf'
 
-  requires 'zsh.conf'.with(username) if username != 'skip'
-  requires 'zsh.confroot'
+  requires 'user zshrc file'.with(username) if username != 'skip'
+  requires 'root zshrc file'
 
   requires 'vim.conf'.with(username) if username != 'skip'
   requires 'vim.confroot'
