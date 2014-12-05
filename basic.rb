@@ -1,4 +1,4 @@
-# basic additional only very basic stuff
+# only very basic stuff
 dep 'basic' do
   requires 'tree.managed'
   requires 'zip.managed'

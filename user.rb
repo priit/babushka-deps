@@ -1,5 +1,5 @@
 # generic user for application deployment
-dep 'create app user', :user, :password do
+dep 'new_app_user', :user, :password do
   user.ask("New app username'")
   password.ask("User #{user} password for sudo")
 
@@ -9,7 +9,7 @@ dep 'create app user', :user, :password do
 end
 
 # basic user
-dep 'create user', :user, :password do
+dep 'new_user', :user, :password do
   requires 'zsh'
   requires 'create group'.with(user)
 
@@ -22,7 +22,7 @@ dep 'create user', :user, :password do
   }
 end
 
-dep 'create group', :group do
+dep 'new_group', :group do
   met? { '/etc/group'.p.grep(/^#{group}:/) }
   meet { sudo "groupadd #{group}" }
 end
