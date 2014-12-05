@@ -1,37 +1,36 @@
-#Current evnviroment
-if [ -f /etc/development ]; then
+# Set evnviroment
+if [ -f /opt/development ]; then
   development=true
-elif [ -f /etc/staging ]; then
+elif [ -f /opt/staging ]; then
   staging=true
-elif [ -f /etc/production ]; then
+elif [ -f /opt/production ]; then
   production=true
 fi
 
 USERNAME=`whoami`
 
-# default locations
+# default locales
 export LANGUAGE=en_US.UTF-8
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 
 # default editor
 if [ $USERNAME = "priit" ]; then
-  export EDITOR="vim -u ~/.vimrc-priit"
+  export EDITOR="vim -u /etc/vim/vimrc-priit"
 else
   export EDITOR="vim"
 fi
 
-# Completions
+# completions
 autoload -U compinit
 compinit -C
 # case-insensitive (all),partial-word and then substring completion
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
 
-# Lines configured by zsh-newuser-install
+# history, lines configured by zsh-newuser-install
 HISTFILE=~/.histfile
 HISTSIZE=100000
 SAVEHIST=100000
-
 setopt appendhistory notify
 
 # setopt extendedglob # wacky pattern matching
@@ -49,7 +48,7 @@ alias "cd........"="cd ../../../../../../../"
 alias "cd........."="cd ../../../../../../../../"
 alias "cd.........."="cd ../../../../../../../../../"
 
-#git 
+# git 
 alias ga="git add"
 alias gs="git status"
 alias gl="git log --max-count=50"
@@ -61,27 +60,10 @@ alias gc="git commit -v"
 alias gb="git branch "
 alias gco="git checkout "
 alias grc="git reset --soft HEAD~1"
-alias gr="git reset"
-alias gre="git rebase "
-alias gme="git merge "
-alias gitignore="
-  mkdir -p log tmp/cache tmp/pids tmp/sessions tmp/sockets public/stylesheets/compiled &&
-  touch log/.keepdir tmp/cache/.keepdir tmp/pids/.keepdir tmp/sessions/.keepdir tmp/sockets/.keepdir public/stylesheets/compiled/.keepdir &&
-  git add -f log/.keepdir tmp/cache/.keepdir tmp/pids/.keepdir tmp/sessions/.keepdir tmp/sockets/.keepdir public/stylesheets/compiled/.keepdir"
 
-#ruby
-alias r19r3="rvm ruby-1.9.2@rails3 --default"
-alias r19r2="rvm ruby-1.9.2@rails2 --default"
-alias r19="rvm ruby-1.9.2@rails3 --default"
-
-alias r18r3="rvm ruby-1.8.7@rails3 --default"
-alias r18r2="rvm ruby-1.8.7@rails2 --default"
-alias r18="rvm ruby-1.8.7@rails2 --default"
-
-alias autospec='autospec --no-full-after-failed'
-alias gemi="gem install --no-ri --no-rdoc "
-
+# ruby
 alias r="ruby -I test -I spec "
+alias gemi="gem install --no-ri --no-rdoc "
 
 # rvm gem directory
 alias cdgem="cd \$(rvm gemhome)/gems"
@@ -94,18 +76,11 @@ alias bigreset="rake db:drop; rake db:create; rake db:migrate; rake db:seed; rak
 alias u='unicorn_rails'
 alias pu='RAILS_ENV=production unicorn_rails'
 
-#svn
-alias svn_clean="find . | grep .svn | xargs rm -fr"
-
 #system
-alias v='vim -u ~/.vimrc-priit'
+alias v='vim -u /etc/vim/vimrc-priit'
 alias install="sudo apt-get install "
 alias ls="ls -hp --group-directories-first "
 alias s='sudo'
-
-if $development; then
-  export PAGER="/bin/sh -c \"col -b | vim -u ~/.vimrc-priit -R -c 'set nonumber' -\""
-fi
 
 alias ps="ps afxww"
 alias free="free -m"
@@ -115,8 +90,6 @@ alias out="sudo apt-get remove"
 alias pdf="evince"
 alias play='totem'
 alias view='eog'
-
-alias ie7='kvm -cpu qemu32,-nx -usb -usbdevice tablet -drive file=/home/priit/vendor/winxp-ie7.img,cache=writeback -soundhw ac97'
 alias ie8='kvm -cpu qemu32,-nx -usb -usbdevice tablet -drive file=/home/priit/vendor/winxp-ie8.img,cache=writeback -soundhw ac97'
 
 # from http://kriener.org/articles/2009/06/04/zsh-prompt-magic
@@ -124,7 +97,6 @@ setopt prompt_subst
 autoload colors    
 colors             
 autoload -Uz vcs_info
-
 
 # default left prompt
 if [[ $production == true ]]; then
@@ -138,12 +110,66 @@ fi
 # default right prompt
 export RPS1="%~"
 
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"  # This loads RVM
+
+# from http://blog.55minutes.com/2012/01/invoke-rails-and-rake-faster-and-with-fewer-mistakes/
+
+# Shortcut for `bundle exec rails` and `bundle exec rake`.
+# If bin/rails and bin/rake are available, use them instead as they are much
+# faster to execute than `bundle exec`.
+
+function ra() {
+# stupid but works with exact match, old one matches wrongly as "gen" to "generate" etc.
+if [[ $1 == "g" || $1 == "generate" || $1 == "c"  || $1 == "console"   ||
+      $1 == "s" || $1 == "server"   || $1 == "db" || $1 == "dbconsole" || 
+      $1 == "new" ]]; then
+
+    # Rails 4
+    if [ -x bin/rails ]; then
+      bin/rails "$@"
+
+    # Rails 3
+    elif [ -x script/rails ]; then
+      script/rails "$@"
+
+    # RAILS 1 and 2, yay
+    elif [ -x script/console ]; then
+      if [[ $1 == "g" || $1 == "generate" ]]; then
+        script/generate ${@:2}
+      elif [[ $1 == "c" || $1 == "console" ]]; then
+        script/console ${@:2}
+      elif [[ $1 == "s" || $1 == "server" ]]; then
+        script/server ${@:2}
+      elif [[ $1 == "db" || $1 == "dbconsole" ]]; then
+        script/dbconsole ${@:2}
+      else
+        echo 'no rails 1 or 2 command'
+      fi
+    else
+      rails "$@"
+    fi
+  else
+    if [ -x bin/rake ]; then
+      bin/rake "$@"
+    elif [ -x script/rake ]; then
+      script/rake "$@"
+    else
+      rake "$@"
+    fi
+  fi
+}
+
 
 #
 # ############## LOCAL ENV ONLY ####################
 #
 
 if [[ $development == true ]]; then
+
+  # for remote servers
+  export VIMUSER=priit
+
+  export PAGER="/bin/sh -c \"col -b | vim -u /etc/vim/vimrc-priit -R -c 'set nonumber' -\""
 
   # check-for-changes can be really slow.
   # you should disable it, if you work with large repositories    
@@ -223,11 +249,9 @@ if [[ $development == true ]]; then
 
   # GIT branch info
   setopt prompt_subst
+
   autoload -Uz vcs_info
-  #zstyle ':vcs_info:*' actionformats \
-      #'%F{5}(%f%s%F{5})%F{3}-%F{5}[%F{2}%b%F{3}|%F{1}%a%F{5}]%f '
-  zstyle ':vcs_info:*' formats       \
-      '%F{99}[%F{2}%b%F{99}]%f'
+  zstyle ':vcs_info:*' formats '%F{99}[%F{2}%b%F{99}]%f'
   zstyle ':vcs_info:(sv[nk]|bzr):*' branchformat '%b%F{1}:%F{3}%r'
   zstyle ':vcs_info:*' enable git cvs svn
 
@@ -240,13 +264,18 @@ if [[ $development == true ]]; then
   }
   export PS1=$'%n$(vcs_info_wrapper): '
 
+  #export RUBY_HEAP_MIN_SLOTS=1000000
+  export RUBY_HEAP_SLOTS_INCREMENT=1000000
+  export RUBY_HEAP_SLOTS_GROWTH_FACTOR=1
+  export RUBY_GC_MALLOC_LIMIT=1000000000
+  export RUBY_HEAP_FREE_MIN=500000
+
+  export AWS_CONFIG_FILE=$HOME/.ssh/amazon/aws_config_file
+  source $HOME/.ssh/amazon-gitlab.eu-priit/credentials.sh
+
+  source ~/.rubotorc
 fi
 
 #
 # ####### LOCAL ENV END ########
 #
-
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"  # This loads RVM
-
-# Autoload screen if we aren't in it.  (Thanks Fjord!)
-#if [[ $STY = '' ]] then screen -xR; fi
