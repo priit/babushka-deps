@@ -6,6 +6,8 @@ dep 'new_app_user', :user, :password do
   requires 'zsh'
   # requires 'create user'.with(user, password)
   # requires 'user is sudoer'.with(user)
+  met? { false }
+  meet { }
 end
 
 # basic user
