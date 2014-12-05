@@ -1,7 +1,17 @@
-dep 'user', :user, :password do
+# generic user for application deployment
+dep 'create app user', :user, :password do
+  user.ask("New app username'")
+  password.ask("User #{user} password for sudo")
+
   requires 'zsh'
-  requires 'group'.with(user)
-  password.ask("Creane a new user #{user} password:")
+  # requires 'create user'.with(user, password)
+  # requires 'user is sudoer'.with(user)
+end
+
+# basic user
+dep 'create user', :user, :password do
+  requires 'zsh'
+  requires 'create group'.with(user)
 
   met? { '/etc/passwd'.p.grep(/^#{user}:/) }
   meet {
@@ -12,7 +22,7 @@ dep 'user', :user, :password do
   }
 end
 
-dep 'group', :group do
+dep 'create group', :group do
   met? { '/etc/group'.p.grep(/^#{group}:/) }
   meet { sudo "groupadd #{group}" }
 end
