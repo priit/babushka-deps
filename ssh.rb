@@ -16,7 +16,7 @@ dep 'ssh_authorized_keys_lock', :username do
   end
 end
 
-dep 'ssh_all_authorized_keys', :username, :keys do
+dep 'ssh_all_authorized_keys', :username do
   requires 'ssh_init_authorized_keys'.with(username)
 
   met? do
