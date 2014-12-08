@@ -2,17 +2,17 @@
 dep 'new_app_user', :username, :password do
   username.ask("Additional user along root user:").default('skip')
   password.ask("Additional user password").default('skip')
-  user.ask("New app username'").default('aaaa')
+  # user.ask("New app username'").default('aaaa')
   password.ask("New user password for sudo")
 
   # requires 'zsh'
   # requires 'create user'.with(user, password)
   # requires 'user is sudoer'.with(user)
   met? { 
-    user.ask("eeeNew app username'").default('aaaa')
+    username.ask("eeeNew app username'").default('aaaa')
   }
   meet { 
-    user.ask("ieeNew app username'").default('aaaa')
+    username.ask("ieeNew app username'").default('aaaa')
   }
 end
 
