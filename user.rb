@@ -3,13 +3,13 @@ dep 'app_user', :username, :password do
   username.ask("New app username'")
   password.ask("New password")
 
-  requires 'ssh_all_authorized_keys', username: username
 
   met? { 
     false
   }
   meet { 
-    # requires 'user'.with(username, password)
+    requires 'user'.with(username, password)
+    requires 'ssh_ask_all_authorized_keys', username: username
     # requires 'user is sudoer'.with(name)
   }
 end

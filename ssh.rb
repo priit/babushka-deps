@@ -1,7 +1,7 @@
 #
 # ssh config
 #
-dep 'ssh_all_authorized_keys', :username, :add do
+dep 'ssh_ask_all_authorized_keys', :username, :add do
   met? do
     "/home/#{username}/.ssh/authorized_keys".p.grep(/^Babushka: skip this file/)
   end
