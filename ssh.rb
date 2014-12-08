@@ -3,7 +3,7 @@
 #
 dep 'ssh_all_authorized_keys', :username do
   met? do
-    "/home/#{username}/.ssh/authorized_keys".p.grep(/^Babushka: skip this file/) }
+    "/home/#{username}/.ssh/authorized_keys".p.grep(/^Babushka: skip this file/)
   end
 
   meet do
