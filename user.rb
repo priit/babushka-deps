@@ -1,6 +1,6 @@
 # generic user for application deployment
 dep 'new_app_user', :user, :password do
-  user.ask("New app username'")
+  user.ask("New app username'").default('aaaa')
   password.ask("New user password for sudo")
 
   requires 'zsh'
