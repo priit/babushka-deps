@@ -1,9 +1,9 @@
 # generic user for application deployment
-dep 'app_user', :name, :password do
-  name.ask("New app username'")
+dep 'app_user', :username, :password do
+  username.ask("New app username'")
   password.ask("New password")
 
-  requires 'new_user'.with(name, password)
+  requires 'new_user'.with(username, password)
   # requires 'user is sudoer'.with(name)
   met? { 
   }
@@ -12,20 +12,20 @@ dep 'app_user', :name, :password do
 end
 
 # basic user with zsh
-dep 'user', :name, :password do
+dep 'user', :username, :password do
   requires 'zsh'
-  requires 'new_group'.with(name)
+  requires 'new_group'.with(username)
 
-  met? { '/etc/passwd'.p.grep(/^#{name}:/) }
+  met? { '/etc/passwd'.p.grep(/^#{username}:/) }
   meet {
-    sudo "useradd --create-home --shell /bin/zsh --base-dir /home --groups #{name} #{name}" and
-    sudo "chmod 701 /home/#{name}" and
-    sudo "chown #{name}:#{name} -R /home/#{name}" and
-    sudo %{echo "#{password}\n#{password}" | passwd #{name}}
+    sudo "useradd --create-home --shell /bin/zsh --base-dir /home --groups #{username} #{username}" and
+    sudo "chmod 701 /home/#{username}" and
+    sudo "chown #{username}:#{username} -R /home/#{username}" and
+    sudo %{echo "#{password}\n#{password}" | passwd #{username}}
   }
 end
 
-dep 'group', :name do
-  met? { '/etc/group'.p.grep(/^#{name}:/) }
-  meet { sudo "groupadd #{name}" }
+dep 'group', :groupname do
+  met? { '/etc/group'.p.grep(/^#{groupname}:/) }
+  meet { sudo "groupadd #{groupname}" }
 end
