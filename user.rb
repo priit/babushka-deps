@@ -6,9 +6,15 @@ dep 'app_user', :username, :password do
   met? { 
   }
   meet { 
-    requires 'user'.with(username, password)
+    # requires 'user'.with(username, password)
     # requires 'user is sudoer'.with(name)
+    puts 'sudooo?'
+    puts sudo?
   }
+
+  def sudo?
+    @sudo ||= username != shell('whoami')
+  end
 end
 
 # basic user with zsh
