@@ -27,6 +27,8 @@ dep 'ssh_all_authorized_keys', :username do
         keys << File.open(file, &:readline)
       end
     end
+
+    keys.size == 0
   end
 
   meet do
