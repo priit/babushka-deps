@@ -15,12 +15,14 @@ dep 'apt' do
   #end
 
   #after { sudo 'apt-get update -y' }
-  
-  met? do
-    confirm("Should we do apt-get update? (y/n):")
-  end
+ 
 
-  meet do
-    sudo 'apt-get update -y'
-  end
+
+  # met? do
+    # confirm("Should we do apt-get update? (y/n):")
+  # end
+
+  # meet do
+    # sudo 'apt-get update -y'
+  # end
 end
