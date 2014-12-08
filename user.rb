@@ -4,7 +4,7 @@ dep 'app_user', :username, :password do
   password.ask("New password")
 
   requires 'user'.with(username, password)
-  requires 'ssh_ask_all_authorized_keys'.with(username)
+  requires 'ssh_all_authorized_keys'.with(username)
   # requires 'user is sudoer'.with(name)
 end
 

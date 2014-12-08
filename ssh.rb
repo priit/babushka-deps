@@ -1,38 +1,32 @@
 #
 # ssh config
 #
-dep 'ssh_ask_all_authorized_keys', :username do
+dep 'ssh_authorized_keys_lock', :username do
   met? do
-    "/home/#{username}/.ssh/authorized_keys".p.grep(/^#{stamp}/)
+    return true if "/home/#{username}/.ssh/authorized_keys".p.grep(/^#{stamp}/)
+    confirm("Should we skip asking authorized keys next time? (y/n)", default: 'n')
   end
 
   meet do
-    keys_path = Dir.glob("#{File.dirname(load_path)}/ssh/keys/*.pub")
-    Dir.glob(keys_path).each do |file|
-      filename = File.basename(file)
-      if confirm("Should we add authorized key: #{filename} (y/n)", default: 'n')
-        key = File.open(file, &:readline)
-        requires 'ssh_authorized_key'.with(username, key)
-      end
-    end
-
-    if confirm("Should we skip asking authorized keys next time? (y/n)", default: 'n')
-      "/home/#{username}/.ssh/authorized_keys".p.append("\n#{stamp}\n")
-    end
-  end
-
-  def keys
-    "/home/#{username}/.ssh/authorized_keys"
-  end
-
-  def sudo?
-    @sudo ||= username != shell('whoami')
+    "/home/#{username}/.ssh/authorized_keys".p.append("\n#{stamp}\n")
   end
 
   def stamp
     "# Babushka: do not update this file"
   end
 end
+
+dep 'ssh_all_authorized_keys', :username do
+  keys_path = Dir.glob("#{File.dirname(load_path)}/ssh/keys/*.pub")
+  Dir.glob(keys_path).each do |file|
+    filename = File.basename(file)
+    if confirm("Should we add authorized key: #{filename} (y/n)", default: 'n')
+      key = File.open(file, &:readline)
+      requires 'ssh_authorized_key'.with(username, key)
+    end
+  end
+end
+
 
 dep 'ssh_authorized_key', :username, :key do
   met? do
