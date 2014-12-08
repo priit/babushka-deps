@@ -12,7 +12,6 @@ dep 'ssh_ask_all_authorized_keys', :username do
       filename = File.basename(file)
       if confirm("Should we add authorized key: #{filename} (y/n)", default: 'n')
         key = File.open(file, &:readline)
-        puts key
         requires 'ssh_authorized_key'.with(username, key)
       end
     end
@@ -37,10 +36,12 @@ end
 
 dep 'ssh_authorized_key', :username, :key do
   met? do
+    puts 'meet'
     shell? "fgrep '#{key}' '#{keys}'", :sudo => sudo?
   end
 
   meet do
+    puts 'any?'
     requires 'ssh_init_authorized_keys'.with(username)
     keys.p.append("# Babushka managed key for #{username}\n")
     keys.p.append(key)
