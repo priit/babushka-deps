@@ -14,7 +14,7 @@ end
 # basic user with zsh
 dep 'new_user', :user, :password do
   requires 'zsh'
-  requires 'create group'.with(user)
+  requires :new_group.with(user)
 
   met? { '/etc/passwd'.p.grep(/^#{user}:/) }
   meet {
