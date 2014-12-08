@@ -32,19 +32,10 @@ dep 'ssh_all_authorized_keys', :username do
   end
 
   meet do
-    authorized_path.p.append('# Babushka managed keys\n')
+    authorized_path.p.append("# Babushka managed keys\n")
     authorized_path.p.append(keys.join('\n'))
-    authorized_path.p.append('# End of Babushka managed keys\n')
+    authorized_path.p.append("# End of Babushka managed keys\n")
   end
-
-  # keys_path = Dir.glob("#{File.dirname(load_path)}/ssh/keys/*.pub")
-  # Dir.glob(keys_path).each do |file|
-    # filename = File.basename(file)
-    # if confirm("Should we add authorized key: #{filename} (y/n)", default: 'n')
-      # key = File.open(file, &:readline)
-      # requires 'ssh_authorized_key'.with(username, key)
-    # end
-  # end
 
   def authorized_path
     "/home/#{username}/.ssh/authorized_keys"
