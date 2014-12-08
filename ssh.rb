@@ -21,19 +21,17 @@ dep 'ssh_all_authorized_keys', :username do
 
   met? do
     # shell? "fgrep '#{key}' '#{authorized_path}'", :sudo => sudo?
-
-    @keys = []
     Dir.glob(keys_path).each do |file|
       filename = File.basename(file)
       if confirm("Should we add authorized key: #{filename} (y/n)", default: 'n')
-        @keys << File.open(file, &:readline)
+        keys << File.open(file, &:readline)
       end
     end
   end
 
   meet do
     authorized_path.p.append('# Babushka managed keys\n')
-    authorized_path.p.append(@keys)
+    authorized_path.p.append(keys.join('\n'))
     authorized_path.p.append('# End of Babushka managed keys\n')
   end
 
@@ -53,6 +51,11 @@ dep 'ssh_all_authorized_keys', :username do
   def keys_path
     @keys_path ||= Dir.glob("#{File.dirname(load_path)}/ssh/keys/*.pub")
   end
+
+  def keys
+    @keys ||= []
+  end
+
 end
 
 
