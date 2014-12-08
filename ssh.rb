@@ -10,7 +10,7 @@ dep 'ssh_all_authorized_keys', :username, :skip do
     keys_path = Dir.glob("#{File.dirname(load_path)}/ssh/keys/*.pub")
     Dir.glob(keys_path).each do |file|
       filename = File.basename(file)
-      skip.ask('Should we add authorized key: #{filename}')
+      skip.ask("Should we add authorized key: #{filename}")
       key = File.open(file, &:readline)
       puts key
       puts skip
