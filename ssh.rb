@@ -7,7 +7,8 @@ dep 'ssh_all_authorized_keys', :username do
   end
 
   meet do
-    File.dirname(load_path) / erb # directory this dep is in, plus relative path
+    puts 'erb test'
+    puts File.dirname(load_path)
   end
 
   def keys
@@ -18,7 +19,6 @@ dep 'ssh_all_authorized_keys', :username do
     @sudo ||= username != shell('whoami')
   end
 end
-
 
 dep 'ssh_authorized_key', :username, :key do
   met? do

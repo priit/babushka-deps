@@ -5,7 +5,6 @@ dep 'app_user', :username, :password do
 
   requires 'ssh_all_authorized_keys', username: username
 
-
   met? { 
     false
   }
@@ -17,11 +16,11 @@ end
 
 # basic user with zsh
 dep 'user', :username, :password do
+  requires 'zsh'
+  requires 'group'.with(username)
+
   met? { '/etc/passwd'.p.grep(/^#{username}:/) }
   meet {
-    requires 'zsh'
-    requires 'group'.with(username)
-
     sudo "useradd --create-home --shell /bin/zsh --base-dir /home -g #{username} #{username}" and
     sudo "chmod 701 /home/#{username}" and
     sudo "chown #{username}:#{username} -R /home/#{username}" and
