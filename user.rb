@@ -3,7 +3,7 @@ dep 'new_app_user', :user, :password do
   user.ask("New app username'").default('aaaa')
   password.ask("New user password for sudo")
 
-  requires 'zsh'
+  # requires 'zsh'
   # requires 'create user'.with(user, password)
   # requires 'user is sudoer'.with(user)
   met? { 
