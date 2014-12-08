@@ -7,6 +7,7 @@ dep 'app_user', :username, :password do
     false
   }
   meet { 
+    puts 'aaaaa'
     requires 'ssh_all_authorized_keys', username: username
     # requires 'user'.with(username, password)
     # requires 'user is sudoer'.with(name)
