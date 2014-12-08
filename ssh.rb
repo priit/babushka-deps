@@ -7,8 +7,9 @@ dep 'ssh_all_authorized_keys', :username do
   end
 
   meet do
-    puts 'erb test'
-    puts File.dirname(load_path)
+    Dir.glob("#{load_path}/ssh/keys/*.pub").each do |file|
+      puts file.inspect
+    end
   end
 
   def keys
