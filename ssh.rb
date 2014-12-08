@@ -29,14 +29,13 @@ end
 
 
 dep 'ssh_authorized_key', :username, :key do
+  requires 'ssh_init_authorized_keys'.with(username)
+
   met? do
-    puts 'meet'
     shell? "fgrep '#{key}' '#{keys}'", :sudo => sudo?
   end
 
   meet do
-    puts 'any?'
-    requires 'ssh_init_authorized_keys'.with(username)
     keys.p.append("# Babushka managed key for #{username}\n")
     keys.p.append(key)
   end
@@ -67,6 +66,7 @@ dep 'ssh_init_authorized_keys', :username do
     shell "id -gn #{username}"
   end
 end
+
 
 #
 # sshd config
