@@ -8,7 +8,7 @@ dep 'ssh_all_authorized_keys', :username do
 
   meet do
     puts 'aaaa'
-    puts 'load_path'
+    puts load_path
     Dir.glob("#{load_path}/ssh/keys/*.pub").each do |file|
       puts 'eee'
       puts file.inspect
