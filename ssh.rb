@@ -10,11 +10,12 @@ dep 'ssh_ask_all_authorized_keys', :username, :add do
     keys_path = Dir.glob("#{File.dirname(load_path)}/ssh/keys/*.pub")
     Dir.glob(keys_path).each do |file|
       filename = File.basename(file)
-      add.ask("Should we add authorized key: #{filename}").default('no')
+      add.ask("Should we add authorized key: #{filename}").choose(['n','y'])
 
-      next if add == 'no' 
-      key = File.open(file, &:readline)
-      requires 'ssh_authorized_key', username: username, key: key
+      if add == 'y' 
+        key = File.open(file, &:readline)
+        requires 'ssh_authorized_key', username: username, key: key
+      end
     end
 
     add.ask("Should we skip asking authorized keys next time?").default('yes')
