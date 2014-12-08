@@ -10,9 +10,13 @@ dep 'new_app_user', :username, :password do
   # requires 'user is sudoer'.with(user)
   met? { 
     username.ask("eeeNew app username'").default('aaaa')
+    puts 'met???'
+    puts username
   }
   meet { 
     username.ask("ieeNew app username'").default('aaaa')
+    puts 'meeet'
+    puts username
   }
 end
 
