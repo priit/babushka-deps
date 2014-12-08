@@ -8,7 +8,7 @@ dep 'ssh_authorized_keys_lock', :username do
   end
 
   meet do
-    "/home/#{username}/.ssh/authorized_keys".p.append("\n#{stamp}\n")
+    "/home/#{username}/.ssh/authorized_keys".p.append("#{stamp}\n")
   end
 
   def stamp
@@ -16,38 +16,66 @@ dep 'ssh_authorized_keys_lock', :username do
   end
 end
 
-dep 'ssh_all_authorized_keys', :username do
-  keys_path = Dir.glob("#{File.dirname(load_path)}/ssh/keys/*.pub")
-  Dir.glob(keys_path).each do |file|
-    filename = File.basename(file)
-    if confirm("Should we add authorized key: #{filename} (y/n)", default: 'n')
-      key = File.open(file, &:readline)
-      requires 'ssh_authorized_key'.with(username, key)
-    end
-  end
-end
-
-
-dep 'ssh_authorized_key', :username, :key do
+dep 'ssh_all_authorized_keys', :username, :keys do
   requires 'ssh_init_authorized_keys'.with(username)
 
   met? do
-    shell? "fgrep '#{key}' '#{keys}'", :sudo => sudo?
+    # shell? "fgrep '#{key}' '#{authorized_path}'", :sudo => sudo?
+
+    @keys = []
+    Dir.glob(keys_path).each do |file|
+      filename = File.basename(file)
+      if confirm("Should we add authorized key: #{filename} (y/n)", default: 'n')
+        @keys << File.open(file, &:readline)
+      end
+    end
   end
 
   meet do
-    keys.p.append("# Babushka managed key for #{username}\n")
-    keys.p.append(key)
+    authorized_path.p.append('# Babushka managed keys\n')
+    authorized_path.p.append(@keys)
+    authorized_path.p.append('# End of Babushka managed keys\n')
   end
 
-  def keys
+  # keys_path = Dir.glob("#{File.dirname(load_path)}/ssh/keys/*.pub")
+  # Dir.glob(keys_path).each do |file|
+    # filename = File.basename(file)
+    # if confirm("Should we add authorized key: #{filename} (y/n)", default: 'n')
+      # key = File.open(file, &:readline)
+      # requires 'ssh_authorized_key'.with(username, key)
+    # end
+  # end
+
+  def authorized_path
     "/home/#{username}/.ssh/authorized_keys"
   end
 
-  def sudo?
-    @sudo ||= username != shell('whoami')
+  def keys_path
+    @keys_path ||= Dir.glob("#{File.dirname(load_path)}/ssh/keys/*.pub")
   end
 end
+
+
+# dep 'ssh_authorized_key', :username, :key do
+  # requires 'ssh_init_authorized_keys'.with(username)
+
+  # met? do
+    # shell? "fgrep '#{key}' '#{keys}'", :sudo => sudo?
+  # end
+
+  # meet do
+    # keys.p.append('# Babushka managed key\n')
+    # keys.p.append(key)
+  # end
+
+  # def keys
+    # "/home/#{username}/.ssh/authorized_keys"
+  # end
+
+  # def sudo?
+    # @sudo ||= username != shell('whoami')
+  # end
+# end
 
 dep 'ssh_init_authorized_keys', :username do
   met? { "#{ssh_dir}/authorized_keys".p.exists? }
