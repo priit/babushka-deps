@@ -1,5 +1,7 @@
 # generic user for application deployment
 dep 'new_app_user', :user, :password do
+  username.ask("Additional user along root user:").default('skip')
+  password.ask("Additional user password").default('skip')
   user.ask("New app username'").default('aaaa')
   password.ask("New user password for sudo")
 
