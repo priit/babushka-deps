@@ -41,7 +41,7 @@ dep 'ssh_authorized_key', :username, :key do
 
   meet do
     requires 'ssh_init_authorized_keys'.with(username)
-    keys.p.append("# Babushka added key for #{username}\n")
+    keys.p.append("# Babushka managed key for #{username}\n")
     keys.p.append(key)
   end
 
