@@ -3,7 +3,7 @@ dep 'app_user', :username, :password do
   username.ask("New app username'")
   password.ask("New password")
 
-  requires 'new_user'.with(username, password)
+  requires 'user'.with(username, password)
   # requires 'user is sudoer'.with(name)
   met? { 
   }
@@ -14,7 +14,7 @@ end
 # basic user with zsh
 dep 'user', :username, :password do
   requires 'zsh'
-  requires 'new_group'.with(username)
+  requires 'group'.with(username)
 
   met? { '/etc/passwd'.p.grep(/^#{username}:/) }
   meet {
