@@ -20,12 +20,11 @@ dep 'ssh_all_authorized_keys', :username do
   requires 'ssh_init_authorized_keys'.with(username)
 
   met? do
-    # shell? "fgrep '#{key}' '#{authorized_path}'", :sudo => sudo?
     Dir.glob(keys_path).each do |file|
       filename = File.basename(file)
-      if confirm("Should we add authorized key: #{filename} (y/n)", default: 'n')
-        keys << File.open(file, &:readline)
-      end
+      # if confirm("Should we add authorized key: #{filename} (y/n)", default: 'n')
+        # keys << File.open(file, &:readline)
+      # end
     end
 
     keys.size == 0
@@ -51,27 +50,6 @@ dep 'ssh_all_authorized_keys', :username do
 
 end
 
-
-# dep 'ssh_authorized_key', :username, :key do
-  # requires 'ssh_init_authorized_keys'.with(username)
-
-  # met? do
-    # shell? "fgrep '#{key}' '#{keys}'", :sudo => sudo?
-  # end
-
-  # meet do
-    # keys.p.append('# Babushka managed key\n')
-    # keys.p.append(key)
-  # end
-
-  # def keys
-    # "/home/#{username}/.ssh/authorized_keys"
-  # end
-
-  # def sudo?
-    # @sudo ||= username != shell('whoami')
-  # end
-# end
 
 dep 'ssh_init_authorized_keys', :username do
   met? { "#{ssh_dir}/authorized_keys".p.exists? }
