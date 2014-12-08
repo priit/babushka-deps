@@ -18,7 +18,7 @@ dep 'user', :username, :password do
 
   met? { '/etc/passwd'.p.grep(/^#{username}:/) }
   meet {
-    sudo "useradd --create-home --shell /bin/zsh --base-dir /home --groups #{username} #{username}" and
+    sudo "useradd --create-home --shell /bin/zsh --base-dir /home -g #{username} #{username}" and
     sudo "chmod 701 /home/#{username}" and
     sudo "chown #{username}:#{username} -R /home/#{username}" and
     sudo %{echo "#{password}\n#{password}" | passwd #{username}}
