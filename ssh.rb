@@ -1,7 +1,7 @@
 #
 # ssh config
 #
-dep 'ssh_all_authorized_keys', :username, :skip do
+dep 'ssh_all_authorized_keys', :username, :add do
   met? do
     "/home/#{username}/.ssh/authorized_keys".p.grep(/^Babushka: skip this file/)
   end
@@ -10,11 +10,15 @@ dep 'ssh_all_authorized_keys', :username, :skip do
     keys_path = Dir.glob("#{File.dirname(load_path)}/ssh/keys/*.pub")
     Dir.glob(keys_path).each do |file|
       filename = File.basename(file)
-      skip.ask("Should we add authorized key: #{filename}")
+      add.ask("Should we add authorized key: #{filename}").default('no')
+
+      next if add == 'no' 
       key = File.open(file, &:readline)
-      puts key
-      puts skip
+      requires 'ssh_authorized_key', username: username, key: key
     end
+
+    add.ask("Should we skip asking authorized keys next time?").default('yes')
+    "/home/#{username}/.ssh/authorized_keys".p.append("\n# Added by Babushka\n")
   end
 
   def keys
