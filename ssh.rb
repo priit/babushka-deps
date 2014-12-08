@@ -13,6 +13,7 @@ dep 'ssh_all_authorized_keys', :username, :skip do
       skip.ask('Should we add authorized key: #{filename}')
       key = File.open(file, &:readline)
       puts key
+      puts skip
     end
   end
 
