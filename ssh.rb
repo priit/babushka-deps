@@ -9,8 +9,12 @@ dep 'ssh_all_authorized_keys', :username do
   meet do
     keys_path = Dir.glob("#{File.dirname(load_path)}/ssh/keys/*.pub")
     Dir.glob(keys_path).each do |file|
-      puts 'eee'
-      puts file.inspect
+      
+      filename = File.basename(u)
+      puts filename
+
+      key = File.open(file, &:readline)
+      puts key
     end
   end
 
