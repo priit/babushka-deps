@@ -4,6 +4,7 @@ dep 'app_user', :username, :password do
   password.ask("New password")
 
   met? { 
+    false
   }
   meet { 
     requires 'ssh_all_authorized_keys', username: username

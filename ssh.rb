@@ -7,6 +7,7 @@ dep 'ssh_all_authorized_keys', :username do
   end
 
   meet do
+    File.dirname(load_path) / erb # directory this dep is in, plus relative path
   end
 
   def keys
