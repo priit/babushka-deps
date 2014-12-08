@@ -3,7 +3,7 @@
 #
 dep 'ssh_ask_all_authorized_keys', :username do
   met? do
-    "/home/#{username}/.ssh/authorized_keys".p.grep(/^Babushka: skip this file/)
+    "/home/#{username}/.ssh/authorized_keys".p.grep(/^#{stamp}/)
   end
 
   meet do
@@ -17,8 +17,9 @@ dep 'ssh_ask_all_authorized_keys', :username do
       end
     end
 
-    add.ask("Should we skip asking authorized keys next time?").default('yes')
-    "/home/#{username}/.ssh/authorized_keys".p.append("\n# Added by Babushka\n")
+    if confirm("Should we skip asking authorized keys next time? (y/n)", default: 'n')
+      "/home/#{username}/.ssh/authorized_keys".p.append("\n#{stamp}\n")
+    end
   end
 
   def keys
@@ -27,6 +28,10 @@ dep 'ssh_ask_all_authorized_keys', :username do
 
   def sudo?
     @sudo ||= username != shell('whoami')
+  end
+
+  def stamp
+    "# Babushka: do not update this file"
   end
 end
 
