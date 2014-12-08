@@ -1,6 +1,6 @@
 # generic user for application deployment
-dep 'new_app_user', :username, :password do
-  username.ask("Additional user along root user:").default('skip')
+dep 'new_app_user', :user, :password do
+  user.ask("Additional user along root user:").default('skip')
   password.ask("Additional user password").default('skip')
   # user.ask("New app username'").default('aaaa')
   password.ask("New user password for sudo")
@@ -9,14 +9,14 @@ dep 'new_app_user', :username, :password do
   # requires 'create user'.with(user, password)
   # requires 'user is sudoer'.with(user)
   met? { 
-    username.ask("eeeNew app username'").default('aaaa')
+    user.ask("eeeNew app username'").default('aaaa')
     puts 'met???'
-    puts username
+    puts user
   }
   meet { 
-    username.ask("ieeNew app username'").default('aaaa')
+    user.ask("ieeNew app username'").default('aaaa')
     puts 'meeet'
-    puts username
+    puts user
   }
 end
 
