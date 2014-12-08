@@ -11,9 +11,8 @@ dep 'ssh_ask_all_authorized_keys', :username do
     Dir.glob(keys_path).each do |file|
       filename = File.basename(file)
       if confirm("Should we add authorized key: #{filename} (y/n)", default: 'n')
-        puts 'adding...'
-        # key = File.open(file, &:readline)
-        # requires 'ssh_authorized_key', username: username, key: key
+        key = File.open(file, &:readline)
+        requires 'ssh_authorized_key'.with(username, key)
       end
     end
 
