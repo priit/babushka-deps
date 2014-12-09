@@ -69,6 +69,7 @@ dep 'admin_password', :password do
   end
 
   met? do
+    puts "what is skip: #{skip}"
     if skip
       true
     else
@@ -78,13 +79,14 @@ dep 'admin_password', :password do
   end
 
   meet do
+    puts 'yeah'
     password.ask('Root user password')
     puts password
+    puts "no password ask? #{password}"
   end
 
   def skip
     @skip ||= true
   end
-
 end
 
