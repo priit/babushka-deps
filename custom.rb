@@ -22,7 +22,7 @@ end
 # cleanup ssh welcome text
 dep 'motd_empty' do
   met? do
-    "/etc/motd".p.empty?
+    !"/etc/motd".p.exists?
   end
 
   meet do
