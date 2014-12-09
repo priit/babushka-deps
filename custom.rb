@@ -65,16 +65,16 @@ dep 'admin_password', :password do
     unmeetable! 'This dep must be run as root.' unless shell('whoami') == 'root'
     if confirm('Root user does not have password, should we add it? (y/n)', default: 'n')
       puts 'anybody'
-      @skip = nil 
+      @add_it = true 
     end
     puts 'setup:'
-    puts skip
-    puts @skip
+    puts @add_it
+    puts @add_it
   end
 
   met? do
-    puts "what is skip: #{skip}"
-    if skip
+    puts "what is : #{@add_it}"
+    if @add_it
       true
     else
       shell('sudo -k') # expire an existing cached password
@@ -87,10 +87,6 @@ dep 'admin_password', :password do
     password.ask('Root user password')
     puts password
     puts "no password ask? #{password}"
-  end
-
-  def skip
-    @skip ||= true
   end
 end
 
