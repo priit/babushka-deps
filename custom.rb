@@ -21,7 +21,7 @@ dep 'custom' do
   requires 'sshd_password_should_be_off'
 
   # password checks
-  requires 'admin_user_password'
+  # requires 'admin_user_password'
 end
 
 
