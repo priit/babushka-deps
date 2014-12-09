@@ -11,7 +11,7 @@ dep 'custom' do
   requires 'vimrc_priit'
 
   # cleanup ssh welcome text
-  requires 'motd-empty'
+  requires 'motd_empty'
 end
 
 
