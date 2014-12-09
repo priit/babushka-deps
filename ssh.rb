@@ -74,7 +74,8 @@ dep 'sshd_pam_should_be_off' do
   end
 
   meet do 
-    shell "sed 's/UsePAM yes/UsePAM no/g' #{path} > #{path}"
+    shell "cp #{path} #{path}.backup"
+    shell "sed 's/UsePAM yes/UsePAM no/g' #{path}.backup > #{path}"
   end
   after { shell '/etc/init.d/ssh restart' }
   
