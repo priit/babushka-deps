@@ -19,8 +19,15 @@ end
 dep 'ssh_all_authorized_keys', :username do
   # requires 'ssh_init_authorized_keys'.with(username)
   met? do
-    testkeys ||= []
-    confirm('test-start')
+    false
+    # testkeys ||= []
+    # confirm('test-start')
+    # confirm('test-end')
+
+    # testkeys.size == 0
+  end
+
+  meet do
     keys_path = Dir.glob("#{File.dirname(load_path)}/ssh/keys/*.pub")
     Dir.glob(keys_path).each do |file|
       filename = File.basename(file)
@@ -31,12 +38,7 @@ dep 'ssh_all_authorized_keys', :username do
         'oooo'
       end
     end
-    confirm('test-end')
 
-    testkeys.size == 0
-  end
-
-  meet do
     # authorized_path.p.append("# Babushka managed keys\n")
     # authorized_path.p.append(keys.join('\n'))
     # authorized_path.p.append("# End of Babushka managed keys\n")
