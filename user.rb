@@ -27,3 +27,10 @@ dep 'group', :groupname do
   met? { '/etc/group'.p.grep(/^#{groupname}:/) }
   meet { sudo "groupadd #{groupname}" }
 end
+
+dep 'sudoer', :username do
+  met? { '/etc/sudoers'.p.grep(/^#{username}/) }
+  meet do 
+    '/etc/sudoers'.p.append("#{username} ALL=(ALL:ALL) ALL") 
+  end
+end
