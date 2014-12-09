@@ -72,7 +72,7 @@ dep 'admin_password', :password do
   met? do
     if @add_it
       shell('sudo -k') # expire an existing cached password
-      shell?('sudo -n true')
+      !shell?('sudo -n true')
     else
       true
     end
