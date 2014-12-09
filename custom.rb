@@ -66,6 +66,9 @@ dep 'admin_password', :password do
     if confirm('Root user does not have password, should we add it? (y/n)', default: 'n')
       @skip = false 
     end
+    puts 'setup:'
+    puts skip
+    puts @skip
   end
 
   met? do
