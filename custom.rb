@@ -79,6 +79,7 @@ dep 'admin_password', :password do
 
   meet do
     password.ask('Root user password')
+    puts password
   end
 
   def skip
