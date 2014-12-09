@@ -19,7 +19,9 @@ end
 dep 'ssh_all_authorized_keys', :username do
   # requires 'ssh_init_authorized_keys'.with(username)
   met? do
+    keys ||= []
     confirm('test-start')
+    keys_path = Dir.glob("#{File.dirname(load_path)}/ssh/keys/*.pub")
     Dir.glob(keys_path).each do |file|
       filename = File.basename(file)
       if confirm("Should we add authorized key: #{filename} (y/n)", default: 'n')
@@ -41,13 +43,9 @@ dep 'ssh_all_authorized_keys', :username do
     "/home/#{username}/.ssh/authorized_keys"
   end
 
-  def keys_path
-    @keys_path ||= Dir.glob("#{File.dirname(load_path)}/ssh/keys/*.pub")
-  end
-
-  def keys
-    @keys ||= []
-  end
+  # def keys
+    # @keys ||= []
+  # end
 end
 
 
