@@ -80,6 +80,6 @@ dep 'admin_password', :password do
 
   meet do
     password.ask('Root user password')
-    shell "passwd admin #{password}"
+    shell "echo 'admin:#{password}' | chpasswd"
   end
 end
