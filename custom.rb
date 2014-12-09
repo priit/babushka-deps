@@ -20,11 +20,8 @@ dep 'custom' do
   # verify ssh password login is off
   requires 'sshd_password_should_be_off'
 
-  # add admin password, amazon debian ec2 stuff
+  # require admin password
   requires 'admin_password'
-
-  # admin should also ask passowrd, amazon debian ec2 stuff
-  requires 'replace_default_admin_sudoer'
 end
 
 
@@ -88,6 +85,8 @@ dep 'admin_password', :password do
 end
 
 dep 'replace_default_admin_sudoer' do
+  requires 'admin_password'
+
   met? do
     path.p.exists? && !path.p.grep(/^# Created by cloud-init/)
   end 
