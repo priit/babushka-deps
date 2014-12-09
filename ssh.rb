@@ -26,9 +26,6 @@ dep 'ssh_all_authorized_keys', :username do
   end
 
   met? do
-    puts 'keys size'
-    puts keys.size
-    puts keys.inspect
     keys.size == 0
   end
 
@@ -38,7 +35,7 @@ dep 'ssh_all_authorized_keys', :username do
       authorized_path.p.append(keys.join('\n'))
     end
     authorized_path.p.append("# End of Babushka managed keys\n")
-    @keys = []
+    @keys = [] # let's keep met? happy
   end
 
   def authorized_path
