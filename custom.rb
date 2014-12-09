@@ -80,6 +80,6 @@ dep 'admin_password', :password do
 
   meet do
     password.ask('Root user password')
-    sudo "passwd admin #{password}"
+    shell "passwd admin #{password}"
   end
 end
