@@ -16,6 +16,9 @@ dep 'custom' do
 
   # verify ssh UsePAM is off
   requires 'sshd_pam_should_be_off'
+
+  # verify ssh root login is off
+  requires 'sshd_root_login_should_be_off'
 end
 
 
