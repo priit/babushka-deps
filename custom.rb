@@ -21,7 +21,7 @@ dep 'custom' do
   requires 'sshd_password_should_be_off'
 
   # password checks
-  # requires 'admin_user_password'
+  requires 'admin_password'
 end
 
 
@@ -59,3 +59,23 @@ dep 'set_us_locale'  do
     shell '/usr/sbin/locale-gen'
   end
 end
+
+dep 'admin_password', :password do
+  met? do
+    if shell('whoami') == 'root'
+      if shell('sudo -n true')
+        confirm('Root user does not have password, should we add it? (y/n)', default: 'n')
+      else
+        true
+      end
+    else
+      puts 'Not root user, cannot dedect root password'
+      false
+    end
+  end
+
+  meet do
+    password.ask('Root user password')
+  end
+end
+
