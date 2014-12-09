@@ -27,7 +27,8 @@ dep 'ssh_all_authorized_keys', :username do
       if confirm("Should we add authorized key: #{filename} (y/n)", default: 'n')
         # testkeys << File.open(file, &:readline)
         # File.open(file, &:readline)
-        testkeys << 'ee'
+        # testkeys << 'ee'
+        'oooo'
       end
     end
     confirm('test-end')
