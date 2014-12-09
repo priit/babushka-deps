@@ -1,52 +1,15 @@
-# Set evnviroment
-if [ -f /opt/development ]; then
-  development=true
-elif [ -f /opt/staging ]; then
-  staging=true
-elif [ -f /opt/production ]; then
-  production=true
-fi
-
-USERNAME=`whoami`
+setopt nobeep # no need for beeps
 
 # default locales
 export LANGUAGE=en_US.UTF-8
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 
-# default editor
-if [ $USERNAME = "priit" ]; then
-  export EDITOR="vim -u /etc/vim/vimrc-priit"
-else
-  export EDITOR="vim"
-fi
-
-# completions
-autoload -U compinit
-compinit -C
-# case-insensitive (all),partial-word and then substring completion
-zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
-
-# history, lines configured by zsh-newuser-install
+# longer history
 HISTFILE=~/.histfile
 HISTSIZE=100000
 SAVEHIST=100000
 setopt appendhistory notify
-
-# setopt extendedglob # wacky pattern matching
-setopt autocd # change to dirs without cd
-setopt nobeep # no need for beeps, was unsetopt beep
-
-# stupid stuff
-alias "cd.."="cd .."
-alias "cd..."="cd ../../"
-alias "cd...."="cd ../../../"
-alias "cd....."="cd ../../../../"
-alias "cd......"="cd ../../../../../"
-alias "cd......."="cd ../../../../../../"
-alias "cd........"="cd ../../../../../../../"
-alias "cd........."="cd ../../../../../../../../"
-alias "cd.........."="cd ../../../../../../../../../"
 
 # git 
 alias ga="git add"
@@ -64,21 +27,13 @@ alias grc="git reset --soft HEAD~1"
 # ruby
 alias r="ruby -I test -I spec "
 alias gemi="gem install --no-ri --no-rdoc "
-
-# rvm gem directory
-alias cdgem="cd \$(rvm gemhome)/gems"
-
-alias con="script/console"
-alias dcon="script/dbconsole"
-alias dbcon="script/dbconsole"
-alias gen="script/generate"
-alias bigreset="rake db:drop; rake db:create; rake db:migrate; rake db:seed; rake db:test:clone"
 alias u='unicorn_rails'
 alias pu='RAILS_ENV=production unicorn_rails'
 
-#system
-alias v='vim -u /etc/vim/vimrc-priit'
-alias install="sudo apt-get install "
+# cd to rvm gem directory
+alias cdgem="cd \$(rvm gemhome)/gems"
+
+# general
 alias ls="ls -hp --group-directories-first "
 alias s='sudo'
 
@@ -87,37 +42,48 @@ alias free="free -m"
 alias update="sudo aptitude update && sudo aptitude safe-upgrade"
 alias in="sudo apt-get install"
 alias out="sudo apt-get remove"
-alias pdf="evince"
-alias play='totem'
-alias view='eog'
-alias ie8='kvm -cpu qemu32,-nx -usb -usbdevice tablet -drive file=/home/priit/vendor/winxp-ie8.img,cache=writeback -soundhw ac97'
 
+# stupid stuff
+alias "cd.."="cd .."
+alias "cd..."="cd ../../"
+alias "cd...."="cd ../../../"
+alias "cd....."="cd ../../../../"
+alias "cd......"="cd ../../../../../"
+alias "cd......."="cd ../../../../../../"
+alias "cd........"="cd ../../../../../../../"
+alias "cd........."="cd ../../../../../../../../"
+alias "cd.........."="cd ../../../../../../../../../"
+setopt autocd # change to dirs without cd
+
+# completions
+autoload -U compinit
+compinit -C
+# case-insensitive (all),partial-word and then substring completion
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
+
+# color promt
 # from http://kriener.org/articles/2009/06/04/zsh-prompt-magic
 setopt prompt_subst
 autoload colors    
 colors             
 autoload -Uz vcs_info
 
-# default left prompt
-if [[ $production == true ]]; then
+# left prompt
+if [  -f /opt/production ]; then
   export PS1="%{$fg[red]%}%n@%m: %{$reset_color%}"
-elif [[ $staging == true ]]; then
+elif [ -f /opt/staging ]; then
   export PS1="%{$fg[yellow]%}%n@%m: %{$reset_color%}"
 else
   export PS1="%n: "
 fi
 
-# default right prompt
+# right prompt
 export RPS1="%~"
-
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"  # This loads RVM
-
-# from http://blog.55minutes.com/2012/01/invoke-rails-and-rake-faster-and-with-fewer-mistakes/
 
 # Shortcut for `bundle exec rails` and `bundle exec rake`.
 # If bin/rails and bin/rake are available, use them instead as they are much
 # faster to execute than `bundle exec`.
-
+# from http://blog.55minutes.com/2012/01/invoke-rails-and-rake-faster-and-with-fewer-mistakes/
 function ra() {
 # stupid but works with exact match, old one matches wrongly as "gen" to "generate" etc.
 if [[ $1 == "g" || $1 == "generate" || $1 == "c"  || $1 == "console"   ||
@@ -159,123 +125,5 @@ if [[ $1 == "g" || $1 == "generate" || $1 == "c"  || $1 == "console"   ||
   fi
 }
 
-
-#
-# ############## LOCAL ENV ONLY ####################
-#
-
-if [[ $development == true ]]; then
-
-  # for remote servers
-  export VIMUSER=priit
-
-  export PAGER="/bin/sh -c \"col -b | vim -u /etc/vim/vimrc-priit -R -c 'set nonumber' -\""
-
-  # check-for-changes can be really slow.
-  # you should disable it, if you work with large repositories    
-  zstyle ':vcs_info:*' disable bzr cdv darcs mtn svk tla
-  #zstyle ':vcs_info:*:prompt:*' check-for-changes true
-  zstyle ':vcs_info:*:prompt:*' unstagedstr '¹'  # display ¹ if there are unstaged changes
-  zstyle ':vcs_info:*:prompt:*' stagedstr '²'    # display ² if there are staged changes
-  zstyle ':vcs_info:*:prompt:*' actionformats "${FMT_BRANCH}${FMT_ACTION}" "${FMT_PATH}"
-  zstyle ':vcs_info:*:prompt:*' formats       "${FMT_BRANCH}"              "${FMT_PATH}"
-  zstyle ':vcs_info:*:prompt:*' nvcsformats   ""                             "%~"         
-
-  #`chpwd' checks that standard output is terminal
-  # then puts the directory in the title bar if the terminal
-  # is an xterm or some close relative.
-  # last directory: ${PWD##*/} or %c or %.
-  #   precmd() { print -Pn "\e]0; ${PWD##*/} %c\a" }
-  chpwd() { print -Pn "\e]0;%.\a" }
-  precmd() { print -Pn "\e]0;%.\a" }
-
-  function precmd {       
-    vcs_info 'prompt'          
-  }      
-
-  function lprompt {
-      local brackets=$1
-      local color1=$2  
-      local color2=$3  
-      local at="${color1}@${PR_RESET}"                        
-
-      #if [[ `hostname` == "aa" ]]; then
-        #local user_host="%m"                    
-      #else
-        #local user_host="${color2}%n${at}${color2}%m"                    
-      #fi
-
-      local bracket_open="${color1}${brackets[1]}${PR_RESET}"
-      local bracket_close="${color1}${brackets[2]}"          
-                                                               
-      local git='$vcs_info_msg_0_'                           
-      local cwd="${color2}%B%1~%b"
-
-      PROMPT="${PR_RESET}${user_host}${bracket_open}${git}${bracket_close}${PR_RESET}: "
-  }                                                                                        
-
-  function rprompt {
-      local brackets=$1
-      local color1=$2  
-      local color2=$3  
-                       
-      local bracket_open="${color1}${brackets[1]}${PR_RESET}"
-      local bracket_close="${color1}${brackets[2]}${PR_RESET}"
-      local colon="${color1}:"                                
-      local at="${color1}@${PR_RESET}"                        
-                                                              
-      local vcs_cwd='${${vcs_info_msg_1_%%.}/$HOME/~}'        
-      local cwd="${color2}%B%20<..<${vcs_cwd}%<<%b"
-      local inner="${user_host}${colon}${cwd}"
-
-      RPROMPT="${PR_RESET}${bracket_open}${inner}${bracket_close}${PR_RESET}"
-  }
-
-  lprompt '' $BR_BRIGHT_BLACK $PR_WHITE
-
-
-  # Load RVM and set promt
-  if [[ -s "$HOME/.rvm/bin/rvm-prompt" ]] ; then
-    export RPS1="$RPS1   \$(~/.rvm/bin/rvm-prompt v g)"
-    source $HOME/.rvm/scripts/rvm
-  elif [[ -s "/usr/local/rvm/scripts/rvm" ]] ; then
-    export RPS1="$RPS1   \$(rvm-prompt v g)"
-    source /usr/local/rvm/scripts/rvm
-  fi
-
-  if [ -f '/etc/profile.d/rvm.sh' ]; then
-    source /etc/profile.d/rvm.sh
-  fi
-
-  # GIT branch info
-  setopt prompt_subst
-
-  autoload -Uz vcs_info
-  zstyle ':vcs_info:*' formats '%F{99}[%F{2}%b%F{99}]%f'
-  zstyle ':vcs_info:(sv[nk]|bzr):*' branchformat '%b%F{1}:%F{3}%r'
-  zstyle ':vcs_info:*' enable git cvs svn
-
-  # or use pre_cmd, see man zshcontrib
-  vcs_info_wrapper() {
-    vcs_info
-    if [ -n "$vcs_info_msg_0_" ]; then
-      echo "%{$fg[grey]%}${vcs_info_msg_0_}%{$reset_color%}$del"
-    fi
-  }
-  export PS1=$'%n$(vcs_info_wrapper): '
-
-  #export RUBY_HEAP_MIN_SLOTS=1000000
-  export RUBY_HEAP_SLOTS_INCREMENT=1000000
-  export RUBY_HEAP_SLOTS_GROWTH_FACTOR=1
-  export RUBY_GC_MALLOC_LIMIT=1000000000
-  export RUBY_HEAP_FREE_MIN=500000
-
-  export AWS_CONFIG_FILE=$HOME/.ssh/amazon/aws_config_file
-  source $HOME/.ssh/amazon-gitlab.eu-priit/credentials.sh
-
-  source ~/.rubotorc
-fi
-
-#
-# ####### LOCAL ENV END ########
-#
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"  # This loads RVM
+[[ -s "/etc/zsh/zshrc-priit" ]] && source "/etc/zsh/zshrc-priit" # priit custom stuff if present
