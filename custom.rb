@@ -14,11 +14,14 @@ dep 'custom' do
   # cleanup ssh welcome text
   requires 'motd_empty'
 
-  # verify ssh UsePAM is off
-  requires 'sshd_pam_should_be_off'
-
   # verify ssh root login is off
   requires 'sshd_root_login_should_be_off'
+
+  # verify ssh password login is off
+  requires 'sshd_password_should_be_off'
+
+  # password checks
+  requires 'admin_user_password'
 end
 
 

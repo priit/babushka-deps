@@ -29,8 +29,15 @@ dep 'group', :groupname do
 end
 
 dep 'sudoer', :username do
-  met? { '/etc/sudoers'.p.grep(/^#{username}/) }
+  met? do
+    path.p.exists?
+  end 
+
   meet do 
-    '/etc/sudoers'.p.append("#{username} ALL=(ALL:ALL) ALL") 
+    path.p.write("#{username} ALL=(ALL:ALL) ALL") 
+  end
+
+  def path
+    "/etc/sudoers.d/user-#{username}"
   end
 end
