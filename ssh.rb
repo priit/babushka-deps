@@ -68,7 +68,7 @@ dep 'sshd_config', :username do
   after { shell '/etc/init.d/ssh restart' }
 end
 
-dep 'sshd_pan_should_be_off' do
+dep 'sshd_pam_should_be_off' do
   met? do
     '/etc/ssh/sshd_config'.p.grep(/UsePAM yes/)
   end
