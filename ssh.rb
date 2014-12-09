@@ -26,6 +26,9 @@ dep 'ssh_all_authorized_keys', :username do
   end
 
   met? do
+    puts 'keys size'
+    puts keys.size
+    puts keys.inspect
     keys.size == 0
   end
 
