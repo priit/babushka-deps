@@ -68,6 +68,7 @@ dep 'admin_password', :password do
       @add_it = true 
     end
     puts 'setup:'
+    @add_it = 'aaa'
     puts @add_it
     puts @add_it
   end
