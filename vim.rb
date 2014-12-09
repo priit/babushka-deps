@@ -22,6 +22,7 @@ end
 dep 'sshd_accept_vimuser_env' do
   met? { '/etc/ssh/sshd_config'.p.grep(/^AcceptEnv VIMUSER/) }
   meet do 
+    '/etc/ssh/sshd_config'.p.append("\n# Babushka added. Variable used in /usr/bin/v file") 
     '/etc/ssh/sshd_config'.p.append("\nAcceptEnv VIMUSER\n") 
   end
   after { shell '/etc/init.d/ssh restart' }
