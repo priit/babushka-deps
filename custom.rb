@@ -20,8 +20,11 @@ dep 'custom' do
   # verify ssh password login is off
   requires 'sshd_password_should_be_off'
 
-  # password checks
+  # add admin password, amazon debian ec2 stuff
   requires 'admin_password'
+
+  # admin should also ask passowrd, amazon debian ec2 stuff
+  requires 'replace_default_admin_sudoer'
 end
 
 
@@ -81,5 +84,28 @@ dep 'admin_password', :password do
   meet do
     password.ask('Root user password')
     shell "echo 'admin:#{password}' | chpasswd"
+  end
+end
+
+dep 'replace_default_admin_sudoer' do
+  met? do
+    path.p.exists?
+  end 
+
+  meet do 
+    filename.p.write("admin ALL=(ALL:ALL) ALL") 
+    if shell "visudo -cf #{filename}"
+      shell "mv #{filename} #{path}"
+    else
+      puts 'Syntax error in new sudoers file'
+    end
+  end
+
+  def path
+    "/etc/sudoers.d/#{filename}"
+  end
+
+  def filename
+    "90-cloud-init-users"
   end
 end
