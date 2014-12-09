@@ -3,7 +3,7 @@ dep 'vim.managed'
 dep 'vimrc_priit' do
   requires 'vim.managed'
   requires 'v.bin'
-  requires 'sshd_user_env_on'
+  requires 'sshd_accept_vimuser_env'
 
   met? { "/etc/vim/vimrc-priit".p.exists? }
   meet do
@@ -19,10 +19,10 @@ dep 'v.bin' do
   end
 end
 
-dep 'sshd_user_env_on' do
-  met? { '/etc/ssh/sshd_config'.p.grep(/^PermitUserEnvironment yes/) }
+dep 'sshd_accept_vimuser_env' do
+  met? { '/etc/ssh/sshd_config'.p.grep(/^AcceptEnv VIMUSER/) }
   meet do 
-    '/etc/ssh/sshd_config'.p.append("\nPermitUserEnvironment yes\n") 
+    '/etc/ssh/sshd_config'.p.append("\nAcceptEnv VIMUSER\n") 
   end
   after { shell '/etc/init.d/ssh restart' }
 end
