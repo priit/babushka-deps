@@ -1,51 +1,7 @@
 #
 # ssh config
 #
-dep 'ssh_authorized_keys_lock', :username do
-  met? do
-    return true if "/home/#{username}/.ssh/authorized_keys".p.grep(/^#{stamp}/)
-    confirm("Should we skip asking authorized keys next time? (y/n)", default: 'n')
-  end
-
-  meet do
-    "/home/#{username}/.ssh/authorized_keys".p.append("#{stamp}\n")
-  end
-
-  def stamp
-    "# Babushka: do not update this file"
-  end
-end
-
-dep 'ssh_all_authorized_keys', :username do
-  # requires 'ssh_init_authorized_keys'.with(username)
-  met? do
-    false
-  end
-
-  meet do
-    keys = []
-    keys_path = Dir.glob("#{File.dirname(load_path)}/ssh/keys/*.pub")
-    Dir.glob(keys_path).each do |file|
-      filename = File.basename(file)
-      if confirm("Should we add authorized key: #{filename} (y/n)", default: 'n')
-        keys << File.open(file, &:readline)
-      end
-    end
-
-    if keys.size > 0
-      authorized_path.p.append("# Babushka managed keys\n")
-      authorized_path.p.append(keys.join('\n'))
-      authorized_path.p.append("# End of Babushka managed keys\n")
-    end
-  end
-
-  def authorized_path
-    "/home/#{username}/.ssh/authorized_keys"
-  end
-end
-
-
-dep 'ssh_init_authorized_keys', :username do
+dep 'ssh_init_authorized_keys_file', :username do
   met? { "#{ssh_dir}/authorized_keys".p.exists? }
   meet do
     shell "mkdir -p -m 700 '#{ssh_dir}'" and
@@ -60,6 +16,68 @@ dep 'ssh_init_authorized_keys', :username do
 
   def group
     shell "id -gn #{username}"
+  end
+end
+
+dep 'ssh_authorized_keys_lock', :username do
+  met? do
+    return true if "/home/#{username}/.ssh/authorized_keys".p.grep(/^#{stamp}/)
+    confirm("Should we skip asking authorized keys next time? (y/n)", default: 'n')
+  end
+
+  meet do
+    "/home/#{username}/.ssh/authorized_keys".p.append("#{stamp}\n")
+  end
+end
+
+dep 'ssh_all_authorized_keys', :username do
+  ssh_authorized_key username, 'test'
+  # requires 'ssh_init_authorized_keys_file'.with(username)
+  # met? do
+    # false
+  # end
+
+  # meet do
+    # keys = []
+    # keys_path = Dir.glob("#{File.dirname(load_path)}/ssh/keys/*.pub")
+    # Dir.glob(keys_path).each do |file|
+      # filename = File.basename(file)
+      # if confirm("Should we add authorized key: #{filename} (y/n)", default: 'n')
+        # keys << File.open(file, &:readline)
+      # end
+    # end
+
+    # if keys.size > 0
+      # authorized_path.p.append("# Babushka managed keys\n")
+      # authorized_path.p.append(keys.join('\n'))
+      # authorized_path.p.append("# End of Babushka managed keys\n")
+    # end
+  # end
+
+  # def authorized_path
+    # "/home/#{username}/.ssh/authorized_keys"
+  # end
+
+  # def stamp
+    # "# Babushka: do not update this file"
+  # end
+end
+
+meta :ssh_authorized_key do
+  accepts_value_for :username, :key
+
+  template do
+    met? do
+      shell? "fgrep '#{key}' '#{authorized_path}'"
+    end
+
+    meet do
+      authorized_path.p.append(key)
+    end
+  end
+
+  def authorized_path
+    "/home/#{username}/.ssh/authorized_keys"
   end
 end
 
