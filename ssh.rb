@@ -70,12 +70,16 @@ end
 
 dep 'sshd_pam_should_be_off' do
   met? do
-    '/etc/ssh/sshd_config'.p.grep(/UsePAM yes/)
+    path.p.grep(/UsePAM yes/)
   end
 
   meet do 
-    shell "sed 's/UsePAM yes/UsePAM no/g"
+    shell "sed 's/UsePAM yes/UsePAM no/g' #{path} > #{path}"
   end
   # after { shell '/etc/init.d/ssh restart' }
+  
+  def path
+    '/etc/ssh/sshd_config'
+  end
 end
 
