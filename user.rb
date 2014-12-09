@@ -30,14 +30,13 @@ end
 
 dep 'sudoer', :username do
   met? do
-    # path.p.exists?
-    false
+    path.p.exists?
   end 
 
   meet do 
     filename.p.write("#{username} ALL=(ALL:ALL) ALL") 
     if shell "visudo -cf #{filename}"
-      puts 'yeah new file ok'
+      shell "mv #{filename} #{path}"
     else
       puts 'Syntax error in new sudoers file'
     end
@@ -50,5 +49,4 @@ dep 'sudoer', :username do
   def filename
     "user-#{username}"
   end
-
 end
