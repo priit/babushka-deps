@@ -17,7 +17,7 @@ dep 'ssh_authorized_keys_lock', :username do
 end
 
 dep 'ssh_all_authorized_keys', :username do
-  requires 'ssh_init_authorized_keys'.with(username)
+  # requires 'ssh_init_authorized_keys'.with(username)
 
   met? do
     Dir.glob(keys_path).each do |file|
@@ -31,9 +31,9 @@ dep 'ssh_all_authorized_keys', :username do
   end
 
   meet do
-    # authorized_path.p.append("# Babushka managed keys\n")
-    # authorized_path.p.append(keys.join('\n'))
-    # authorized_path.p.append("# End of Babushka managed keys\n")
+    authorized_path.p.append("# Babushka managed keys\n")
+    authorized_path.p.append(keys.join('\n'))
+    authorized_path.p.append("# End of Babushka managed keys\n")
   end
 
   def authorized_path
