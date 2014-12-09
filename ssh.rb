@@ -36,9 +36,9 @@ dep 'ssh_all_authorized_keys', :username do
     authorized_path.p.append("# Babushka managed keys\n")
     keys.each do |key|
       authorized_path.p.append(keys.join('\n'))
-      keys.delete(key)
     end
     authorized_path.p.append("# End of Babushka managed keys\n")
+    keys = []
   end
 
   def authorized_path
