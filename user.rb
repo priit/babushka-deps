@@ -30,14 +30,25 @@ end
 
 dep 'sudoer', :username do
   met? do
-    path.p.exists?
+    # path.p.exists?
+    false
   end 
 
   meet do 
-    path.p.write("#{username} ALL=(ALL:ALL) ALL") 
+    filename.p.write("#{username} ALL=(ALL:ALL) ALL") 
+    if shell "visudo -cf #{filename}"
+      puts 'yeah new file ok'
+    else
+      puts 'new file not ok'
+    end
   end
 
   def path
-    "/etc/sudoers.d/user-#{username}"
+    "/etc/sudoers.d/#{filename}"
   end
+
+  def filename
+    "user-#{username}"
+  end
+
 end
