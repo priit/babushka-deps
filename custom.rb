@@ -89,7 +89,7 @@ end
 
 dep 'replace_default_admin_sudoer' do
   met? do
-    path.p.exists?
+    path.p.exists? && !path.p.grep(/^# Created by cloud-init/)
   end 
 
   meet do 
