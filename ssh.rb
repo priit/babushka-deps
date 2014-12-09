@@ -30,7 +30,7 @@ dep 'ssh_all_authorized_keys', :username do
     end
     confirm('test-end')
 
-    keys.size == 0
+    testkeys.size == 0
   end
 
   meet do
