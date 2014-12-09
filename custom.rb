@@ -2,8 +2,8 @@ dep 'custom' do
   # set locale, US by default
   requires 'locales.conf'
 
-  requires 'root zshrc file'
+  requires 'root_user_zshrc'
 
-  # set gitlab vim
-  requires 'vim.confroot'
+  # set priit vim
+  requires 'vimrc_priit'
 end
