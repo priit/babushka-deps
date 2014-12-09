@@ -79,10 +79,7 @@ dep 'admin_password', :password do
   end
 
   meet do
-    puts 'yeah'
     password.ask('Root user password')
-    puts password
-    puts "no password ask? #{password}"
+    sudo "passwd admin #{password}"
   end
 end
-
