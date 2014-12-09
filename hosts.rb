@@ -20,7 +20,6 @@ dep 'hosts.deny' do
 end
 
 dep 'hosts.allow', :allowed_ips do
-
   met? do
     if '/etc/hosts.allow'.p.grep(/^ALL: /) 
       true
