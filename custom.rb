@@ -69,9 +69,12 @@ dep 'admin_password', :password do
   end
 
   met? do
-    return true if skip
-    shell('sudo -k') # expire an existing cached password
-    shell?('sudo -n true')
+    if skip
+      true
+    else
+      shell('sudo -k') # expire an existing cached password
+      shell?('sudo -n true')
+    end
   end
 
   meet do
