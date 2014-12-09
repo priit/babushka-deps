@@ -70,13 +70,12 @@ end
 
 dep 'sshd_pan_should_be_off' do
   met? do
-    '/etc/ssh/sshd_config'.p.grep(/^UsePAM yes/)
+    '/etc/ssh/sshd_config'.p.grep(/UsePAM yes/)
   end
 
   meet do 
-    '/etc/ssh/sshd_config'.p.append("\nAcceptEnv VIMUSER\n") 
+    shell "sed 's/UsePAM yes/UsePAM no/g"
   end
-
-
+  # after { shell '/etc/init.d/ssh restart' }
 end
 
