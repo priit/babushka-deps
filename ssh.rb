@@ -16,28 +16,24 @@ dep 'ssh_all_authorized_keys', :username do
   requires 'ssh_init_authorized_keys_file'.with(username)
 
   setup do
-    keys_path = Dir.glob("#{File.dirname(load_path)}/ssh/keys/*.pub")
-    Dir.glob(keys_path).each do |file|
-      filename = File.basename(file)
-      if confirm("Should we add authorized key: #{filename} (y/n)", default: 'n')
-        keys << File.open(file, &:readline)
+    if confirm("Should we add authorized keys? (y/n)", default: 'n')
+      keys_path = Dir.glob("#{File.dirname(load_path)}/ssh/keys/*.pub")
+      Dir.glob(keys_path).each do |file|
+        filename = File.basename(file)
+        if confirm("Should add: #{filename} (y/n)", default: 'n')
+          keys << File.open(file, &:readline)
+        end
       end
     end
-    puts 'in setup block'
-    puts keys.size
   end
 
   met? do
-    puts 'in met block'
-    puts keys.size
     keys.size == 0
   end
 
   meet do
     authorized_path.p.append("# Babushka managed keys\n")
-    keys.each do |key|
-      authorized_path.p.append(keys.join('\n'))
-    end
+    authorized_path.p.append(keys.join('\n'))
     authorized_path.p.append("# End of Babushka managed keys\n")
     @keys = [] # let's keep met? happy
   end
