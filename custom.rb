@@ -61,17 +61,13 @@ dep 'set_us_locale'  do
 end
 
 dep 'admin_password', :password do
+  setup do
+    unmeetable! "This dep must be run as root." unless shell('whoami') == 'root'
+    unmeetable! if !confirm('Root user does not have password, should we add it? (y/n)', default: 'n')
+  end
+
   met? do
-    if shell('whoami') == 'root'
-      if shell('sudo -n true')
-        confirm('Root user does not have password, should we add it? (y/n)', default: 'n')
-      else
-        true
-      end
-    else
-      puts 'Not root user, cannot dedect root password'
-      false
-    end
+    shell('sudo -n true')
   end
 
   meet do
