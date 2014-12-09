@@ -18,14 +18,15 @@ end
 
 dep 'ssh_all_authorized_keys', :username do
   # requires 'ssh_init_authorized_keys'.with(username)
-  Dir.glob(keys_path).each do |file|
-    filename = File.basename(file)
-    if confirm("Should we add authorized key: #{filename} (y/n)", default: 'n')
-      keys << File.open(file, &:readline)
-    end
-  end
-
   met? do
+    # Dir.glob(keys_path).each do |file|
+      # filename = File.basename(file)
+      # if confirm("Should we add authorized key: #{filename} (y/n)", default: 'n')
+        # keys << File.open(file, &:readline)
+      # end
+    # end
+    confirm('test')
+
     keys.size == 0
   end
 
