@@ -1,0 +1,7 @@
+#!/bin/sh
+
+if [ ! -z "$VIMUSER" ]; then
+  /usr/bin/vim -u /etc/vim/vimrc-$VIMUSER $*
+else
+  /usr/bin/vim $*
+fi

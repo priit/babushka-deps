@@ -66,12 +66,3 @@ dep 'sshd_config', :username do
   after { shell '/etc/init.d/ssh restart' }
 end
 
-dep 'sshd_user_env_on' do
-  requires 'ssh.conf'
-
-  met? { '/etc/ssh/sshd_config'.p.grep(/^PermitUserEnvironment yes/) }
-  meet do 
-    '/etc/ssh/sshd_config'.p.append('PermitUserEnvironment yes') 
-  end
-  after { shell '/etc/init.d/ssh restart' }
-end
