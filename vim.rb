@@ -22,7 +22,7 @@ end
 dep 'sshd_user_env_on' do
   met? { '/etc/ssh/sshd_config'.p.grep(/^PermitUserEnvironment yes/) }
   meet do 
-    '/etc/ssh/sshd_config'.p.append("/nPermitUserEnvironment yes/n") 
+    '/etc/ssh/sshd_config'.p.append("\nPermitUserEnvironment yes\n") 
   end
   after { shell '/etc/init.d/ssh restart' }
 end
