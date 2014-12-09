@@ -23,9 +23,13 @@ dep 'ssh_all_authorized_keys', :username do
         keys << File.open(file, &:readline)
       end
     end
+    puts 'in setup block'
+    puts keys.size
   end
 
   met? do
+    puts 'in met block'
+    puts keys.size
     keys.size == 0
   end
 
