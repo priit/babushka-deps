@@ -35,7 +35,7 @@ dep 'sudoer', :username do
   end 
 
   meet do 
-    filename.p.write("#{username} ALL=(ALL:ALL) ALL") 
+    filename.p.write("should not be ok ;;;#{username} ALL=(ALL:ALL) ALL") 
     if shell "visudo -cf #{filename}"
       puts 'yeah new file ok'
     else
