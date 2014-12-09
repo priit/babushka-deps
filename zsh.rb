@@ -1,26 +1,26 @@
 dep 'zsh.managed'
 
-dep 'zsh', :user do
+dep 'zsh', :username do
   requires 'zsh.managed'
-  user.default!(shell('whoami'))
+  username.default!(shell('whoami'))
 
-  met? { shell("sudo su - '#{user}' -c 'echo $SHELL'") == which('zsh') }
-  meet { sudo("chsh -s '#{which('zsh')}' #{user}") }
+  met? { shell("sudo su - '#{username}' -c 'echo $SHELL'") == which('zsh') }
+  meet { sudo("chsh -s '#{which('zsh')}' #{username}") }
 end
 
-dep 'user zshrc file', :user do
-  requires 'zsh'.with(user)
+dep 'zshrc', :username do
+  requires 'zsh'.with(username)
 
-  met? { user == 'root' ? true : "/home/#{user}/.zshrc".p.exists? }
+  met? { username == 'root' ? true : "/home/#{username}/.zshrc".p.exists? }
   meet do
-    render_erb 'zsh/zshrc', :to => "/home/#{user}/.zshrc".p
-    log_shell  "Set owner as #{user}:#{user}:", 
-      "chown #{user}:#{user} /home/#{user}/.zshrc"
+    render_erb 'zsh/zshrc', :to => "/home/#{username}/.zshrc".p
+    log_shell  "Set owner as #{username}:#{username}:", 
+      "chown #{username}:#{username} /home/#{username}/.zshrc"
   end
 end
 
 # root
-dep 'root zshrc file' do
+dep 'root_user_zshrc' do
   requires 'zsh'.with('root')
   met? { "/root/.zshrc".p.exists? }
   meet { render_erb 'zsh/zshrc', :to => "/root/.zshrc".p }

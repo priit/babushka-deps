@@ -5,6 +5,7 @@ dep 'app_user', :username, :password do
 
   requires 'user'.with(username, password)
   requires 'ssh_all_authorized_keys'.with(username)
+  requires 'zshrc'.with(username)
   # requires 'user is sudoer'.with(name)
 end
 

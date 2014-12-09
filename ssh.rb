@@ -1,17 +1,6 @@
 #
 # ssh config
 #
-dep 'ssh_authorized_keys_lock', :username do
-  met? do
-    return true if "/home/#{username}/.ssh/authorized_keys".p.grep(/^#{stamp}/)
-    confirm("Should we skip asking authorized keys next time? (y/n)", default: 'n')
-  end
-
-  meet do
-    "/home/#{username}/.ssh/authorized_keys".p.append("#{stamp}\n")
-  end
-end
-
 dep 'ssh_all_authorized_keys', :username do
   requires 'ssh_init_authorized_keys_file'.with(username)
 
@@ -20,7 +9,7 @@ dep 'ssh_all_authorized_keys', :username do
       keys_path = Dir.glob("#{File.dirname(load_path)}/ssh/keys/*.pub")
       Dir.glob(keys_path).each do |file|
         filename = File.basename(file)
-        if confirm("Should add: #{filename} (y/n)", default: 'n')
+        if confirm("Should we add: #{filename} (y/n)", default: 'n')
           keys << File.open(file, &:readline)
         end
       end
@@ -40,10 +29,6 @@ dep 'ssh_all_authorized_keys', :username do
 
   def authorized_path
     "/home/#{username}/.ssh/authorized_keys"
-  end
-
-  def stamp
-    "# Babushka: do not update this file"
   end
 
   def keys
@@ -68,8 +53,6 @@ dep 'ssh_init_authorized_keys_file', :username do
     shell "id -gn #{username}"
   end
 end
-
-
 
 #
 # sshd config
