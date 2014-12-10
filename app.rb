@@ -13,7 +13,7 @@ dep 'rvm', :username do
   end
 
   meet do
-    shell 'bash -c "`curl https://rvm.beginrescueend.com/install/rvm`"'
+    shell "curl -sSL https://get.rvm.io | bash -s stable --ruby"
   end
 end
 
