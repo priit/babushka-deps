@@ -12,6 +12,9 @@ dep 'zshrc', :username do
   requires 'zsh'.with(username)
 
   met? do
+    puts 'test'
+    puts sourche_path
+    puts path
     shell? "diff #{source_path} #{path}"
   end
 
