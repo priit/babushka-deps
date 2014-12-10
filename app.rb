@@ -9,7 +9,7 @@ dep 'app', :username, :appname do
     end
   end
 
-  username.choose(@homenames)
+  username.choose(@homenames.join(' '))
   appname.ask("New app name")
 
   # requires 'ruby_deps'.with(username)
