@@ -1,12 +1,10 @@
 # rails app
 dep 'app', :username, :appname do
-  setup do
-    @homenames = []
-    Dir.glob('/home/*').sort.each do |dir|
-      homename = dir.split('/').last
-      next if homename == 'admin'
-      @homenames << homename
-    end
+  @homenames = []
+  Dir.glob('/home/*').sort.each do |dir|
+    homename = dir.split('/').last
+    next if homename == 'admin'
+    @homenames << homename
   end
 
   username.choose(@homenames.join(' '))
