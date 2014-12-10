@@ -16,7 +16,7 @@ dep 'zshrc', :username do
   end
 
   meet do
-    render_erb 'zsh/zshrc', to: zshrc_path, as: autodel
+    render_erb 'zsh/zshrc', to: zshrc_path, as: 'autodel'
   end
 
   def zshrc_path
