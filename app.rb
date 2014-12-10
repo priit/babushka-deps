@@ -56,7 +56,7 @@ dep 'app_dirs', :username, :appname do
   end
 
   meet do
-    log_shell "mkdir #{dirs.join(' ')}"
+    shell "mkdir #{dirs.join(' ')}"
   end
 
   def path
