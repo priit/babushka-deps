@@ -73,10 +73,9 @@ dep 'admin_password', :password do
     if @add_it
       shell('sudo -k') # expire an existing cached password
       puts 'test'
-      puts shell('passwd --status admin')[1] == 'P'
-      binding.pry
+      puts shell('passwd --status admin').split(' ')[1] == 'P'
 
-      shell('passwd --status admin')[1] == 'P'
+      shell('passwd --status admin').split(' ')[1] == 'P'
     else
       true
     end
