@@ -7,13 +7,6 @@ dep 'app', :username, :appname do
   # requires 'app_dirs'.with(username, appname)
 end
 
-dep 'rvm' do
-  met? do
-    
-  end
-
-end
-
 dep 'rvm', :username do
   met? do
     "/home/#{username}/.rvm/scripts/rvm".p.file?
