@@ -77,15 +77,14 @@ dep 'ruby_deps' do
   end
 
   met? do
-    puts shell? "dpkg --status #{list.join(' ')}"
-    false
+    shell? "dpkg --status #{list.join(' ')}"
   end
 
   meet do
-    log_shell "apt-get --yes install #{list.join(' ')}"
+    log_shell "apt-get --yes install #{list.join(' ')}", sudo: true
   end
 
   after do
-    log_shell "Autoremoving packages", "apt-get -y autoremove", :sudo => true
+    log_shell "Autoremoving packages", "apt-get -y autoremove", sudo: true
   end
 end
