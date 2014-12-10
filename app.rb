@@ -10,7 +10,7 @@ dep 'app', :username, :appname do
   username.default(@homenames.first).choose(@homenames)
   appname.ask("New app name")
 
-  # requires 'ruby_deps'.with(username)
+  requires 'ruby_deps'.with(username)
   requires 'rbenv'.with(username)
   # requires 'ruby-build'.with(username)
   # requires 'rvm'.with(username)
@@ -28,6 +28,20 @@ dep 'rbenv', :username do
 end
 
 dep 'app_dirs', :username, :appname do
+  def dirs
+    w%(
+      #{path}
+      #{path}/current
+      #{path}/releases
+      #{path}/shared
+      #{path}/shared/bundle
+      #{path}/shared/config
+      #{path}/shared/log
+      #{path}/shared/pins
+      #{path}/shared/tmp
+    )
+  end
+
   setup do
     if !"/home/#{username}".p.exists?
       unmeetable! 'This dep requires linux user should be present.' 
@@ -46,27 +60,31 @@ dep 'app_dirs', :username, :appname do
     @path ||= "/home/#{username}/#{appname}"
   end
 
-  def dirs
-    w%(
-      #{path}
-      #{path}/current
-      #{path}/releases
-      #{path}/shared
-      #{path}/shared/bundle
-      #{path}/shared/config
-      #{path}/shared/log
-      #{path}/shared/pins
-      #{path}/shared/tmp
-    )
-  end
 end
 
 dep 'ruby_deps' do
-  # meet do
-  # shell 'apt-get install autoconf bison build-essential libssl-dev libyaml-dev' /
-    # 'libreadline6-dev zlib1g-dev libncurses5-dev'
+  def list
+    %w(
+      autoconf
+      bison
+      build-essential
+      libssl-dev
+      libyaml-dev
+      libreadline6-dev
+      zlib1g-dev
+      libncurses5-dev
+    )
+  end
 
-  # after do
-    # log_shell "Autoremoving packages", "apt-get -y autoremove", :sudo => true
-  # end
+  met? do
+    shell? "dpkg --status #{list.join(' ')}"
+  end
+
+  meet do
+    shell "apt-get --yes install #{list.join(' ')}"
+  end
+
+  after do
+    log_shell "Autoremoving packages", "apt-get -y autoremove", :sudo => true
+  end
 end
