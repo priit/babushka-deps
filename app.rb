@@ -12,8 +12,7 @@ dep 'app', :username, :appname do
 
   requires 'ruby_deps'
   requires 'rbenv'.with(username)
-  # requires 'rvm'.with(username)
-  # requires 'app_dirs'.with(username, appname)
+  requires 'app_dirs'.with(username, appname)
 end
 
 dep 'rbenv', :username do
@@ -57,7 +56,7 @@ dep 'app_dirs', :username, :appname do
   end
 
   meet do
-    shell "mkdir #{dirs.join(' ')}"
+    log_shell "mkdir #{dirs.join(' ')}"
   end
 
   def path
