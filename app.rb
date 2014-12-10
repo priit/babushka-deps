@@ -4,7 +4,7 @@ dep 'app', :username, :appname do
     @homenames = []
     Dir.glob('/home/*').sort.each do |dir|
       homename = dir.split('/').last
-      next if hamename == 'admin'
+      next if homename == 'admin'
       @homenames << homename
     end
   end
