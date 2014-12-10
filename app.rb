@@ -7,7 +7,7 @@ dep 'app', :username, :appname do
     @homenames << homename
   end
 
-  username.choose(@homenames)
+  username.default(@homenames.first).choose(@homenames)
   appname.ask("New app name")
 
   # requires 'ruby_deps'.with(username)
