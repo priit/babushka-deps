@@ -7,12 +7,12 @@ dep 'app', :username, :appname do
     @homenames << homename
   end
 
-  username.choose(@homenames.join(' '))
+  username.choose(@homenames)
   appname.ask("New app name")
 
   # requires 'ruby_deps'.with(username)
   requires 'rbenv'.with(username)
-  requires 'ruby-build'.with(username)
+  # requires 'ruby-build'.with(username)
   # requires 'rvm'.with(username)
   # requires 'app_dirs'.with(username, appname)
 end
