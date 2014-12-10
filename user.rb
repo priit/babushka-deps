@@ -50,4 +50,3 @@ dep 'sudoer', :username do
     "user-#{username}"
   end
 end
-
