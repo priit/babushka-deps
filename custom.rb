@@ -72,10 +72,7 @@ dep 'admin_password', :password do
   met? do
     if @add_it
       shell('sudo -k') # expire an existing cached password
-      puts 'test'
-      puts !shell?('sudo -l -U admin -n true')
-
-      !shell?('sudo -l -U admin -n true')
+      shell('passwd --status admin').split(' ').second == 'P'
     else
       true
     end
