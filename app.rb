@@ -1,20 +1,22 @@
-# generic rails app
+# rails app
 dep 'app', :username, :appname do
   username.ask("Username")
   appname.ask("New app name")
 
-  requires 'rvm'.with(username)
+  # requires 'ruby_deps'.with(username)
+  requires 'rben'.with(username)
+  # requires 'rvm'.with(username)
   # requires 'app_dirs'.with(username, appname)
 end
 
-dep 'rvm', :username do
-  met? do
-    "/home/#{username}/.rvm/scripts/rvm".p.file?
-  end
-
-  meet do
-    shell "curl -sSL https://get.rvm.io | bash -s stable --ruby"
-  end
+dep 'rbenv', :username do
+  met? {
+    in_path? 'rbenv'
+  }
+  meet {
+    git 'https://github.com/sstephenson/rbenv.git', :to => "/home/#{username}/.rbenv"
+    shell "chown #{username}:#{username} -R /home/#{username}/.rbenv"
+  }
 end
 
 dep 'app_dirs', :username, :appname do
@@ -50,3 +52,14 @@ dep 'app_dirs', :username, :appname do
     )
   end
 end
+
+dep 'ruby_deps' do
+  meet do
+  shell 'apt-get install autoconf bison build-essential libssl-dev libyaml-dev' /
+    'libreadline6-dev zlib1g-dev libncurses5-dev'
+
+  after do
+    log_shell "Autoremoving packages", "apt-get -y autoremove", :sudo => true
+  end
+end
+
