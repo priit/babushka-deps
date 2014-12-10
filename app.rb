@@ -32,7 +32,7 @@ end
 
 dep 'app_dirs', :username, :appname do
   def dirs
-    w%(
+    %w(
       #{path}
       #{path}/current
       #{path}/releases
