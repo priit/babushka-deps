@@ -63,27 +63,27 @@ end
 dep 'admin_password', :password do
   setup do
     unmeetable! 'This dep must be run as root.' unless shell('whoami') == 'root'
-    shell('sudo -k') # expire an existing cached password
-    if shell?('sudo -n true')
+    if !password?
       @add_it = true if confirm('Root user does not have password, should we add it? (y/n)', default: 'n')
     end
   end
 
   met? do
     if @add_it
-      shell('sudo -k') # expire an existing cached password
-      puts 'test'
-      puts shell('passwd --status admin').split(' ')[1] == 'P'
-
-      shell('passwd --status admin').split(' ')[1] == 'P'
+      password?
     else
       true
     end
   end
 
   meet do
-    password.ask('Root user password')
+    password.ask('Add a new admin password')
     shell "echo 'admin:#{password}' | chpasswd"
+  end
+
+  def password?
+    shell('sudo -k') # expire an existing cached password
+    shell('passwd --status admin').split(' ')[1] == 'P'
   end
 end
 
