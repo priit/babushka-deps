@@ -12,7 +12,7 @@ dep 'zshrc', :username do
   requires 'zsh'.with(username)
 
   met? do
-    log_shell "diff #{source_path} #{zshrc_path}"
+    log_shell "tt", "diff #{source_path} #{zshrc_path}"
     shell? "diff #{source_path} #{zshrc_path}"
   end
 
