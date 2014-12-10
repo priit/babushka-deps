@@ -4,7 +4,7 @@ dep 'app', :username, :appname do
   appname.ask("New app name")
 
   # requires 'ruby_deps'.with(username)
-  requires 'rben'.with(username)
+  requires 'rbenv'.with(username)
   # requires 'rvm'.with(username)
   # requires 'app_dirs'.with(username, appname)
 end
@@ -54,12 +54,11 @@ dep 'app_dirs', :username, :appname do
 end
 
 dep 'ruby_deps' do
-  meet do
-  shell 'apt-get install autoconf bison build-essential libssl-dev libyaml-dev' /
-    'libreadline6-dev zlib1g-dev libncurses5-dev'
+  # meet do
+  # shell 'apt-get install autoconf bison build-essential libssl-dev libyaml-dev' /
+    # 'libreadline6-dev zlib1g-dev libncurses5-dev'
 
-  after do
-    log_shell "Autoremoving packages", "apt-get -y autoremove", :sudo => true
-  end
+  # after do
+    # log_shell "Autoremoving packages", "apt-get -y autoremove", :sudo => true
+  # end
 end
-
