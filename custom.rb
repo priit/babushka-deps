@@ -64,7 +64,7 @@ dep 'admin_password', :password do
   setup do
     unmeetable! 'This dep must be run as root.' unless shell('whoami') == 'root'
     if !password?
-      @add_it = true if confirm('Root user does not have password, should we add it? (y/n)', default: 'n')
+      @add_it = true if confirm('User admin does not have password, should we add it? (y/n)', default: 'n')
     end
   end
 
