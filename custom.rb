@@ -6,7 +6,7 @@ dep 'custom' do
   requires 'env'
 
   # add root zshrc
-  requires 'root_user_zshrc'
+  requires 'zshrc'.with('root')
 
   # add v bin and priit vim
   requires 'vimrc_priit'

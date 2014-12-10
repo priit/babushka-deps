@@ -11,17 +11,24 @@ end
 dep 'zshrc', :username do
   requires 'zsh'.with(username)
 
-  met? { username == 'root' ? true : "/home/#{username}/.zshrc".p.exists? }
+  met? do
+    shell? "diff #{source_path} #{path}"
+  end
+
   meet do
     render_erb 'zsh/zshrc', :to => "/home/#{username}/.zshrc".p
-    log_shell  "Set owner as #{username}:#{username}:", 
-      "chown #{username}:#{username} /home/#{username}/.zshrc"
+    shell "chown #{username}:#{username} /home/#{username}/.zshrc"
   end
-end
 
-# root
-dep 'root_user_zshrc' do
-  requires 'zsh'.with('root')
-  met? { "/root/.zshrc".p.exists? }
-  meet { render_erb 'zsh/zshrc', :to => "/root/.zshrc".p }
+  def path
+    if username == 'root'
+      '/root/.zshrc'
+    else
+      "/home/#{username}/.zshrc"
+    end
+  end
+
+  def source_path
+    @source_path ||= erb_path_for 'zsh/zshrc'
+  end
 end

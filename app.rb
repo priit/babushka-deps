@@ -85,10 +85,10 @@ dep 'ruby_deps' do
   end
 
   meet do
-    log_shell "apt-get --yes install #{list.join(' ')}", sudo: true
+    shell "apt-get --yes install #{list.join(' ')}", sudo: true
   end
 
   after do
-    log_shell "Autoremoving packages", "apt-get -y autoremove", sudo: true
+    shell "Autoremoving packages", "apt-get -y autoremove", sudo: true
   end
 end
