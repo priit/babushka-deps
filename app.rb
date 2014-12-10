@@ -77,11 +77,12 @@ dep 'ruby_deps' do
   end
 
   met? do
-    shell? "dpkg --status #{list.join(' ')}"
+    puts shell? "dpkg --status #{list.join(' ')}"
+    false
   end
 
   meet do
-    shell "apt-get --yes install #{list.join(' ')}"
+    log_shell "apt-get --yes install #{list.join(' ')}"
   end
 
   after do
