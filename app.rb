@@ -10,7 +10,7 @@ dep 'app', :username, :appname do
   username.default(@homenames.first).choose(@homenames)
   appname.ask("New app name")
 
-  requires 'ruby_deps'.with(username)
+  requires 'ruby_deps'
   requires 'rbenv'.with(username)
   # requires 'ruby-build'.with(username)
   # requires 'rvm'.with(username)
