@@ -13,7 +13,7 @@ dep 'zshrc', :username do
 
   met? do
     puts 'test'
-    puts sourche_path
+    puts source_path
     puts path
     shell? "diff #{source_path} #{path}"
   end
