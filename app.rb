@@ -1,10 +1,20 @@
 # rails app
 dep 'app', :username, :appname do
-  username.ask("Username")
+  setup do
+    @homenames = []
+    Dir.glob('/home/*').sort.each do |dir|
+      homename = dir.split('/').last
+      next if hamename == 'admin'
+      @homenames << homename
+    end
+  end
+
+  username.choose(@homenames)
   appname.ask("New app name")
 
   # requires 'ruby_deps'.with(username)
   requires 'rbenv'.with(username)
+  requires 'ruby-build'.with(username)
   # requires 'rvm'.with(username)
   # requires 'app_dirs'.with(username, appname)
 end

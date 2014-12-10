@@ -7,7 +7,7 @@ dep 'ssh_all_authorized_keys', :username do
   setup do
     if confirm("Should we add authorized keys? (y/n)", default: 'n')
       keys_path = Dir.glob("#{File.dirname(load_path)}/ssh/keys/*.pub")
-      Dir.glob(keys_path).each do |file|
+      Dir.glob(keys_path).sort.each do |file|
         filename = File.basename(file)
         if confirm("Should we add: #{filename} (y/n)", default: 'n')
           keys << File.open(file, &:readline)
