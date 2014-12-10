@@ -12,18 +12,14 @@ dep 'zshrc', :username do
   requires 'zsh'.with(username)
 
   met? do
-    puts 'test'
-    puts source_path
-    puts path
-    shell? "diff #{source_path} #{path}"
+    shell? "diff #{source_path} #{zshrc_path}"
   end
 
   meet do
-    render_erb 'zsh/zshrc', :to => "/home/#{username}/.zshrc".p
-    shell "chown #{username}:#{username} /home/#{username}/.zshrc"
+    render_erb 'zsh/zshrc', to: zshrc_path, as: autodel
   end
 
-  def path
+  def zshrc_path
     if username == 'root'
       '/root/.zshrc'
     else
