@@ -11,7 +11,7 @@ end
 
 dep 'rbenv', :username do
   met? {
-    in_path? 'rbenv'
+    "/home/#{username}/.rbenv".p.exists?
   }
   meet {
     git 'https://github.com/sstephenson/rbenv.git', :to => "/home/#{username}/.rbenv"
