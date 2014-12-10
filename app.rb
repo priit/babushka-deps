@@ -12,19 +12,23 @@ dep 'app', :username, :appname do
 
   requires 'ruby_deps'
   requires 'rbenv'.with(username)
-  # requires 'ruby-build'.with(username)
   # requires 'rvm'.with(username)
   # requires 'app_dirs'.with(username, appname)
 end
 
 dep 'rbenv', :username do
   met? {
-    "/home/#{username}/.rbenv".p.exists?
+    path.p.exists? && "#{path}/plugins/ruby-build".p.exists?
   }
   meet {
-    git 'https://github.com/sstephenson/rbenv.git', :to => "/home/#{username}/.rbenv"
+    git 'https://github.com/sstephenson/rbenv.git', to: path
+    git 'https://github.com/sstephenson/ruby-build.git', to: "#{path}/plugins/ruby-build"
     shell "chown #{username}:#{username} -R /home/#{username}/.rbenv"
   }
+
+  def path
+    "/home/#{username}/.rbenv"
+  end
 end
 
 dep 'app_dirs', :username, :appname do
