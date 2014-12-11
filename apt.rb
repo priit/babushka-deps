@@ -1,5 +1,5 @@
-dep 'ruby-dev.managed'
-dep 'libcurl4-openssl-dev.managed'
+apt 'ruby-dev'
+apt 'libcurl4-openssl-dev'
 
 # dep 'apt' do
   #met? do
