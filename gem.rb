@@ -43,9 +43,8 @@ dep 'passenger' do
   end
 
   def latest_version
-    # hack until bett st --local passenger | grep passengerer idea
-    shell "gem list --local passenger | grep passenger".split("\n")
-      .first.sub(/.*\(/, '').sub(/\).*/, '').split(',').first
+    spec = YAML.parse(rvm("gem specification #{gem_name}"))
+    spec.select("/version/version")[0].value
   end
 
   def path
