@@ -26,7 +26,7 @@ end
 # and passenger will always stay under root user
 # for easier update and management
 dep 'passenger' do
-  requires 'ruby-dev.managed'
+  # requires 'ruby-dev.managed'
   requires 'libcurl4-openssl-dev.managed'
 
   met? do
