@@ -93,16 +93,3 @@ dep 'ruby_deps' do
   end
 end
 
-# passenger runtime is ruby version agnostic,
-# thus no need to install under each username
-# and passenger will always stay under root user
-# for easier update and management
-dep 'passenger' do
-  met? do
-    shell? "gem list --local passenger | grep passenger", as: 'root'
-  end
-
-  meet do
-    shell "gem install --no-ri --no-rdoc passenger", as: 'root'
-  end
-end
