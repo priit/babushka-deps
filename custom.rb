@@ -8,6 +8,9 @@ dep 'custom' do
   # add root zshrc
   requires 'zshrc'.with('root')
 
+  # add root gemrc
+  requires 'gemrc'.with('root')
+
   # add v bin and priit vim
   requires 'vimrc_priit'
 
