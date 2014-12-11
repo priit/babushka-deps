@@ -1,5 +1,14 @@
-apt 'ruby-dev'
-apt 'libcurl4-openssl-dev'
+dep 'ruby-dev.lib' do
+  installs {
+    via :apt, 'ruby-dev'
+  }
+end
+
+dep 'libcurl4-openssl-dev.lib' do
+  installs {
+    via :apt, 'libcurl4-openssl-dev'
+  }
+end
 
 # dep 'apt' do
   #met? do
