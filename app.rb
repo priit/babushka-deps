@@ -8,12 +8,12 @@ dep 'app', :username, :appname do
   end
 
   username.default(@home_dirs.first).choose(@home_dirs)
-  appname.ask("New app name")
+  appname.ask("Rails app name")
 
   requires 'ruby_deps'
   requires 'rbenv'.with(username)
   requires 'app_dirs'.with(username, appname)
-
+  requires 'passenger'
 end
 
 dep 'rbenv', :username do
@@ -90,5 +90,19 @@ dep 'ruby_deps' do
 
   after do
     shell "Autoremoving packages", "apt-get -y autoremove", sudo: true
+  end
+end
+
+# passenger runtime is ruby version agnostic,
+# thus no need to install under each username
+# and passenger will always stay under admin user
+# for easier update and management
+dep 'passenger' do
+  met? do
+    shell? "gem list --local passenger | grep passenger", as: 'admin'
+  end
+
+  meet do
+    shell "gem install --no-ri --no-rdoc passenger", as: 'admin'
   end
 end
