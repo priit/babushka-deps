@@ -43,8 +43,9 @@ dep 'passenger' do
   end
 
   def latest_version
-    # hack until better idea
-    shell "gem list --local passenger | grep passenger".sub(/.*\(/, '').sub(/\).*/, '').split(',').first
+    # hack until bett st --local passenger | grep passengerer idea
+    shell "gem list --local passenger | grep passenger".split("\n")
+      .first.sub(/.*\(/, '').sub(/\).*/, '').split(',').first
   end
 
   def path
