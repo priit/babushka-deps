@@ -99,10 +99,10 @@ end
 # for easier update and management
 dep 'passenger' do
   met? do
-    shell? "gem list --local passenger | grep passenger", as: 'sudo'
+    shell? "gem list --local passenger | grep passenger", as: 'root'
   end
 
   meet do
-    shell "gem install --no-ri --no-rdoc passenger", as: 'sudo'
+    shell "gem install --no-ri --no-rdoc passenger", as: 'root'
   end
 end
