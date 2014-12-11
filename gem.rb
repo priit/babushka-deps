@@ -30,12 +30,25 @@ dep 'passenger' do
   requires 'libcurl4-openssl-dev.lib'
 
   met? do
-    shell?("gem list --local passenger | grep passenger", as: 'root')
+    shell?("gem list --local passenger | grep passenger", as: 'root') && so_path.p.exists?
   end
 
   meet do
     log_shell "Passenger gem install...",  "gem install --no-ri --no-rdoc passenger", as: 'root'
     log_shell "Passenger nginx install...",
       "passenger-install-nginx-module -a --languages ruby", as: 'root'
+  end
+
+  def latest_version
+    # hack until better idea
+    shell "gem list --local passenger | grep passenger".sub(/.*\(/, '').sub(/\).*/, '').split(',').first
+  end
+
+  def path
+    shell("gem env gemdir")
+  end
+
+  def so_path
+    "#{path}/gems/passenger-#{latest_version}/ext/nginx/mod_passenger.so"
   end
 end
