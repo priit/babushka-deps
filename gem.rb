@@ -35,10 +35,7 @@ dep 'passenger' do
   requires 'libcurl4-openssl-dev.lib'
 
   met? do
-    puts 'passenger path'
-    puts so_path
-    # shell?("gem list --local passenger | grep passenger", as: 'root') && so_path.p.exists?
-    true
+    shell?("gem list --local passenger | grep passenger", as: 'root') # && so_path.p.exists?
   end
 
   meet do
