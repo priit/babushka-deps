@@ -46,7 +46,7 @@ dep 'passenger' do
 
   def latest_version
     spec = YAML.parse(shell("gem specification passenger"))
-    spec.select("/version/version")[0].value
+    spec.to_ruby.version.to_s
   end
 
   def path
