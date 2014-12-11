@@ -45,7 +45,7 @@ dep 'passenger' do
   end
 
   def latest_version
-    spec = YAML.parse(rvm("gem specification #{gem_name}"))
+    spec = YAML.parse(shell("gem specification passenger"))
     spec.select("/version/version")[0].value
   end
 
