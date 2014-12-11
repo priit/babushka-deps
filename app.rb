@@ -14,6 +14,7 @@ dep 'app', :username, :appname do
   requires 'rbenv'.with(username)
   requires 'app_dirs'.with(username, appname)
   requires 'passenger'
+  requires 'nginx_init'
 end
 
 dep 'rbenv', :username do
