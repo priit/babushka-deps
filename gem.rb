@@ -26,8 +26,8 @@ end
 # and passenger will always stay under root user
 # for easier update and management
 dep 'passenger' do
-  # requires 'ruby-dev.managed'
-  requires 'libcurl4-openssl-dev.managed'
+  requires 'ruby-dev.lib'
+  requires 'libcurl4-openssl-dev.lib'
 
   met? do
     shell?("gem list --local passenger | grep passenger", as: 'root')
