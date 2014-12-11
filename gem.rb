@@ -26,11 +26,16 @@ end
 # and passenger will always stay under root user
 # for easier update and management
 dep 'passenger' do
+  requires 'ruby-dev.managed'
+  requires 'libcurl4-openssl-dev.managed'
+
   met? do
-    shell? "gem list --local passenger | grep passenger", as: 'root'
+    shell?("gem list --local passenger | grep passenger", as: 'root')
   end
 
   meet do
-    shell "gem install --no-ri --no-rdoc passenger", as: 'root'
+    log_shell "Passenger gem install...",  "gem install --no-ri --no-rdoc passenger", as: 'root'
+    log_shell "Passenger nginx install...",
+      "passenger-install-nginx-module -a --languages ruby", as: 'root'
   end
 end
