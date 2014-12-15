@@ -1,4 +1,7 @@
-# rails app
+#
+# Default app creates passenger/nginx stack
+# Note: passenger will be installed under admin user
+#
 dep 'app', :username, :appname do
   @home_dirs = []
   Dir.glob('/home/*').sort.each do |dir|
@@ -13,9 +16,14 @@ dep 'app', :username, :appname do
   requires 'ruby_deps'
   requires 'rbenv'.with(username)
   requires 'app_dirs'.with(username, appname)
-  requires 'passenger'
+  requires 'passenger' # installed under admin user, because core does not depend on ruby version
   requires 'nginx_init'
 end
+
+
+#
+# Low level deps
+#
 
 dep 'rbenv', :username do
   met? {
