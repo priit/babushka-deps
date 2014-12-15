@@ -125,14 +125,4 @@ if [[ $1 == "g" || $1 == "generate" || $1 == "c"  || $1 == "console"   ||
   fi
 }
 
-# prefer rbenv over rvm
-if [[ -s "$HOME/.rbenv" ]]; then
-  # rbenv loading
-  export PATH="$HOME/.rbenv/bin:$PATH"
-  eval "$(rbenv init -)"
-elif [[ -s "$HOME/.rvm/scripts/rvm" ]]; then
-  # fallback to rvm
-  source "$HOME/.rvm/scripts/rvm"
-fi
-
 [[ -s "/etc/zsh/zshrc-priit" ]] && source "/etc/zsh/zshrc-priit" # priit custom stuff if present
