@@ -68,6 +68,7 @@ dep 'nginx_init' do
 
   meet do
     render_erb 'gem/init_nginx', to: init_path
+    shell "chmod +x #{init_path}"
   end
 
   def init_path
