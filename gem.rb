@@ -26,10 +26,9 @@ dep 'gemrc', :username do
   end
 end
 
-# passenger runtime is ruby version agnostic,
-# thus no need to install under each username
-# and passenger will always stay under root user
-# for easier update and management
+# Passenger runtime is ruby version agnostic,
+# thus no need to install under each user
+# Passenger will use system default ruby
 dep 'passenger' do
   requires 'ruby-dev.lib'
   requires 'libcurl4-openssl-dev.lib'

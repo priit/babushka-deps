@@ -14,7 +14,7 @@ dep 'app', :username, :appname do
   appname.ask("Rails app name")
 
   requires 'ruby_deps'
-  requires 'rbenv'.with(username)
+  requires 'rbenv'
   requires 'app_dirs'.with(username, appname)
   requires 'passenger' # installed under admin user, because core does not depend on ruby version
   requires 'nginx_init'
@@ -25,7 +25,7 @@ end
 # Low level deps
 #
 
-dep 'rbenv', :username do
+dep 'rbenv' do
   met? {
     path.p.exists? &&
     "#{path}/plugins/ruby-build".p.exists? &&
@@ -36,12 +36,47 @@ dep 'rbenv', :username do
     git 'https://github.com/sstephenson/ruby-build.git', to: "#{path}/plugins/ruby-build"
     git 'https://github.com/carsomyr/rbenv-bundler.git', to: "#{path}/plugins/bundler"
     shell "chown #{username}:#{username} -R /home/#{username}/.rbenv"
+
+    # create rbenv profile file
+    profile = <<-EOL
+      #!/bin/bash
+      export RBENV_ROOT="#{path}"
+      export PATH="$RBENV_ROOT/bin:$PATH"
+      eval "$(rbenv init -)"
+    EOL
+
+    profile_path.p.write(profile)
+    shell "chmod 755 #{profile_path}"
   }
 
   def path
-    "/home/#{username}/.rbenv"
+    '/usr/local/rbenv'
+  end
+
+  def profile_path
+    '/etc/profile.d/rbenv.sh'
   end
 end
+
+dep 'ruby', :version, :patchlevel do
+  requires 'rbenv'
+  met? {
+    # check for right system ruby in rbenv
+    if login_shell "rbenv versions | grep '#{version}-#{patchlevel}' 1>/dev/null 2>&1"
+      log_ok "ruby version=#{version} patchlevel=#{patchlevel}"
+    end
+  }
+  meet {
+    # install system ruby in rbenv
+    login_shell "rbenv install #{version}-#{patchlevel}"
+    log "ruby version=#{version} patchlevel=#{patchlevel}"
+  }
+  after {
+    login_shell 'rbenv rehash'
+    login_shell "rbenv global #{version}-#{patchlevel}"
+  }
+end
+
 
 dep 'app_dirs', :username, :appname do
   def dirs
