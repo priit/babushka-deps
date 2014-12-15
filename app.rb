@@ -35,7 +35,6 @@ dep 'rbenv' do
     git 'https://github.com/sstephenson/rbenv.git', to: path
     git 'https://github.com/sstephenson/ruby-build.git', to: "#{path}/plugins/ruby-build"
     git 'https://github.com/carsomyr/rbenv-bundler.git', to: "#{path}/plugins/bundler"
-    shell "chown #{username}:#{username} -R /home/#{username}/.rbenv"
 
     # create rbenv profile file
     profile = <<-EOL
