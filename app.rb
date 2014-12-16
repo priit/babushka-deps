@@ -13,9 +13,15 @@ dep 'app', :username, :appname do
   username.default(@home_dirs.first).choose(@home_dirs)
   appname.ask("Rails app name")
 
+  # app env
+  requires 'app_dirs'.with(username, appname)
+
+  # ruby env
   requires 'ruby_deps'
   requires 'rbenv'
-  requires 'app_dirs'.with(username, appname)
+  requires 'ruby'.with('2.1.5')
+
+  # web server
   requires 'passenger' # installed under admin user, because core does not depend on ruby version
   requires 'nginx_init'
 end
@@ -42,22 +48,22 @@ dep 'rbenv' do
   end
 end
 
-dep 'ruby', :version, :patchlevel do
+dep 'ruby', :version do
   requires 'rbenv'
   met? {
     # check for right system ruby in rbenv
-    if login_shell "rbenv versions | grep '#{version}-#{patchlevel}' 1>/dev/null 2>&1"
-      log_ok "ruby version=#{version} patchlevel=#{patchlevel}"
+    if login_shell "rbenv versions | grep '#{version}' 1>/dev/null 2>&1"
+      log_ok "ruby version=#{version}"
     end
   }
   meet {
     # install system ruby in rbenv
-    login_shell "rbenv install #{version}-#{patchlevel}"
-    log "ruby version=#{version} patchlevel=#{patchlevel}"
+    login_shell "rbenv install #{version}"
+    log "ruby version=#{version}"
   }
   after {
     login_shell 'rbenv rehash'
-    login_shell "rbenv global #{version}-#{patchlevel}"
+    login_shell "rbenv global #{version}"
   }
 end
 
