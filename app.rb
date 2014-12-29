@@ -7,7 +7,7 @@ dep 'app', :username, :appname, :ruby_ver do
   end
 
   username.default(@home_dirs.first).choose(@home_dirs)
-  ruby_ver.default('2.1.5')
+  ruby_ver.default('2.2.0')
   appname.ask("Rails app name")
 
   # app env
@@ -119,6 +119,7 @@ dep 'ruby_deps' do
       libreadline6-dev
       zlib1g-dev
       libncurses5-dev
+      libffi-dev
     )
   end
 
