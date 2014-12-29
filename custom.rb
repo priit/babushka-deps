@@ -1,3 +1,4 @@
+# ec2 debian specific
 dep 'custom' do
   # set locale, US by default
   requires 'set_us_locale'
@@ -7,9 +8,11 @@ dep 'custom' do
 
   # add root zshrc
   requires 'zshrc'.with('root')
+  requires 'zshrc'.with('admin')
 
   # add root gemrc
   requires 'gemrc'.with('root')
+  requires 'gemrc'.with('admin')
 
   # add v bin and priit vim
   requires 'vimrc_priit'
