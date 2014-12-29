@@ -1,7 +1,3 @@
-#
-# Default app creates passenger/nginx stack
-# Note: passenger will be installed under admin user
-#
 dep 'app', :username, :appname, :ruby_ver do
   @home_dirs = []
   Dir.glob('/home/*').sort.each do |dir|
@@ -20,11 +16,7 @@ dep 'app', :username, :appname, :ruby_ver do
   # ruby env
   requires 'ruby_deps'
   requires 'rbenv'
-  requires 'ruby'.with('2.1.5')
-
-  # web server
-  requires 'passenger' # installed under admin user, because core does not depend on ruby version
-  requires 'nginx_init'
+  # requires 'ruby'.with('2.1.5')
 end
 
 
