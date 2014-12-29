@@ -10,7 +10,7 @@ end
 
 dep 'enable-passenger-root' do
   met? do
-    path.p.grep(/#{from_string}/)
+    !path.p.grep(/#{from_string}/)
   end
 
   meet do 
