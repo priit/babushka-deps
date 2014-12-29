@@ -35,7 +35,7 @@ dep 'rbenv', :username do
 
   requires 'rbenv-core'.with(username, path)
   requires 'rbenv-ruby-build'.with(username, path)
-  requires 'rbenv-core'.with(username, path)
+  requires 'rbenv-bundler'.with(username, path)
 end
 
 dep 'rbenv-core', :username, :path do
@@ -48,7 +48,7 @@ dep 'rbenv-ruby-build', :username, :path do
   meet { git 'https://github.com/sstephenson/ruby-build.git', to: "#{path}/plugins/ruby-build" }
 end
 
-dep 'rbenv', :username, :path do
+dep 'rbenv-bundler', :username, :path do
   met? { "#{path}/plugins/bundler".p.exists? }
   meet { git 'https://github.com/carsomyr/rbenv-bundler.git', to: "#{path}/plugins/bundler" }
 end
