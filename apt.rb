@@ -1,4 +1,5 @@
 dep 'nginx-extras.lib' do
+  requires 'passenger-source-list'
   installs {
     via :apt, 'nginx-extras'
   }

@@ -6,4 +6,3 @@ dep 'nginx_passenger' do
   requires 'nginx-extras.lib'
   requires 'passenger.lib'
 end
-
