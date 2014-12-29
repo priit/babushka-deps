@@ -24,7 +24,7 @@ dep 'custom' do
   requires 'sshd_password_should_be_off'
 
   # require admin password
-  requires 'admin_password'
+  requires 'replace_default_admin_sudoer'
 end
 
 

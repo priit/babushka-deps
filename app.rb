@@ -2,7 +2,7 @@
 # Default app creates passenger/nginx stack
 # Note: passenger will be installed under admin user
 #
-dep 'app', :username, :appname do
+dep 'app', :username, :appname, :ruby_ver do
   @home_dirs = []
   Dir.glob('/home/*').sort.each do |dir|
     homename = dir.split('/').last
@@ -11,6 +11,7 @@ dep 'app', :username, :appname do
   end
 
   username.default(@home_dirs.first).choose(@home_dirs)
+  ruby_ver.default('2.1.5')
   appname.ask("Rails app name")
 
   # app env
