@@ -111,7 +111,7 @@ dep 'ruby_deps' do
   end
 
   met? do
-    shell? "sudo dpkg --status #{list.join(' ')}"
+    shell?("dpkg --status #{list.join(' ')}", as: 'root')
   end
 
   meet do
