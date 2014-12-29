@@ -25,10 +25,6 @@ end
 #
 
 dep 'rbenv', :username do
-  requires 'rbenv-core'.with(username, path)
-  requires 'rbenv-ruby-build'.with(username, path)
-  requires 'rbenv-core'.with(username, path)
-
   def path
     if username.nil?
       '/usr/local/rbenv'
@@ -36,6 +32,10 @@ dep 'rbenv', :username do
       "/home/#{username}/.rbenv"
     end
   end
+
+  requires 'rbenv-core'.with(username, path)
+  requires 'rbenv-ruby-build'.with(username, path)
+  requires 'rbenv-core'.with(username, path)
 end
 
 dep 'rbenv-core', :username, :path do
