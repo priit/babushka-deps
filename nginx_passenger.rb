@@ -54,4 +54,3 @@ dep 'enable-passenger-ruby' do
     'passenger_ruby'
   end
 end
-
