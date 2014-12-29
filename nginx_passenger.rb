@@ -1,9 +1,9 @@
 #
 # Default app creates nginx/passenger stack
-# Passenger will be installed under admin user
+# Passenger will be installed by official deb
 #
 dep 'nginx_passenger' do
-  # web server
-  requires 'passenger' # installed under admin user, because core does not depend on ruby version
-  requires 'nginx_init'
+  requires 'nginx-extras.lib'
+  requires 'passenger.lib'
 end
+

@@ -1,3 +1,16 @@
+dep 'nginx-extras.lib' do
+  installs {
+    via :apt, 'nginx-extras'
+  }
+end
+
+dep 'passenger.lib' do
+  requires 'passenger-source-list'
+  installs {
+    via :apt, 'passenger'
+  }
+end
+
 dep 'passenger-source-list' do
   requires 'passenger-repo-key'
 
@@ -14,10 +27,6 @@ dep 'passenger-source-list' do
     '/etc/apt/sources.list.d/passenger.list'
   end
 end
-
-#
-# low level 
-#
 
 dep 'ruby-dev.lib' do
   installs {
