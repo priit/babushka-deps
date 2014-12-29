@@ -1,4 +1,4 @@
-deb 'passenger-source-list' do
+dep 'passenger-source-list' do
   require 'passenger-repo-key'
 
   met? {
@@ -43,7 +43,7 @@ dep 'ca-certificates.lib' do
   }
 end
 
-deb 'passenger.lib' do
+dep 'passenger.lib' do
   require 'passenger-repo-key'
   require 'passenger-source-list'
 
@@ -56,7 +56,7 @@ deb 'passenger.lib' do
   }
 end
 
-deb 'passenger-repo-key' do
+dep 'passenger-repo-key' do
   require 'apt-transport-https.lib'
   require 'ca-certificates.lib'
 
