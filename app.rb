@@ -119,7 +119,7 @@ dep 'ruby_deps' do
   end
 
   met? do
-    shell? "dpkg --status #{list.join(' ')}"
+    shell? "sudo dpkg --status #{list.join(' ')}"
   end
 
   meet do
