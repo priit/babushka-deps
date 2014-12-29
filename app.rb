@@ -37,10 +37,10 @@ dep 'rbenv', :username do
   }
 
   def path
-    if username.present?
-      "/home/#{username}/.rbenv"
-    else
+    if username.nil?
       '/usr/local/rbenv'
+    else
+      "/home/#{username}/.rbenv"
     end
   end
 end
