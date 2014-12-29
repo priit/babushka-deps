@@ -15,7 +15,7 @@ dep 'app', :username, :appname, :ruby_ver do
 
   # ruby env
   requires 'ruby_deps'
-  requires 'rbenv'
+  requires 'rbenv'.with(username)
   # requires 'ruby'.with('2.1.5')
 end
 
@@ -24,7 +24,7 @@ end
 # Low level deps
 #
 
-dep 'rbenv' do
+dep 'rbenv', :username do
   met? {
     path.p.exists? &&
     "#{path}/plugins/ruby-build".p.exists? &&
@@ -37,7 +37,11 @@ dep 'rbenv' do
   }
 
   def path
-    '/usr/local/rbenv'
+    if username.present?
+      "/home/#{username}/.rbenv"
+    else
+      '/usr/local/rbenv'
+    end
   end
 end
 
