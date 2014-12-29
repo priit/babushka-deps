@@ -131,8 +131,8 @@ dep 'ruby_deps' do
     shell "apt-get --yes install #{list.join(' ')}", sudo: true
   end
 
-  after do
-    shell "Autoremoving packages", "apt-get -y autoremove", sudo: true
-  end
+  # after do
+    # shell "Autoremoving packages", "apt-get -y autoremove", sudo: true
+  # end
 end
 
