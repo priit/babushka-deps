@@ -1,5 +1,7 @@
 meta :copy do
-  accepts_value_for :source, :path, :username
+  accepts_value_for :source
+  accepts_value_for :path
+  accepts_value_for :username
 
   template do
     met? do
