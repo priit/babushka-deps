@@ -1,7 +1,18 @@
-dep 'nginx-extras.lib' do
+dep 'nginx.lib' do
   requires 'passenger-source-list'
   installs {
     via :apt, 'nginx-extras'
+  }
+end
+
+dep 'apache.lib' do
+  requires 'passenger-source-list'
+  installs {
+    via :apt, 'libapache2-mod-passenger'
+  }
+  after {
+    log_shell "a2enmod passenger", as: 'root'
+    log_shell "service apache2 restart", as: 'root'
   }
 end
 

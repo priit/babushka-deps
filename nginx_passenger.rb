@@ -3,7 +3,7 @@
 # Passenger will be installed by official deb
 #
 dep 'nginx_passenger' do
-  requires 'nginx-extras.lib'
+  requires 'nginx.lib'
   requires 'passenger.lib'
   requires 'enable-passenger-root'
   requires 'enable-passenger-ruby'
