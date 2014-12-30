@@ -25,5 +25,5 @@ dep 'sshd_accept_vimuser_env' do
     '/etc/ssh/sshd_config'.p.append("\n# Babushka added. Variable used in /usr/bin/v file") 
     '/etc/ssh/sshd_config'.p.append("\nAcceptEnv VIMUSER\n") 
   end
-  after { shell '/etc/init.d/ssh restart' }
+  after { shell 'service ssh reload', as: 'root' }
 end
