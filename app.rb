@@ -41,16 +41,19 @@ end
 dep 'rbenv-core', :username, :path do
   met? { path.p.exists? }
   meet { git 'https://github.com/sstephenson/rbenv.git', to: path }
+  after { shell "chown #{username}:#{username} -R #{path}", as: 'root' }
 end
 
 dep 'rbenv-ruby-build', :username, :path do
   met? { "#{path}/plugins/ruby-build".p.exists? }
   meet { git 'https://github.com/sstephenson/ruby-build.git', to: "#{path}/plugins/ruby-build" }
+  after { shell "chown #{username}:#{username} -R #{path}", as: 'root' }
 end
 
 dep 'rbenv-bundler', :username, :path do
   met? { "#{path}/plugins/bundler".p.exists? }
   meet { git 'https://github.com/carsomyr/rbenv-bundler.git', to: "#{path}/plugins/bundler" }
+  after { shell "chown #{username}:#{username} -R #{path}", as: 'root' }
 end
 
 dep 'ruby', :version do
@@ -99,7 +102,7 @@ dep 'app_dirs', :username, :appname do
   end
 
   meet do
-    shell "mkdir #{dirs.join(' ')}"
+    shell "mkdir #{dirs.join(' ')}", as: username
   end
 
   def path
