@@ -7,6 +7,7 @@ dep 'vimrc_priit.copy' do
 
   source 'vim/vimrc-priit'
   path '/etc/vim/vimrc-priit'
+  comment '"'
 end
 
 dep 'v.copy' do
