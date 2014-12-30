@@ -15,7 +15,7 @@ dep 'custom' do
   requires 'gemrc'.with('admin')
 
   # add v bin and priit vim
-  requires 'vimrc_priit'
+  requires 'vimrc_priit.copy'
 
   # cleanup ssh welcome text
   requires 'motd_empty'
