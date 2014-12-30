@@ -2,7 +2,7 @@ dep 'vim.managed'
 
 dep 'vimrc_priit' do
   requires 'vim.managed'
-  requires 'v.bin'
+  requires 'v.copy'
   requires 'sshd_accept_vimuser_env'
 
   met? { "/etc/vim/vimrc-priit".p.exists? }
@@ -11,12 +11,13 @@ dep 'vimrc_priit' do
   end
 end
 
-dep 'v.bin' do
-  met? { "/usr/bin/v".p.exists? }
-  meet do
-    render_erb 'vim/v-bin', :to => "/usr/bin/v".p
-    shell 'chmod +x /usr/bin/v'
-  end
+dep 'v.copy' do
+  source 'vim/v-bin'
+  path '/usr/bin/v'
+
+  after {
+    shell "chmod +x #{path}"
+  }
 end
 
 dep 'sshd_accept_vimuser_env' do
