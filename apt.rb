@@ -22,6 +22,12 @@ dep 'passenger.lib' do
   }
 end
 
+dep 'libpq-dev.lib' do
+  installs {
+    via :apt, 'libpq-dev'
+  }
+end
+
 dep 'passenger-source-list' do
   requires 'passenger-repo-key'
 

@@ -17,6 +17,9 @@ dep 'app', :username, :appname, :ruby_ver do
   requires 'ruby_deps'
   requires 'rbenv'.with(username)
   # requires 'ruby'.with('2.1.5')
+  
+  # postgres dev
+  requires 'libpq-dev.lib'
 end
 
 
