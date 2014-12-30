@@ -1,7 +1,19 @@
 #!/bin/sh
 
+# ssh can send dedicated VIMUSER, so each ssh user has own vim profile
+# at your local machine, define VIMUSER and send it to server
+#
+# local machine: $HOME/.ssh/config file:
+# Host *
+#   SendEnv VIMUSER
+#
+# local machine: $HOME/.zshrc
+# export VIMUSER=priit
+# 
+
+# default v command fallback is priit
 if [ ! -z "$VIMUSER" ]; then
   /usr/bin/vim -u /etc/vim/vimrc-$VIMUSER $*
 else
-  /usr/bin/vim $*
+  /usr/bin/vim -u /etc/vim/vimrc-priit $*
 fi
