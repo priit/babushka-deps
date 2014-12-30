@@ -16,7 +16,7 @@ dep 'v.copy' do
   path '/usr/bin/v'
 
   after {
-    shell "chmod +x #{path}"
+    shell "chmod +x /usr/bin/v"
   }
 end
 
