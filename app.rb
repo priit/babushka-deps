@@ -91,6 +91,7 @@ dep 'app_dirs', :username, :appname do
       #{path}/shared/log
       #{path}/shared/pins
       #{path}/shared/tmp
+      #{path}/shared/tmp/cache
     )
   end
 
