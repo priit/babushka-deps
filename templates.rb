@@ -13,7 +13,7 @@ meta :copy do
     end
 
     meet do
-      render_erb source, to: path
+      render_erb source, to: path, comment: c
       shell "chown #{u}:#{u} #{path}"
     end
 
