@@ -11,8 +11,7 @@ dep 'apache.lib' do
     via :apt, 'libapache2-mod-passenger'
   }
   after {
-    log_shell "a2enmod passenger", as: 'root'
-    log_shell "service apache2 restart", as: 'root'
+    shell 'sudo a2enmod passenger; sudo service apache2 restart'
   }
 end
 
