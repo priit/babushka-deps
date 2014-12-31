@@ -83,7 +83,6 @@ dep 'app_dirs', :username, :appname do
   def dirs
     %W(
       #{path}
-      #{path}/current
       #{path}/releases
       #{path}/shared
       #{path}/shared/bundle
