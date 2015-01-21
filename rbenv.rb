@@ -1,4 +1,4 @@
-dep 'app', :username, :appname, :ruby_ver do
+dep 'rbenv', :username, :ruby_ver do
   @home_dirs = []
   Dir.glob('/home/*').sort.each do |dir|
     homename = dir.split('/').last
@@ -7,27 +7,22 @@ dep 'app', :username, :appname, :ruby_ver do
   end
 
   username.default(@home_dirs.first).choose(@home_dirs)
-  ruby_ver.default('2.2.0')
-  appname.ask("Rails app name")
-
-  # app env
-  requires 'app_dirs'.with(username, appname)
+  ruby_ver.ask('Ruby version?').default('2.2.0')
 
   # ruby env
   requires 'ruby_deps'
-  requires 'rbenv'.with(username)
+  requires 'rbenv-stack'.with(username)
   # requires 'ruby'.with('2.1.5')
   
   # postgres dev
   requires 'libpq-dev.lib'
 end
 
-
 #
 # Low level deps
 #
 
-dep 'rbenv', :username do
+dep 'rbenv-stack', :username do
   def path
     if username.nil?
       '/usr/local/rbenv'
@@ -76,42 +71,6 @@ dep 'ruby', :version do
     login_shell 'rbenv rehash'
     login_shell "rbenv global #{version}"
   }
-end
-
-
-dep 'app_dirs', :username, :appname do
-  def dirs
-    %W(
-      #{path}
-      #{path}/releases
-      #{path}/shared
-      #{path}/shared/bundle
-      #{path}/shared/config
-      #{path}/shared/log
-      #{path}/shared/pins
-      #{path}/shared/tmp
-      #{path}/shared/tmp/cache
-    )
-  end
-
-  setup do
-    if !"/home/#{username}".p.exists?
-      unmeetable! 'This dep requires linux user should be present.' 
-    end
-  end
-
-  met? do
-    dirs.map {|d| d.p.exists?}.all?
-  end
-
-  meet do
-    shell "mkdir #{dirs.join(' ')}", as: username
-  end
-
-  def path
-    @path ||= "/home/#{username}/#{appname}"
-  end
-
 end
 
 dep 'ruby_deps' do
