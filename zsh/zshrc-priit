@@ -5,10 +5,12 @@
 # default editor
 export EDITOR="vim -u /etc/vim/vimrc-priit"
 
+# export BUNDLER_EDITOR="/bin/echo"
+
 # for remote servers
 export VIMUSER=priit
 
-export PAGER="/bin/sh -c \"col -b | vim -u /etc/vim/vimrc-priit -R -c 'set nonumber' -\""
+#export PAGER="/bin/sh -c \"col -b | vim -u /etc/vim/vimrc-priit -R -c 'set nonumber' -\""
 
 alias ie8='kvm -cpu qemu32,-nx -usb -usbdevice tablet -drive file=/home/priit/vendor/winxp-ie8.img,cache=writeback -soundhw ac97'
 alias pdf="evince"
