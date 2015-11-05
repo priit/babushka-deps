@@ -109,7 +109,7 @@ dep 'sshd_pam_should_be_off' do
 
   meet do
     shell "cp #{path} #{path}.backup"
-    shell "sed 's/UsePam .*/UsePam no/g' #{path}.backup > #{path}"
+    shell "sed 's/UsePAM .*/UsePAM no/g' #{path}.backup > #{path}"
   end
 
   def path
