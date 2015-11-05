@@ -60,6 +60,16 @@ end
 # sshd config
 #
 
+# Use it when starting updating sshd_config
+dep 'sshd_config_day_backup' do
+  met? do
+    "/etc/ssh/sshd_config-#{Date.today}".p.exists?
+  end
+  meet do
+    "cp /etc/ssh/sshd_config /etc/ssh/sshd_config-#{Date.today}"
+  end
+end
+
 # global one config for all
 dep 'sshd_config', :username do
   met? do
