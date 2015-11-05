@@ -8,7 +8,7 @@ dep 'network_ip_failover', :ip_failover do
     ip_failover.ask('Please provide failover ip:')
     net_dev = 'eth0'
     next_virtual_interface_nr = shell "grep -e 'iface[ \t]*#{net_dev}:' #{path} | wc --lines"
-    vir_dev = "eth0:#{next_virtual_interface_nr}"
+    vir_dev = "#{net_dev}:#{next_virtual_interface_nr}"
     
     conf =  
       "\n# IP failover:\n" \
