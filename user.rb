@@ -1,15 +1,15 @@
 # 
 # Creates linux user for Rails application deployment
-# Usage babushka priit:app_user
+# Usage babushka priit:user
 #
 # Create own dedicated linux user and group for each app.
 # Add manually missing ssh keys for all deployers.
 # 
-dep 'app_user', :username, :password do
+dep 'user', :username, :password do
   username.ask("New app username'")
   password.ask("New password")
 
-  requires 'user'.with(username, password)
+  requires 'linux_user'.with(username, password)
   requires 'ssh_all_authorized_keys'.with(username)
   requires 'zshrc'.with(username)
   requires 'gemrc'.with(username)
@@ -22,7 +22,7 @@ end
 #
 
 # basic user with zsh
-dep 'user', :username, :password do
+dep 'linux_user', :username, :password do
   requires 'zsh'
   requires 'group'.with(username)
 
