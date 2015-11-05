@@ -9,7 +9,7 @@ dep 'gemrc', :username do
   end
 
   meet do
-    render_erb 'gem/gemrc', to: gemrc_path
+    render_erb 'gemrc', to: gemrc_path
     shell "chown #{username}:#{username} #{gemrc_path}"
   end
 
@@ -22,7 +22,7 @@ dep 'gemrc', :username do
   end
 
   def source_path
-    @source_path ||= erb_path_for 'gem/gemrc'
+    @source_path ||= erb_path_for 'gemrc'
   end
 end
 
@@ -68,7 +68,7 @@ dep 'gem-nginx_init' do
   end
 
   meet do
-    render_erb 'gem/init_nginx', to: init_path
+    render_erb 'init_nginx', to: init_path
     shell "chmod +x #{init_path}"
   end
 
@@ -77,6 +77,6 @@ dep 'gem-nginx_init' do
   end
 
   def source_path
-    @source_path ||= erb_path_for 'gem/init_nginx'
+    @source_path ||= erb_path_for 'init_nginx'
   end
 end

@@ -5,13 +5,13 @@ dep 'vimrc_priit.copy' do
   requires 'v.copy'
   requires 'sshd_accept_vimuser_env'
 
-  source 'vim/vimrc-priit'
+  source 'vimrc-priit'
   path '/etc/vim/vimrc-priit'
   comment '"'
 end
 
 dep 'v.copy' do
-  source 'vim/v-bin'
+  source 'v-bin'
   path '/usr/bin/v'
   after { shell "chmod +x /usr/bin/v" }
 end

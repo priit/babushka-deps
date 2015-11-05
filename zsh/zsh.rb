@@ -16,7 +16,7 @@ dep 'zshrc', :username do
   end
 
   meet do
-    render_erb 'zsh/zshrc', to: path
+    render_erb 'zshrc', to: path
     shell "chown #{username}:#{username} #{path}"
   end
 
@@ -29,6 +29,6 @@ dep 'zshrc', :username do
   end
 
   def source_path
-    @source_path ||= erb_path_for 'zsh/zshrc'
+    @source_path ||= erb_path_for 'zshrc'
   end
 end

@@ -36,7 +36,7 @@ dep 'passenger-source-list' do
   }
   meet {
     debian_version = "debian-#{shell("cat /etc/debian_version").to_i}"
-    render_erb "apt/passenger.list.#{debian_version}", :to => path
+    render_erb "passenger.list.#{debian_version}", :to => path
     Babushka::AptHelper.update_pkg_lists "Updating apt lists to load Passenger sources."
   }
 
