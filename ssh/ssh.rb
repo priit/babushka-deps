@@ -88,12 +88,12 @@ end
 
 dep 'sshd_root_login_should_be_off' do
   met? do
-    path.p.grep(/PermitRootLogin no/)
+    path.p.grep(/^PermitRootLogin no/)
   end
 
   meet do 
     shell "cp #{path} #{path}.backup"
-    shell "sed 's/PermitRootLogin .*/PermitRootLogin no/g' #{path}.backup > #{path}"
+    shell "sed 's/.*PermitRootLogin .*/PermitRootLogin no/g' #{path}.backup > #{path}"
   end
   after { shell '/etc/init.d/ssh restart' }
   
@@ -104,12 +104,12 @@ end
 
 dep 'sshd_pam_should_be_off' do
   met? do
-    path.p.grep(/UsePAM no/)
+    path.p.grep(/^UsePAM no/)
   end
 
   meet do
     shell "cp #{path} #{path}.backup"
-    shell "sed 's/UsePAM .*/UsePAM no/g' #{path}.backup > #{path}"
+    shell "sed 's/.*UsePAM .*/UsePAM no/g' #{path}.backup > #{path}"
   end
   after { shell '/etc/init.d/ssh restart' }
 
