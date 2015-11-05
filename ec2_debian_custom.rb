@@ -20,6 +20,9 @@ dep 'ec2_debian_custom' do
   # cleanup ssh welcome text
   requires 'motd_empty'
 
+  # sshd origin backup
+  requires 'sshd_config_day_backup'
+
   # verify ssh root login is off
   requires 'sshd_root_login_should_be_off'
 
