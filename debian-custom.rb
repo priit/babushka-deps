@@ -1,5 +1,5 @@
 # ec2 debian specific
-dep 'custom' do
+dep 'debian_custom' do
   # set locale, US by default
   requires 'set_us_locale'
 
