@@ -66,7 +66,7 @@ dep 'sshd_config_day_backup' do
     "/etc/ssh/sshd_config-#{Date.today}".p.exists?
   end
   meet do
-    "cp /etc/ssh/sshd_config /etc/ssh/sshd_config-#{Date.today}"
+    shell "cp /etc/ssh/sshd_config /etc/ssh/sshd_config-#{Date.today}"
   end
 end
 
