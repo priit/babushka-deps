@@ -1,4 +1,5 @@
-# ec2 debian specific
+# debian specific
+# run after you have setup dedicated user
 dep 'debian_custom' do
   # set locale, US by default
   requires 'set_us_locale'
@@ -27,7 +28,6 @@ dep 'debian_custom' do
   # verify ssh password login is off
   requires 'sshd_password_should_be_off'
 end
-
 
 # cleanup ssh welcome text
 dep 'motd_empty' do
