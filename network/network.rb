@@ -20,7 +20,7 @@ dep 'network_ip_failover', :ip_failover do
       "  pre-down /sbin/ifconfig #{vir_dev} down\n"
     path.p.append(conf)
   end
-  # after { shell '/etc/init.d/networking restart' }
+  after { shell '/etc/init.d/networking restart' }
   
   def path
     '/etc/network/interfaces'
