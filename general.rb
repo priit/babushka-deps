@@ -1,5 +1,5 @@
-# only very basic stuff
-dep 'basic' do
+# only very general basic stuff, should be harmless in most situations
+dep 'general' do
   requires 'tree.managed'
   requires 'zip.managed'
   requires 'unzip.managed'
@@ -11,7 +11,6 @@ end
 dep 'tree.managed' 
 dep 'unzip.managed'
 dep 'zip.managed'
-
 
 dep 'build-essential' do
   met? { shell('dpkg -l | grep "build-essential"') }
