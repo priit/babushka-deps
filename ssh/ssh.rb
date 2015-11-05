@@ -111,6 +111,7 @@ dep 'sshd_pam_should_be_off' do
     shell "cp #{path} #{path}.backup"
     shell "sed 's/UsePAM .*/UsePAM no/g' #{path}.backup > #{path}"
   end
+  after { shell '/etc/init.d/ssh restart' }
 
   def path
     '/etc/ssh/sshd_config'
