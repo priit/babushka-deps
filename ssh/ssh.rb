@@ -72,12 +72,12 @@ end
 
 dep 'sshd_password_should_be_off' do
   met? do
-    path.p.grep(/PasswordAuthentication no/)
+    path.p.grep(/^PasswordAuthentication no/)
   end
 
   meet do 
     shell "cp #{path} #{path}.backup"
-    shell "sed 's/PasswordAuthentication .*/PasswordAuthentication no/g' #{path}.backup > #{path}"
+    shell "sed 's/.*PasswordAuthentication .*/PasswordAuthentication no/g' #{path}.backup > #{path}"
   end
   after { shell '/etc/init.d/ssh restart' }
   
