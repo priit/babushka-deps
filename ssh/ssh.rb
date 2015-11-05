@@ -108,7 +108,7 @@ dep 'sshd_pam_should_be_off' do
   end
 
   meet do
-    shell "cp #{path} #{path.backup}"
+    shell "cp #{path} #{path}.backup"
     shell "sed 's/UsePam .*/UsePam no/g' #{path}.backup > #{path}"
   end
 
