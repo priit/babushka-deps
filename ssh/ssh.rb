@@ -79,7 +79,7 @@ dep 'sshd_password_should_be_off' do
 
   meet do 
     shell "cp #{path} #{path}.backup"
-    shell "sed 's/^PasswordAuthentication .*/PasswordAuthentication no/g' #{path}.backup > #{path}"
+    shell "sed 's/PasswordAuthentication .*/PasswordAuthentication no/g' #{path}.backup > #{path}"
   end
   after { shell '/etc/init.d/ssh restart' }
   
