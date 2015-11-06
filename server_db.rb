@@ -16,7 +16,7 @@ dep 'server_db', :password do
     requires 'network_ip_failover'
   else
     requires 'server_db_yml'
-    prompt_message "Please edit babushka.yml file before continue"
+    log "Please edit babushka.yml file before continue"
   end
 end
 
