@@ -1,7 +1,7 @@
 # 
 # DB basic template
 #
-dep 'server-db', :username, :password do
+dep 'server_db', :username, :password do
   username.ask("New app username'")
   password.ask("New password")
 
