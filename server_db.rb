@@ -5,18 +5,19 @@ dep 'server_db', :password do
   require 'ostruct'
   require 'yaml'
   conf_file = 'babushka.yml'
-  if !conf_file.p.exists?
+
+  if conf_file.p.exists?
+    conf = OpenStruct.new(YAML.load_file(conf_file)['server_db'])
+    password.ask("New password")
+
+    requires 'general'
+    requires 'user'.with(conf.user, password, conf.authorized_keys)
+    requires 'debian_custom'
+    requires 'network_ip_failover'
+  else
     requires 'server_db_yml'
-    unmeetable! 'Please edit babushka.yml file before continue'
+    puts 'Please edit babushka.yml file before continue'
   end
-  conf = OpenStruct.new(YAML.load_file(conf_file)['server_db'])
-
-  password.ask("New password")
-
-  requires 'general'
-  requires 'user'.with(conf.user, password, conf.authorized_keys)
-  requires 'debian_custom'
-  requires 'network_ip_failover'
 end
 
 # generate blank babushka yml file
