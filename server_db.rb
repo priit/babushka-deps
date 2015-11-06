@@ -9,7 +9,7 @@ dep 'server_db_yml' do
   end
 
   meet do 
-    path.p.append <<-EOF
+    path.p.append <<-EOF.gsub(/^ {6}/, '')
       server_db:
         name: SERVER_NAME
         authorized_keys: priit, martin
