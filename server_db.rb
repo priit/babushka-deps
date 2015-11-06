@@ -1,6 +1,26 @@
 # 
 # DB basic template
 #
+
+# generate blank babushka yml file
+deb 'server_db_yml' do
+  met? do
+    path.p.exists?
+  end
+
+  meet do 
+    path.p.append <<-EOF
+      server_db:
+        name: SERVER_NAME
+        authorized_keys: priit, martin
+    EOF
+  end
+  
+  def path
+    'babushka.yml'
+  end
+end
+
 dep 'server_db', :password do
   require 'ostruct'
   require 'yaml'
