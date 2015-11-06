@@ -3,7 +3,7 @@
 #
 
 # generate blank babushka yml file
-deb 'server_db_yml' do
+dep 'server_db_yml' do
   met? do
     path.p.exists?
   end
@@ -31,4 +31,4 @@ dep 'server_db', :password do
   requires 'user'.with(conf.user, password, conf.authorized_keys)
   requires 'debian_custom'
   requires 'network_ip_failover'
-end
+nd
