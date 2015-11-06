@@ -3,8 +3,8 @@
 #
 
 # for manual interactive usage
-dep 'ssh_all_authorized_keys', :username do
-  requires 'ssh_init_authorized_keys_file'.with(username)
+dep 'ssh_all_authorized_keys', :linux_user do
+  requires 'ssh_init_authorized_keys_file'.with(linux_user)
 
   setup do
     if confirm("Should we add authorized keys? (y/n)", default: 'n')
@@ -32,7 +32,7 @@ dep 'ssh_all_authorized_keys', :username do
   end
 
   def authorized_path
-    "/home/#{username}/.ssh/authorized_keys"
+    "/home/#{linux_user}/.ssh/authorized_keys"
   end
 
   def keys
@@ -40,43 +40,53 @@ dep 'ssh_all_authorized_keys', :username do
   end
 end
 
-dep 'ssh_authorized_keys', :username, :keys do
-  username.ask('Please provide linux home user')
-  keys.ask('Please provide keys (comma separated)')
-  requires 'ssh_init_authorized_keys_file'.with(username)
-  
-  met? do
-    keys_array = keys.to_s.split(',').map(&:strip)
-    keys_array.map do |key|
-      key_file = "#{File.dirname(load_path)}/keys/#{key}.pub"
-      pub = File.open(key_file).first.to_s.strip
-      path.p.grep(pub)
-    end.all?
-  end
+dep 'ssh_authorized_keys', :linux_user, :key_names do
+  linux_user.ask('Please provide linux username')
+  key_names.ask('Please provide key names (comma separated)')
+  requires 'ssh_init_authorized_keys_file'.with(linux_user)
 
-  meet do
-  end
-
-  def path
-    "/home/#{username}/.ssh/authorized_keys"
+  key_names.to_s.split(',').map(&:strip).each do |key_name|
+    requires 'ssh_authorized_key'.with(linux_user, key_name)
   end
 end
 
-dep 'ssh_init_authorized_keys_file', :username do
+dep 'ssh_authorized_key', :linux_user, :key_name do
+  linux_user.ask('Please provide linux username')
+  key_name.ask('Please provide pub key name')
+
+  met? do
+    path.p.grep(key)
+  end
+
+  meet do
+    path.p.append(key)
+  end
+
+  def key
+    key_file = "#{File.dirname(load_path)}/keys/#{key_name}.pub"
+    File.open(key_file).first.to_s.strip
+  end
+
+  def path
+    "/home/#{linux_user}/.ssh/authorized_keys"
+  end
+end
+
+dep 'ssh_init_authorized_keys_file', :linux_user do
   met? { "#{ssh_dir}/authorized_keys".p.exists? }
   meet do
     shell "mkdir -p -m 700 '#{ssh_dir}'" and
     shell "touch '#{ssh_dir}/authorized_keys'" and
-    shell "chown -R #{username}:#{group} '#{ssh_dir}'" and
+    shell "chown -R #{linux_user}:#{group} '#{ssh_dir}'" and
     shell "chmod 644 #{(ssh_dir / 'authorized_keys')}"
   end
 
   def ssh_dir
-    "/home/#{username}/.ssh"
+    "/home/#{linux_user}/.ssh"
   end
 
   def group
-    shell "id -gn #{username}"
+    shell "id -gn #{linux_user}"
   end
 end
 
