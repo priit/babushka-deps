@@ -7,6 +7,7 @@ dep 'general' do
   requires 'screen.managed'
   requires 'screen.turn_off_startup_message'
   requires 'screen.turn_off_vbell'
+  requires 'htop.managed'
 end
 
 dep 'tree.managed' 
