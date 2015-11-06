@@ -1,7 +1,7 @@
 # 
 # DB basic template
 #
-dep 'server_db', :password do
+dep 'server_app', :password do
   require 'ostruct'
   require 'yaml'
   conf_file = 'babushka.yml'
