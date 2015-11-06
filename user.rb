@@ -9,6 +9,7 @@ dep 'user', :username, :password do
   username.ask("New app username'")
   password.ask("New password")
 
+  requires 'sudo.lib'
   requires 'linux_user'.with(username, password)
   requires 'ssh_all_authorized_keys'.with(username)
   requires 'zshrc'.with(username)
