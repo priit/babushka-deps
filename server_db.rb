@@ -8,4 +8,5 @@ dep 'server_db', :username, :password do
   requires 'general'
   requires 'user'.with(username, password)
   requires 'debian_custom'
+  requires 'network_ip_failover'
 end
