@@ -1,6 +1,25 @@
 # 
 # DB basic template
 #
+dep 'server_db', :password do
+  if conf.nil?
+    requires 'server_db_yml'
+    unmeetable! 'Please update babushka.yml file before continue'
+  end
+
+  password.ask("New password")
+
+  requires 'general'
+  requires 'user'.with(conf.user, password, conf.authorized_keys)
+  requires 'debian_custom'
+  requires 'network_ip_failover'
+
+  def conf
+    require 'ostruct'
+    require 'yaml'
+    @conf ||= OpenStruct.new(YAML.load_file('babushka.yml')['server_db'])
+  end
+end
 
 # generate blank babushka yml file
 dep 'server_db_yml' do
@@ -19,16 +38,4 @@ dep 'server_db_yml' do
   def path
     'babushka.yml'
   end
-end
-
-dep 'server_db', :password do
-  require 'ostruct'
-  require 'yaml'
-  conf = OpenStruct.new(YAML.load_file('babushka.yml')['server_db'])
-  password.ask("New password")
-
-  requires 'general'
-  requires 'user'.with(conf.user, password, conf.authorized_keys)
-  requires 'debian_custom'
-  requires 'network_ip_failover'
 end
