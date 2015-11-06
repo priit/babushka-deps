@@ -17,7 +17,6 @@ dep 'user', :username, :password do
   requires 'sudoer'.with(username)
 end
 
-
 #
 # Low level deps
 #

@@ -1,6 +1,8 @@
 #
 # ssh user config
 #
+
+# for manual interactive usage
 dep 'ssh_all_authorized_keys', :username do
   requires 'ssh_init_authorized_keys_file'.with(username)
 
@@ -35,6 +37,25 @@ dep 'ssh_all_authorized_keys', :username do
 
   def keys
     @keys ||= []
+  end
+end
+
+dep 'ssh_authorized_key', :username, :keys do
+  requires 'ssh_init_authorized_keys_file'.with(username)
+  
+  met? do
+    keys.map do |key|
+      key_file = Dir.glob("#{File.dirname(load_path)}/keys/#{key}.pub")
+      pub = File.open(key_file)
+      path.p.grep(pub)
+    end.all?
+  end
+
+  meet do
+  end
+
+  def path
+    "/home/#{username}/.ssh/authorized_keys"
   end
 end
 
