@@ -8,7 +8,7 @@ dep 'server_db', :password do
   password.ask("New password")
 
   requires 'general'
-  requires 'user'.with(conf.user, password)
+  requires 'user'.with(conf.user, password, conf.authorized_keys)
   requires 'debian_custom'
   requires 'network_ip_failover'
 end

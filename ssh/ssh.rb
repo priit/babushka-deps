@@ -1,45 +1,6 @@
 #
 # ssh user config
 #
-
-# for manual interactive usage
-dep 'ssh_all_authorized_keys', :linux_user do
-  requires 'ssh_init_authorized_keys_file'.with(linux_user)
-
-  setup do
-    if confirm("Should we add authorized keys? (y/n)", default: 'n')
-      keys_path = Dir.glob("#{File.dirname(load_path)}/keys/*.pub")
-      Dir.glob(keys_path).sort.each do |file|
-        filename = File.basename(file)
-        if confirm("Should we add: #{filename} (y/n)", default: 'n')
-          keys << File.open(file, &:readline)
-        end
-      end
-    end
-  end
-
-  met? do
-    keys.size == 0
-  end
-
-  meet do
-    authorized_path.p.append("# Babushka added keys\n")
-    keys.each do |k|
-      authorized_path.p.append(k)
-    end
-    authorized_path.p.append("# End of Babushka added keys\n")
-    @keys = [] # let's keep met? happy
-  end
-
-  def authorized_path
-    "/home/#{linux_user}/.ssh/authorized_keys"
-  end
-
-  def keys
-    @keys ||= []
-  end
-end
-
 dep 'ssh_authorized_keys', :linux_user, :key_names do
   linux_user.ask('Please provide linux username')
   key_names.ask('Please provide key names (comma separated)')
@@ -87,6 +48,44 @@ dep 'ssh_init_authorized_keys_file', :linux_user do
 
   def group
     shell "id -gn #{linux_user}"
+  end
+end
+
+# for manual interactive usage, depricated
+dep 'ssh_all_authorized_keys', :linux_user do
+  requires 'ssh_init_authorized_keys_file'.with(linux_user)
+
+  setup do
+    if confirm("Should we add authorized keys? (y/n)", default: 'n')
+      keys_path = Dir.glob("#{File.dirname(load_path)}/keys/*.pub")
+      Dir.glob(keys_path).sort.each do |file|
+        filename = File.basename(file)
+        if confirm("Should we add: #{filename} (y/n)", default: 'n')
+          keys << File.open(file, &:readline)
+        end
+      end
+    end
+  end
+
+  met? do
+    keys.size == 0
+  end
+
+  meet do
+    authorized_path.p.append("# Babushka added keys\n")
+    keys.each do |k|
+      authorized_path.p.append(k)
+    end
+    authorized_path.p.append("# End of Babushka added keys\n")
+    @keys = [] # let's keep met? happy
+  end
+
+  def authorized_path
+    "/home/#{linux_user}/.ssh/authorized_keys"
+  end
+
+  def keys
+    @keys ||= []
   end
 end
 

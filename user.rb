@@ -5,13 +5,19 @@
 # Create own dedicated linux user and group for each app.
 # Add manually missing ssh keys for all deployers.
 # 
-dep 'user', :username, :password do
+dep 'user', :username, :password, :key_names do
   username.ask("New app username'")
   password.ask("New password")
 
   requires 'sudo.lib'
   requires 'linux_user'.with(username, password)
-  requires 'ssh_all_authorized_keys'.with(username)
+  
+  if key_names.nil?
+    requires 'ssh_all_authorized_keys'.with(username)
+  else
+    requires 'ssh_authorized_keys'.with(username, key_names)
+  end
+
   requires 'zshrc'.with(username)
   requires 'gemrc'.with(username)
   requires 'sudoer'.with(username)
