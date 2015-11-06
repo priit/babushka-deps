@@ -7,7 +7,7 @@ dep 'server_db' do
   conf = OpenStruct.new(YAML.load_file('babushka.yml')['server_db'])
 
   requires 'general'
-  requires 'user'.with(conf.username)
+  requires 'user'.with(conf.user)
   requires 'debian_custom'
   requires 'network_ip_failover'
 end
