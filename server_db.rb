@@ -11,7 +11,7 @@ dep 'server_db_yml' do
   meet do 
     path.p.append <<-EOF.gsub(/^ {6}/, '')
       server_db:
-        name: SERVER_NAME
+        user: LINUX USERNAME
         authorized_keys: priit, martin
     EOF
   end
