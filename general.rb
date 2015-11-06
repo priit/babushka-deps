@@ -13,6 +13,7 @@ end
 dep 'tree.managed' 
 dep 'unzip.managed'
 dep 'zip.managed'
+dep 'htop.managed'
 
 dep 'build-essential' do
   met? { shell('dpkg -l | grep "build-essential"') }
