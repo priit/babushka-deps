@@ -16,7 +16,7 @@ dep 'server_db', :password do
     requires 'network_ip_failover'
   else
     requires 'server_db_yml'
-    puts '/n/nPlease edit babushka.yml file before continue/n'
+    puts "/n/nPlease edit babushka.yml file before continue/n"
   end
 end
 
