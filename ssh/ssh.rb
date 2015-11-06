@@ -59,7 +59,7 @@ dep 'ssh_authorized_key', :linux_user, :key_name do
   end
 
   meet do
-    path.p.append(key)
+    path.p.append("#{key}/n")
   end
 
   def key
