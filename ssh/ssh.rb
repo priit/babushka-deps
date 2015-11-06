@@ -48,7 +48,7 @@ dep 'ssh_authorized_keys', :username, :keys do
   met? do
     keys_array = keys.to_s.split(',').map(&:strip)
     keys_array.map do |key|
-      key_file = Dir.glob("#{File.dirname(load_path)}/keys/#{key}.pub")
+      key_file = "#{File.dirname(load_path)}/keys/#{key}.pub"
       pub = File.open(key_file).first.to_s.strip
       path.p.grep(pub)
     end.all?
