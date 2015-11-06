@@ -1,4 +1,4 @@
-deb 'sudo.lib' do
+dep 'sudo.lib' do
   installs {
     via :apt, 'sudo'
   }
