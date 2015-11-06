@@ -1,3 +1,9 @@
+deb 'sudo.lib' do
+  installs {
+    via :apt, 'sudo'
+  }
+end
+
 dep 'nginx.lib' do
   requires 'passenger-source-list'
   installs {
