@@ -42,11 +42,12 @@ end
 
 dep 'ssh_authorized_keys', :username, :keys do
   username.ask('Please provide linux home user')
+  keys.ask('Please provide keys (comma separated)')
   requires 'ssh_init_authorized_keys_file'.with(username)
   
   met? do
-    keys.ask('Please provide keys array')
-    keys.map do |key|
+    keys_array = keys.to_s.split(',').map(&:strip)
+    keys_array.map do |key|
       key_file = Dir.glob("#{File.dirname(load_path)}/keys/#{key}.pub")
       pub = File.open(key_file)
       path.p.grep(pub)
