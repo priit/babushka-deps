@@ -4,12 +4,12 @@
 dep 'server_db', :password do
   require 'ostruct'
   require 'yaml'
-  conf = OpenStruct.new(YAML.load_file('babushka.yml')['server_db'])
-
-  if conf.nil?
+  conf_file = 'babushka.yml'
+  if !conf_file.p.exists?
     requires 'server_db_yml'
-    unmeetable! 'Please update babushka.yml file before continue'
+    unmeetable! 'Please edit babushka.yml file before continue'
   end
+  conf = OpenStruct.new(YAML.load_file(conf_file)['server_db'])
 
   password.ask("New password")
 
