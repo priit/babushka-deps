@@ -55,16 +55,16 @@ dep 'ssh_authorized_key', :linux_user, :key_name do
   key_name.ask('Please provide pub key name')
 
   met? do
-    path.p.grep(key)
+    path.p.grep(key.strip)
   end
 
   meet do
-    path.p.append("#{key}/n")
+    path.p.append(key)
   end
 
   def key
     key_file = "#{File.dirname(load_path)}/keys/#{key_name}.pub"
-    File.open(key_file).first.to_s.strip
+    File.open(key_file).first.to_s
   end
 
   def path
