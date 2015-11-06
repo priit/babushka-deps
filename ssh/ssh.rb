@@ -40,9 +40,9 @@ dep 'ssh_all_authorized_keys', :username do
   end
 end
 
-dep 'ssh_authorized_key', :username, :keys do
-  username.ask('Please provide linux home user') if username.nil?
-  keys.ask('Please provide keys array') if keys.nil?
+dep 'ssh_authorized_keys', :username, :keys do
+  username.ask('Please provide linux home user')
+  keys.ask('Please provide keys array')
   requires 'ssh_init_authorized_keys_file'.with(username)
   
   met? do
