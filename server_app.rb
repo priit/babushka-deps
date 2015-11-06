@@ -15,7 +15,7 @@ dep 'server_app', :password do
     requires 'debian_custom'
     requires 'network_ip_failover'
   else
-    requires 'server_db_yml'
+    requires 'server_app_yml'
     log "Please edit babushka.yml file before continue", as: :warning
   end
 end
