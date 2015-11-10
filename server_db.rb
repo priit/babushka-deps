@@ -14,6 +14,7 @@ dep 'server_db', :password do
     requires 'user'.with(conf.user, password, conf.authorized_keys)
     requires 'debian_custom'
     requires 'network_ip_failover'.with(conf.network_ip_failover) if conf.network_ip_failover
+    requires 'postgres'
   else
     requires 'server_db_yml'
     log "Please edit babushka.yml file before continue", as: :warning
