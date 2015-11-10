@@ -5,3 +5,10 @@ dep 'postgres' do
   requires 'postgresql.managed'
   requires 'libpq-dev.managed'
 end
+
+dep 'postgres94' do
+   via :apt, [
+        "postgresql-9.4",
+        "libpq-dev"
+      ]
+end
