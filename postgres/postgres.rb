@@ -1,11 +1,11 @@
-dep 'postgresql.bin' do 
+dep 'postgresql-9.4.bin' do 
   installs 'postgresql-9.4'
 end
 
 dep 'libpq-dev.managed'
 
 dep 'postgres' do
-  requires 'postgresql.bin'
+  requires 'postgresql-9.4.bin'
   requires 'libpq-dev.managed'
 end
 
