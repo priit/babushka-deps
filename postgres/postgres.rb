@@ -1,5 +1,10 @@
 dep 'postgresql-9.4.bin' do 
-  installs 'postgresql-9.4'
+  installs {
+    via :apt, [
+      "postgresql-9.4",
+      "libpq-dev"
+    ]
+  }
 end
 
 dep 'libpq-dev.managed'
