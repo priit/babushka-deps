@@ -1,5 +1,5 @@
-dep 'postgresql.managed'
-dep 'libpq-dev.managed'
+dep 'postgresql.bin'
+dep 'libpq-dev.bin'
 
 dep 'postgres' do
   requires 'postgresql.bin'
