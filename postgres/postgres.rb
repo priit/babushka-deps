@@ -7,11 +7,11 @@ dep 'postgresql-9.4.managed' do
   provides 'psql'
 end
 
-dep 'libpq-dev.managed'
+dep 'libpq-dev.lib'
 
 dep 'postgres' do
   requires 'postgresql-9.4.managed'
-  requires 'libpq-dev.managed'
+  requires 'libpq-dev.lib'
 end
 
 # dep 'postgres94', template: 'bin' do
