@@ -1,5 +1,5 @@
 dep 'postgresql.bin' do 
-  installs 'postgres-9.4'
+  installs 'postgresql-9.4'
 end
 
 dep 'libpq-dev.managed'
