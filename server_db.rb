@@ -13,7 +13,7 @@ dep 'server_db', :password do
     requires 'general'
     requires 'user'.with(conf.user, password, conf.authorized_keys)
     requires 'debian_custom'
-    requires 'postgres'
+    requires 'postgres94'
   else
     requires 'server_db_yml'
     log "Please edit babushka.yml file before continue", as: :warning

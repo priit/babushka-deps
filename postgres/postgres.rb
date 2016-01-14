@@ -3,7 +3,7 @@ dep 'libpq-dev.managed'
 
 dep 'postgres' do
   requires 'postgresql.managed'
-  # requires 'libpq-dev'
+  requires 'libpq-dev.managed'
 end
 
 dep 'postgres94' do
