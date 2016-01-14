@@ -2,8 +2,8 @@ dep 'postgresql.managed'
 dep 'libpq-dev.managed'
 
 dep 'postgres' do
-  requires 'postgresql.managed'
-  requires 'libpq-dev.managed'
+  requires 'postgresql.bin'
+  requires 'libpq-dev.bin'
 end
 
 dep 'postgres94', template: 'bin' do
