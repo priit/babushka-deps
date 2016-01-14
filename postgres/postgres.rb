@@ -7,10 +7,15 @@ dep 'postgres' do
 end
 
 dep 'postgres94' do
-  installs {
-    via :apt, [
-      "postgresql-9.4",
-      "libpq-dev"
-    ]
-  }
+  installs "postgresql-9.4", "libpq-dev"
 end
+
+
+# dep 'postgres94' do
+  # installs {
+    # via :apt, [
+      # "postgresql-9.4",
+      # "libpq-dev"
+    # ]
+  # }
+# end
