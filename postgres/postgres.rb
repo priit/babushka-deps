@@ -13,12 +13,3 @@ dep 'postgres' do
   requires 'postgresql-9.4.managed'
   requires 'libpq-dev.lib'
 end
-
-# dep 'postgres94', template: 'bin' do
-  # installs {
-    # via :apt, [
-      # "postgresql-9.4",
-      # "libpq-dev"
-    # ]
-  # }
-# end
