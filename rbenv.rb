@@ -35,13 +35,13 @@ end
 
 dep 'rbenv-core', :username, :path do
   met? { path.p.exists? }
-  meet { git 'https://github.com/sstephenson/rbenv.git', to: path }
+  meet { git 'https://github.com/rbenv/rbenv.git', to: path }
   after { shell "chown #{username}:#{username} -R #{path}", as: 'root' }
 end
 
 dep 'rbenv-ruby-build', :username, :path do
   met? { "#{path}/plugins/ruby-build".p.exists? }
-  meet { git 'https://github.com/sstephenson/ruby-build.git', to: "#{path}/plugins/ruby-build" }
+  meet { git 'https://github.com/rbenv/ruby-build.git', to: "#{path}/plugins/ruby-build" }
   after { shell "chown #{username}:#{username} -R #{path}", as: 'root' }
 end
 
