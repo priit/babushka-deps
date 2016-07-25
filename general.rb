@@ -8,6 +8,7 @@ dep 'general' do
   requires 'screen.turn_off_startup_message'
   requires 'screen.turn_off_vbell'
   requires 'htop.managed'
+  requires 'cron.default_email'
 end
 
 dep 'tree.managed' 
@@ -38,5 +39,16 @@ dep 'screen.turn_off_vbell' do
   meet do
     '/etc/screenrc'.p.append("\n# Added by Babushka\n")
     '/etc/screenrc'.p.append("vbell off\n")
+  end
+end
+
+#
+# Cron default email
+#
+dep 'cron.default_email' do
+  met? { '/etc/default/cron'.p.grep(/^MAILTO=info@gitlab/) }
+  meet do
+    '/etc/default/cron'.p.append("\n# Added by Babushka\n")
+    '/etc/default/cron'.p.append("MAILTO=info@gitlab.eu\n")
   end
 end
