@@ -30,7 +30,7 @@ dep 'server_app_yml' do
     path.p.append <<-EOF.gsub(/^ {6}/, '')
       server_app:
         user: LINUX USERNAME
-        authorized_keys: priit, martin
+        authorized_keys: priit
         network_ip_failover:
     EOF
   end
