@@ -116,7 +116,7 @@ dep 'apt-backports-list' do
   end
 
   def version
-    "debian-#{shell("cat /etc/debian_version").to_i}"
+    shell("cat /etc/debian_version").to_i
   end
 end
 
