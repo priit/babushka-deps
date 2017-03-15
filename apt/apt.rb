@@ -112,7 +112,7 @@ dep 'apt-backports-list' do
   }
 
   def path
-    "/etc/apt/sources.list.d/backports.list.debian-#{version}"
+    '/etc/apt/sources.list.d/backports.list'
   end
 
   def version
