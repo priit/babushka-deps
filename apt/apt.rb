@@ -23,6 +23,7 @@ end
 
 dep 'passenger.lib' do
   requires 'passenger-source-list'
+  requires 'nginx.lib'
   installs {
     via :apt, 'passenger'
   }
