@@ -72,7 +72,7 @@ dep 'ruby_deps' do
       build-essential
       libssl-dev
       libyaml-dev
-      libreadline7-dev
+      libreadline-dev
       zlib1g-dev
       libncurses5-dev
       libffi-dev
