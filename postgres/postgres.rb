@@ -1,7 +1,7 @@
-dep 'postgresql-9.4.managed' do 
+dep 'postgresql-9.6.managed' do 
   installs {
     via :apt, [
-      "postgresql-9.4"
+      "postgresql-9.6"
     ]
   }
   provides 'psql'
@@ -10,6 +10,6 @@ end
 dep 'libpq-dev.lib'
 
 dep 'postgres' do
-  requires 'postgresql-9.4.managed'
+  requires 'postgresql-9.6.managed'
   requires 'libpq-dev.lib'
 end
