@@ -79,6 +79,7 @@ end
 dep 'passenger.lib' do
   requires 'passenger-repo-key'
   requires 'passenger-source-list'
+  requires 'dirmngr-managed' # otherwise you will get /usr/bin/dirmngr': No such file or directory
 
   met? {
     shell?("sudo apt-key list | grep 'Phusion Automated Software Signing'", as: 'root')
@@ -92,6 +93,7 @@ end
 dep 'passenger-repo-key' do
   requires 'apt-transport-https.lib'
   requires 'ca-certificates.lib'
+  requires 'dirmngr-managed' # otherwise you will get /usr/bin/dirmngr': No such file or directory
 
   met? {
     shell?("sudo apt-key list | grep 'Phusion Automated Software Signing'", as: 'root')
