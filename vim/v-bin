@@ -12,8 +12,4 @@
 # 
 
 # default v command fallback is priit
-if [ ! -z "$VIMUSER" ]; then
-  /usr/bin/vim -u /etc/vim/vimrc-$VIMUSER $*
-else
-  /usr/bin/vim -u /etc/vim/vimrc-priit $*
-fi
+/usr/bin/vim $*

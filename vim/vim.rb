@@ -6,7 +6,7 @@ dep 'vimrc_priit.copy' do
   requires 'sshd_accept_vimuser_env'
 
   source 'vimrc-priit'
-  path '/etc/vim/vimrc-priit'
+  path '/etc/vim/vimrc.local'
   comment '"'
 end
 
