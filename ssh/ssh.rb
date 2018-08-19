@@ -95,6 +95,7 @@ end
 
 # Use it when starting updating sshd_config
 dep 'sshd_config_day_backup' do
+  require 'date'
   met? do
     "/etc/ssh/sshd_config-#{Date.today}".p.exists?
   end
