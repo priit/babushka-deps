@@ -40,7 +40,7 @@ dep 'gem-passenger' do
   end
 
   meet do
-    log_shell "Passenger gem install...",  "gem install --no-ri --no-rdoc passenger", as: 'root'
+    log_shell "Passenger gem install...",  "gem install --no-document passenger", as: 'root'
     log_shell "Passenger nginx install...",
       "passenger-install-nginx-module -a --languages ruby", as: 'root'
   end
